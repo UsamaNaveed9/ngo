@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include ngo *.css
+recursive-include ngo *.csv
+recursive-include ngo *.html
+recursive-include ngo *.ico
+recursive-include ngo *.js
+recursive-include ngo *.json
+recursive-include ngo *.md
+recursive-include ngo *.png
+recursive-include ngo *.py
+recursive-include ngo *.svg
+recursive-include ngo *.txt
+recursive-exclude ngo *.pyc
