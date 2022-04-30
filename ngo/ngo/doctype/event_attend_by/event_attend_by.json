@@ -1,0 +1,41 @@
+{
+ "actions": [],
+ "creation": "2022-04-28 13:48:05.286261",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "donor",
+  "center"
+ ],
+ "fields": [
+  {
+   "fieldname": "donor",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Donor",
+   "options": "Donor",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "donor.locality",
+   "fieldname": "center",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Center"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-04-28 15:56:03.602594",
+ "modified_by": "Administrator",
+ "module": "NGO",
+ "name": "Event Attend by",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

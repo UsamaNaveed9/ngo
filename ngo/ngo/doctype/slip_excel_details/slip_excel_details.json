@@ -1,0 +1,73 @@
+{
+ "actions": [],
+ "autoname": "field:slip_number",
+ "creation": "2022-04-28 16:24:04.255494",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "slip_number",
+  "date",
+  "column_break_3",
+  "event",
+  "section_break_5",
+  "cheque_details"
+ ],
+ "fields": [
+  {
+   "fieldname": "slip_number",
+   "fieldtype": "Data",
+   "label": "Slip Number",
+   "unique": 1
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "event",
+   "fieldtype": "Link",
+   "label": "Event",
+   "options": "Event Master"
+  },
+  {
+   "fieldname": "cheque_details",
+   "fieldtype": "Table",
+   "label": "Cheque Details",
+   "options": "Slip Cheque Details"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-04-28 16:26:59.659035",
+ "modified_by": "Administrator",
+ "module": "NGO",
+ "name": "Slip Excel Details",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

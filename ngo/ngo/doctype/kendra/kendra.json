@@ -1,0 +1,50 @@
+{
+ "actions": [],
+ "autoname": "field:centre_name",
+ "creation": "2022-04-28 14:49:41.948498",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "centre_name",
+  "eligible_to_electronic_payment"
+ ],
+ "fields": [
+  {
+   "fieldname": "centre_name",
+   "fieldtype": "Data",
+   "label": "Centre Name",
+   "unique": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "eligible_to_electronic_payment",
+   "fieldtype": "Check",
+   "label": "Eligible to Electronic Payment"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-04-28 14:49:53.195974",
+ "modified_by": "Administrator",
+ "module": "NGO",
+ "name": "Kendra",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
