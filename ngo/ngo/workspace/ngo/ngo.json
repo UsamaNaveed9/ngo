@@ -1,0 +1,50 @@
+{
+ "category": "Modules",
+ "charts": [],
+ "creation": "2022-05-06 12:39:09.448447",
+ "developer_mode_only": 0,
+ "disable_user_customization": 0,
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "extends_another_page": 0,
+ "hide_custom": 0,
+ "icon": "money-coins-1",
+ "idx": 0,
+ "is_default": 0,
+ "is_standard": 1,
+ "label": "NGO",
+ "links": [],
+ "modified": "2022-05-06 12:41:13.807654",
+ "modified_by": "Administrator",
+ "module": "NGO",
+ "name": "NGO",
+ "owner": "Administrator",
+ "pin_to_bottom": 0,
+ "pin_to_top": 0,
+ "shortcuts": [
+  {
+   "doc_view": "",
+   "label": "Donor",
+   "link_to": "Donor",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Event Master",
+   "link_to": "Event Master",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Bank Statement",
+   "link_to": "Bank Statement Details",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Excel Slip",
+   "link_to": "Slip Excel Details",
+   "type": "DocType"
+  }
+ ]
+}
