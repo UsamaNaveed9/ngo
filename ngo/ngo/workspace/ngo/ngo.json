@@ -14,7 +14,7 @@
  "is_standard": 1,
  "label": "NGO",
  "links": [],
- "modified": "2022-05-06 12:41:13.807654",
+ "modified": "2022-05-06 12:46:39.313634",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "NGO",
@@ -44,6 +44,12 @@
    "doc_view": "",
    "label": "Excel Slip",
    "link_to": "Slip Excel Details",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Kendra Jawabdar",
+   "link_to": "Kendra Jawabdar",
    "type": "DocType"
   }
  ]
