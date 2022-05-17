@@ -14,18 +14,24 @@
  "is_standard": 1,
  "label": "NGO",
  "links": [],
- "modified": "2022-05-06 12:46:39.313634",
+ "modified": "2022-05-17 17:24:25.966782",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "NGO",
  "owner": "Administrator",
  "pin_to_bottom": 0,
- "pin_to_top": 0,
+ "pin_to_top": 1,
  "shortcuts": [
   {
    "doc_view": "",
    "label": "Donor",
    "link_to": "Donor",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Bank Account",
+   "link_to": "Bank Account",
    "type": "DocType"
   },
   {
