@@ -105,7 +105,7 @@ doctype_js = {
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
 # 	"all": [
 # 		"ngo.tasks.all"
 # 	],
@@ -120,8 +120,13 @@ doctype_js = {
 # 	]
 # 	"monthly": [
 # 		"ngo.tasks.monthly"
-# 	]
-# }
+# 	],
+    "cron": {
+		"* * * * *": [
+			"ngo.update_event_status"
+		]
+	}
+}
 
 # Testing
 # -------
