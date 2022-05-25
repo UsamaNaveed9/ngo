@@ -60,6 +60,15 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "IFSC",
+   "link_to": "IFSC",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Bank Account",
    "link_to": "Bank Account",
    "link_type": "DocType",
@@ -162,7 +171,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-05-23 15:01:32.251282",
+ "modified": "2022-05-24 14:55:54.716640",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "NGO",

@@ -2,7 +2,11 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Event Master', {
-	// refresh: function(frm) {
-
-	// }
+	before_save: function(frm){
+		if(frm.doc.extend_ends_on){
+			if(frm.doc.ends_on){
+				frm.set_value('status', 'Extended');
+			}
+		}
+	}
 });

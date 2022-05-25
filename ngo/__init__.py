@@ -12,32 +12,30 @@ def update_event_status():
 	now = datetime.now(timezone("Asia/Kolkata")).strftime("%Y-%m-%d %H:%M:%S")
 	#print ("Current date and time : ", now)
 
+	#get events that status is Not started
 	event_not_started = frappe.db.get_list('Event Master',
     filters={
         'status': 'Not Started'
     },
-    fields=['name','starts_on','ends_on']
+    fields=['name','starts_on']
 	)
-
-	#print(event_not_started)
 	for i in event_not_started:
 		starts_on = i.starts_on.strftime("%Y-%m-%d %H:%M:%S")
-		ends_on = i.ends_on.strftime("%Y-%m-%d %H:%M:%S")
 		#print(starts_on, ends_on)
 		if now > starts_on:
 			doc = frappe.get_doc('Event Master', i.name)
 			doc.status = 'Started'
 			doc.save()
 			#print("Done")
-		 
+
+	#get events	that status is Started 
 	event_started = frappe.db.get_list('Event Master',
     filters={
         'status': 'Started'
     },
-    fields=['name','starts_on','ends_on']
+    fields=['name','ends_on']
 	)
 	for i in event_started:
-		starts_on = i.starts_on.strftime("%Y-%m-%d %H:%M:%S")
 		ends_on = i.ends_on.strftime("%Y-%m-%d %H:%M:%S")
 		#print(starts_on, ends_on)
 		if now > ends_on:
@@ -46,3 +44,18 @@ def update_event_status():
 			doc.save()
 			#print("Done")
 
+	#get events that status is Extended
+	event_extended = frappe.db.get_list('Event Master',
+    filters={
+        'status': 'Extended'
+    },
+    fields=['name','extends_on']
+	)
+	for i in event_extended:
+		extends_on = i.extends_on.strftime("%Y-%m-%d %H:%M:%S")
+		#print(starts_on, ends_on)
+		if now > extends_on:
+			doc = frappe.get_doc('Event Master', i.name)
+			doc.status = 'Closed'
+			doc.save()
+			#print("Done")

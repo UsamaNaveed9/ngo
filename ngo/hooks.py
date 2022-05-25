@@ -37,7 +37,9 @@ doctype_js = {
     "Donor" : "customjs/donor.js",
     "Bank Account" : "customjs/bank_account.js"
     }
-# doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
+doctype_list_js = {
+     "Event Master" : "ngo/doctype/event_master/event_master_list.js"
+    }
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 

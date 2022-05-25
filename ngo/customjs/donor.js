@@ -8,6 +8,15 @@ frappe.ui.form.on('Donor', {
 				]
 			}
 		});
+
+		frm.set_query('customer_primary_address', function(doc) {
+			return {
+				filters: {
+					'link_doctype': 'Donor',
+					'link_name': doc.name
+				}
+			}
+		})
 	},
 	country: function(frm){
 	    var country = cur_frm.doc.country;
