@@ -45,6 +45,18 @@
   "section_break_8",
   "description",
   "participants",
+  "donor_status",
+  "active_status",
+  "country",
+  "column_break_41",
+  "region",
+  "state",
+  "district",
+  "column_break_45",
+  "zone",
+  "centre",
+  "get_participants",
+  "section_break_40",
   "event_participants"
  ],
  "fields": [
@@ -298,11 +310,76 @@
    "fieldname": "extends_on",
    "fieldtype": "Datetime",
    "label": "Extends on"
+  },
+  {
+   "fieldname": "donor_status",
+   "fieldtype": "Select",
+   "label": "Donor Status",
+   "options": "Eligible\nIneligible"
+  },
+  {
+   "fieldname": "active_status",
+   "fieldtype": "Select",
+   "label": "Active Status",
+   "options": "Active\nInactive"
+  },
+  {
+   "fieldname": "section_break_40",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "region",
+   "fieldtype": "Link",
+   "label": "Region",
+   "options": "Territory"
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Link",
+   "label": "State",
+   "options": "Territory"
+  },
+  {
+   "fieldname": "district",
+   "fieldtype": "Link",
+   "label": "District",
+   "options": "Territory"
+  },
+  {
+   "fieldname": "zone",
+   "fieldtype": "Link",
+   "label": "Zone",
+   "options": "Territory"
+  },
+  {
+   "fieldname": "centre",
+   "fieldtype": "Link",
+   "label": "Centre",
+   "options": "Territory"
+  },
+  {
+   "fieldname": "column_break_41",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_45",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "get_participants",
+   "fieldtype": "Button",
+   "label": "Get Participants"
   }
  ],
  "icon": "fa fa-calendar",
  "links": [],
- "modified": "2022-05-21 18:30:25.895603",
+ "modified": "2022-06-01 12:24:57.441178",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Event Master",
