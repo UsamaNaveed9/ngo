@@ -328,6 +328,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "default": "India",
    "fieldname": "country",
    "fieldtype": "Link",
    "label": "Country",
@@ -379,7 +380,7 @@
  ],
  "icon": "fa fa-calendar",
  "links": [],
- "modified": "2022-06-01 12:24:57.441178",
+ "modified": "2022-06-02 17:35:54.661660",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Event Master",
