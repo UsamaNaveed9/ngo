@@ -96,6 +96,23 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Reconciliation",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Slip Details",
+   "link_to": "Slip Details",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Centre(Kendra)",
    "link_type": "DocType",
    "onboard": 0,
@@ -171,7 +188,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-05-24 14:55:54.716640",
+ "modified": "2022-06-07 14:06:54.246602",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "NGO",

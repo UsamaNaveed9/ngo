@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "creation": "2022-04-28 16:29:02.795557",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -46,7 +47,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-04-28 16:29:41.108112",
+ "modified": "2022-06-07 13:43:43.564527",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Bank Statement Details",

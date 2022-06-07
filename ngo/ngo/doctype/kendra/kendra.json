@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "autoname": "field:centre_name",
  "creation": "2022-04-28 14:49:41.948498",
  "doctype": "DocType",
@@ -25,7 +26,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-04-28 14:49:53.195974",
+ "modified": "2022-06-07 13:44:44.849847",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Kendra",

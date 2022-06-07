@@ -5,34 +5,100 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "bank_name",
-  "cheque_no",
-  "cheque_amount"
+  "deposit_date",
+  "cheque_date",
+  "cheque_bank",
+  "account_no",
+  "micr_code",
+  "column_break_6",
+  "short_code",
+  "amount",
+  "donor_name",
+  "clearing_status",
+  "event"
  ],
  "fields": [
   {
-   "fieldname": "bank_name",
-   "fieldtype": "Data",
+   "columns": 1,
+   "fieldname": "deposit_date",
+   "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Bank Name"
+   "label": "Deposit Date"
   },
   {
-   "fieldname": "cheque_no",
-   "fieldtype": "Data",
+   "columns": 1,
+   "fieldname": "cheque_date",
+   "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Cheque No"
+   "label": "Cheque Date"
   },
   {
-   "fieldname": "cheque_amount",
-   "fieldtype": "Currency",
+   "columns": 1,
+   "fieldname": "cheque_bank",
+   "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Cheque Amount"
+   "label": "Cheque Bank",
+   "options": "Bank"
+  },
+  {
+   "columns": 1,
+   "fieldname": "account_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Account No"
+  },
+  {
+   "columns": 1,
+   "fieldname": "micr_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "MICR Code"
+  },
+  {
+   "columns": 1,
+   "fieldname": "short_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Short Code"
+  },
+  {
+   "columns": 1,
+   "fieldname": "amount",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Amount"
+  },
+  {
+   "columns": 1,
+   "fieldname": "donor_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Donor Name"
+  },
+  {
+   "columns": 1,
+   "fieldname": "clearing_status",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Clearing Status"
+  },
+  {
+   "columns": 1,
+   "fieldname": "event",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Event",
+   "options": "Event Master"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-04-28 16:26:06.001030",
+ "modified": "2022-06-07 14:22:31.822543",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Slip Cheque Details",

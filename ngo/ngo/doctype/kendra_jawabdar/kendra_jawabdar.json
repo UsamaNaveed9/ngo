@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "autoname": "KJ.{first_name}.{last_name}",
  "creation": "2022-04-28 14:56:14.119298",
  "doctype": "DocType",
@@ -46,7 +47,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-04-28 15:00:12.569168",
+ "modified": "2022-06-07 13:44:21.006653",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Kendra Jawabdar",

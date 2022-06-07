@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format:{bank_name}-{branch_name}-{branch_code}",
  "creation": "2022-05-11 15:36:10.350369",
@@ -37,7 +38,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-05-12 17:19:38.596999",
+ "modified": "2022-06-06 12:59:42.138854",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "IFSC",
@@ -57,5 +58,6 @@
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "track_changes": 1
 }

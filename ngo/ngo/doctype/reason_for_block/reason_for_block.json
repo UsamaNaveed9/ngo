@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:reason",
  "creation": "2022-05-12 13:31:43.423697",
@@ -20,7 +21,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-05-12 13:50:27.917312",
+ "modified": "2022-06-06 13:00:01.115763",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Reason For Block",

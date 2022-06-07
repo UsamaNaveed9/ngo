@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:trust_name",
  "creation": "2022-05-09 12:09:42.858173",
@@ -19,7 +20,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-05-09 12:09:56.227390",
+ "modified": "2022-06-07 13:43:21.678637",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Trust Name",

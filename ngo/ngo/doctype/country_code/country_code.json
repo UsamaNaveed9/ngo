@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:country_code",
  "creation": "2022-05-11 15:13:16.975889",
@@ -26,7 +27,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-05-11 15:18:11.697050",
+ "modified": "2022-06-06 13:00:16.891536",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Country Code",
@@ -47,5 +48,6 @@
  ],
  "search_fields": "country_name",
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "track_changes": 1
 }

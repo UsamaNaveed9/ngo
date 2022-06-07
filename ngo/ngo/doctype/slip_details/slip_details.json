@@ -1,36 +1,21 @@
 {
  "actions": [],
- "autoname": "field:slip_number",
+ "allow_import": 1,
+ "autoname": "field:slip_name",
  "creation": "2022-04-28 16:24:04.255494",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "slip_number",
-  "date",
+  "slip_name",
+  "slip_date",
   "column_break_3",
-  "event",
+  "deposit_account",
+  "deposit_bank",
   "section_break_5",
   "cheque_details"
  ],
  "fields": [
-  {
-   "fieldname": "slip_number",
-   "fieldtype": "Data",
-   "label": "Slip Number",
-   "unique": 1
-  },
-  {
-   "fieldname": "date",
-   "fieldtype": "Date",
-   "label": "Date"
-  },
-  {
-   "fieldname": "event",
-   "fieldtype": "Link",
-   "label": "Event",
-   "options": "Event Master"
-  },
   {
    "fieldname": "cheque_details",
    "fieldtype": "Table",
@@ -44,14 +29,38 @@
   {
    "fieldname": "section_break_5",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "slip_date",
+   "fieldtype": "Date",
+   "label": "Slip Date"
+  },
+  {
+   "fetch_from": "deposit_account.bank",
+   "fieldname": "deposit_bank",
+   "fieldtype": "Data",
+   "label": "Deposit Bank"
+  },
+  {
+   "fieldname": "slip_name",
+   "fieldtype": "Data",
+   "label": "Slip Name",
+   "unique": 1
+  },
+  {
+   "fieldname": "deposit_account",
+   "fieldtype": "Link",
+   "label": "Deposit Account",
+   "options": "Bank Account"
   }
  ],
+ "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-04-28 16:26:59.659035",
+ "modified": "2022-06-07 17:27:54.084197",
  "modified_by": "Administrator",
  "module": "NGO",
- "name": "Slip Excel Details",
+ "name": "Slip Details",
  "owner": "Administrator",
  "permissions": [
   {
