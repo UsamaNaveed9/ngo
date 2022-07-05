@@ -1,0 +1,131 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-07-05 16:02:53.679576",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "reconcile",
+  "get_data",
+  "column_break_3",
+  "match_status",
+  "section_break_5",
+  "data_6",
+  "column_break_7",
+  "data_8",
+  "column_break_9",
+  "previous",
+  "column_break_11",
+  "next",
+  "section_break_11",
+  "slip",
+  "bank_statement",
+  "reconcile_details"
+ ],
+ "fields": [
+  {
+   "fieldname": "reconcile",
+   "fieldtype": "Link",
+   "label": "Reconcile",
+   "options": "Reconcile"
+  },
+  {
+   "fieldname": "get_data",
+   "fieldtype": "Button",
+   "label": "Get Data"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "match_status",
+   "fieldtype": "Select",
+   "label": "Match Status",
+   "options": "\nFully Match\nPartially Match\nNo Match"
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "data_6",
+   "fieldtype": "Data",
+   "hidden": 1
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "previous",
+   "fieldtype": "Button",
+   "label": "Previous"
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "next",
+   "fieldtype": "Button",
+   "label": "Next"
+  },
+  {
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "slip",
+   "fieldtype": "Table",
+   "label": "Slip",
+   "options": "Slip Cheque Details"
+  },
+  {
+   "fieldname": "bank_statement",
+   "fieldtype": "Table",
+   "label": "Bank Statement",
+   "options": "Statement Details"
+  },
+  {
+   "fieldname": "reconcile_details",
+   "fieldtype": "Table",
+   "label": "Reconcile Details",
+   "options": "Reconcile Details"
+  },
+  {
+   "fieldname": "data_8",
+   "fieldtype": "Data",
+   "hidden": 1
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "hide_toolbar": 1,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-07-05 16:09:58.848373",
+ "modified_by": "Administrator",
+ "module": "NGO",
+ "name": "Manual Reconcile",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
