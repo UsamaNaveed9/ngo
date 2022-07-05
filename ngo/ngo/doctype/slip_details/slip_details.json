@@ -1,13 +1,12 @@
 {
  "actions": [],
  "allow_import": 1,
- "autoname": "field:slip_name",
+ "autoname": "format:Slip-{######}",
  "creation": "2022-04-28 16:24:04.255494",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "slip_name",
   "slip_date",
   "column_break_3",
   "deposit_account",
@@ -17,6 +16,7 @@
  ],
  "fields": [
   {
+   "allow_bulk_edit": 1,
    "fieldname": "cheque_details",
    "fieldtype": "Table",
    "label": "Cheque Details",
@@ -42,12 +42,6 @@
    "label": "Deposit Bank"
   },
   {
-   "fieldname": "slip_name",
-   "fieldtype": "Data",
-   "label": "Slip Name",
-   "unique": 1
-  },
-  {
    "fieldname": "deposit_account",
    "fieldtype": "Link",
    "label": "Deposit Account",
@@ -57,7 +51,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-06-07 17:27:54.084197",
+ "modified": "2022-07-05 10:51:41.565115",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Slip Details",

@@ -87,15 +87,6 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Bank Statement",
-   "link_to": "Bank Statement Details",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
    "label": "Reconciliation",
    "link_type": "DocType",
    "onboard": 0,
@@ -106,6 +97,24 @@
    "is_query_report": 0,
    "label": "Slip Details",
    "link_to": "Slip Details",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Bank Statement",
+   "link_to": "Bank Statement Details",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Reconcile",
+   "link_to": "Reconcile",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -188,7 +197,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-06-07 14:06:54.246602",
+ "modified": "2022-07-04 12:30:28.609662",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "NGO",
