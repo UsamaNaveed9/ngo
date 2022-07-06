@@ -11,9 +11,9 @@
   "column_break_3",
   "match_status",
   "section_break_5",
-  "data_6",
+  "account",
   "column_break_7",
-  "data_8",
+  "index",
   "column_break_9",
   "previous",
   "column_break_11",
@@ -48,11 +48,6 @@
   {
    "fieldname": "section_break_5",
    "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "data_6",
-   "fieldtype": "Data",
-   "hidden": 1
   },
   {
    "fieldname": "column_break_7",
@@ -95,19 +90,25 @@
    "options": "Reconcile Details"
   },
   {
-   "fieldname": "data_8",
-   "fieldtype": "Data",
-   "hidden": 1
-  },
-  {
    "fieldname": "column_break_11",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "account",
+   "fieldtype": "Table",
+   "label": "Account",
+   "options": "Account No"
+  },
+  {
+   "fieldname": "index",
+   "fieldtype": "Int",
+   "label": "Index"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-07-05 16:09:58.848373",
+ "modified": "2022-07-05 17:36:29.396275",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Manual Reconcile",
