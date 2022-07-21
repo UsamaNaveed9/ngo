@@ -16,7 +16,8 @@
   "credit_date",
   "final_decision",
   "final_reject_code",
-  "final_reject_reason"
+  "final_reject_reason",
+  "code"
  ],
  "fields": [
   {
@@ -100,12 +101,17 @@
   {
    "fieldname": "column_break_6",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "code",
+   "fieldtype": "Data",
+   "label": "Code"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-07-04 11:11:34.127731",
+ "modified": "2022-07-17 17:56:55.680316",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Statement Details",

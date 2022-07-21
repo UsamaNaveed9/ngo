@@ -11,7 +11,7 @@
   "column_break_3",
   "match_status",
   "section_break_5",
-  "account",
+  "code",
   "column_break_7",
   "index",
   "column_break_9",
@@ -27,7 +27,7 @@
   {
    "fieldname": "reconcile",
    "fieldtype": "Link",
-   "label": "Reconcile",
+   "label": "Auto Reconciled",
    "options": "Reconcile"
   },
   {
@@ -43,7 +43,7 @@
    "fieldname": "match_status",
    "fieldtype": "Select",
    "label": "Match Status",
-   "options": "\nFully Match\nPartially Match\nNo Match"
+   "options": "\nAll Records\nFully Match\nPartially Match\nNo Match"
   },
   {
    "fieldname": "section_break_5",
@@ -75,13 +75,13 @@
    "fieldname": "slip",
    "fieldtype": "Table",
    "label": "Slip",
-   "options": "Slip Cheque Details"
+   "options": "Manual Details"
   },
   {
    "fieldname": "bank_statement",
    "fieldtype": "Table",
    "label": "Bank Statement",
-   "options": "Statement Details"
+   "options": "Manual Details"
   },
   {
    "fieldname": "reconcile_details",
@@ -94,21 +94,23 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "account",
-   "fieldtype": "Table",
-   "label": "Account",
-   "options": "Account No"
-  },
-  {
    "fieldname": "index",
    "fieldtype": "Int",
+   "hidden": 1,
    "label": "Index"
+  },
+  {
+   "fieldname": "code",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Code",
+   "options": "Code"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-07-05 17:36:29.396275",
+ "modified": "2022-07-21 00:22:57.687361",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Manual Reconcile",

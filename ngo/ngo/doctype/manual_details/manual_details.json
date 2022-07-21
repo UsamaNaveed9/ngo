@@ -1,6 +1,6 @@
 {
  "actions": [],
- "creation": "2022-07-04 12:35:09.108664",
+ "creation": "2022-07-07 11:11:47.211717",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -11,10 +11,7 @@
   "micr_code",
   "column_break_5",
   "short_code",
-  "amount",
-  "match_value",
-  "match_status",
-  "code"
+  "amount"
  ],
  "fields": [
   {
@@ -39,11 +36,15 @@
    "label": "Account No"
   },
   {
-   "columns": 1,
+   "columns": 2,
    "fieldname": "micr_code",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "MICR Code"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
   },
   {
    "columns": 1,
@@ -58,39 +59,15 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Amount"
-  },
-  {
-   "columns": 1,
-   "fieldname": "match_status",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Match Status",
-   "options": "\nFully Match\nPartially Match\nNo Match"
-  },
-  {
-   "fieldname": "column_break_5",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "code",
-   "fieldtype": "Data",
-   "label": "Code"
-  },
-  {
-   "columns": 1,
-   "fieldname": "match_value",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "Match"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-07-18 06:48:39.748567",
+ "modified": "2022-07-07 11:13:26.074241",
  "modified_by": "Administrator",
  "module": "NGO",
- "name": "Reconcile Details",
+ "name": "Manual Details",
  "owner": "Administrator",
  "permissions": [],
  "sort_field": "modified",

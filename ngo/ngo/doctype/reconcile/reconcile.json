@@ -6,20 +6,19 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "slip",
-  "process",
+  "from_date",
+  "to_date",
+  "get_slip_records",
+  "slips",
   "column_break_3",
   "bank_statement",
+  "process",
   "section_break_5",
-  "reconcile_detail"
+  "reconcile_one",
+  "section_break_10",
+  "reconcile_two"
  ],
  "fields": [
-  {
-   "fieldname": "slip",
-   "fieldtype": "Link",
-   "label": "Slip",
-   "options": "Slip Details"
-  },
   {
    "fieldname": "process",
    "fieldtype": "Button",
@@ -40,16 +39,48 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "reconcile_detail",
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date"
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From Date"
+  },
+  {
+   "fieldname": "slips",
    "fieldtype": "Table",
-   "label": "Reconcile Detail",
+   "label": "Slips",
+   "options": "Slip list"
+  },
+  {
+   "fieldname": "get_slip_records",
+   "fieldtype": "Button",
+   "label": "Get Slip Records"
+  },
+  {
+   "fieldname": "reconcile_one",
+   "fieldtype": "Table",
+   "label": "Statement to Slip Reconcile",
+   "options": "Reconcile Details"
+  },
+  {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "reconcile_two",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Slip to Statement Reconcile",
    "options": "Reconcile Details"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-07-04 12:35:54.423831",
+ "modified": "2022-07-21 00:20:08.458398",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Reconcile",

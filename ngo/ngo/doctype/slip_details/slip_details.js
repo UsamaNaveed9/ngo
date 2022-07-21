@@ -10,5 +10,12 @@ frappe.ui.form.on('Slip Details', {
 		        ]
 		    }
 		});
+	},
+	before_save: function(frm){
+		var items = cur_frm.doc.cheque_details;
+		for(var j in items) {
+			items[j].code = ''+items[j].cheque_date+items[j].cheque_number+items[j].micr_code+items[j].short_code;
+			//console.log(''+items[j].cheque_date+items[j].cheque_number+items[j].micr_code+items[j].short_code);
+		}
 	}
 });
