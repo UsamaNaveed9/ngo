@@ -14,8 +14,11 @@ frappe.ui.form.on('Slip Details', {
 	before_save: function(frm){
 		var items = cur_frm.doc.cheque_details;
 		for(var j in items) {
-			items[j].code = ''+items[j].cheque_date+items[j].cheque_number+items[j].micr_code+items[j].short_code;
+			items[j].code = ''+items[j].cheque_date+items[j].micr_code+items[j].short_code+items[j].amount;
+			//items[j].code = ''+items[j].cheque_date+items[j].cheque_number+items[j].micr_code+items[j].short_code;
 			//console.log(''+items[j].cheque_date+items[j].cheque_number+items[j].micr_code+items[j].short_code);
+			items[j].image = '/'+items[j].event+'/'+items[j].token+'_'+items[j].srno+'_ChequeImage.jpg'
 		}
+
 	}
 });

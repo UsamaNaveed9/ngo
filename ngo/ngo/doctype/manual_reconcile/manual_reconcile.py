@@ -30,12 +30,12 @@ def get_slip_record(slips, code):
 	slipss = json.loads(slips)
 	slip_records = []
 	for sl in slipss:
-		slip_record = frappe.db.sql('''select cheque_date,cheque_number,account_no,micr_code,short_code,amount from `tabSlip Cheque Details` 
+		slip_record = frappe.db.sql('''select cheque_date,cheque_number,account_no,micr_code,short_code,amount,image from `tabSlip Cheque Details` 
 							where `tabSlip Cheque Details`.parent = "{0}" and `tabSlip Cheque Details`.code = "{1}"'''.format(sl,code),as_dict = 1)
 		if slip_record:					
 			slip_records.append(slip_record)
 
-	return slip_record	
+	return slip_records
 
 @frappe.whitelist()
 def get_bs_record(bs_name, code):

@@ -1,0 +1,51 @@
+{
+ "actions": [],
+ "creation": "2022-08-01 13:48:01.711071",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "id",
+  "reconcile_status",
+  "note_or_proof",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "ID"
+  },
+  {
+   "fieldname": "reconcile_status",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Reconcile Status"
+  },
+  {
+   "fieldname": "note_or_proof",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Note or Proof"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Remarks"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-08-01 13:48:16.381862",
+ "modified_by": "Administrator",
+ "module": "NGO",
+ "name": "Manually Reconciled Records",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -1,0 +1,79 @@
+{
+ "actions": [],
+ "autoname": "format:{event_name}-CHQ-{######}",
+ "creation": "2022-08-01 13:13:26.988700",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "event_name",
+  "token",
+  "sr_no",
+  "column_break_4",
+  "cheque_image",
+  "id",
+  "image_url"
+ ],
+ "fields": [
+  {
+   "fieldname": "event_name",
+   "fieldtype": "Link",
+   "label": "Event Name",
+   "options": "Event Master"
+  },
+  {
+   "fieldname": "token",
+   "fieldtype": "Data",
+   "label": "Token"
+  },
+  {
+   "fieldname": "sr_no",
+   "fieldtype": "Int",
+   "label": "Sr No"
+  },
+  {
+   "depends_on": "eval:!doc.__islocal;",
+   "fieldname": "cheque_image",
+   "fieldtype": "Attach Image",
+   "label": "Cheque Image"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "image_url",
+   "fieldtype": "Data",
+   "label": "Image URL"
+  },
+  {
+   "fieldname": "id",
+   "fieldtype": "Data",
+   "label": "ID"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-08-01 13:30:20.979158",
+ "modified_by": "Administrator",
+ "module": "NGO",
+ "name": "Check Images",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

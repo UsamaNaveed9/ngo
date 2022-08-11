@@ -1,0 +1,30 @@
+{
+ "actions": [],
+ "creation": "2022-07-31 21:18:14.578042",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "token_file"
+ ],
+ "fields": [
+  {
+   "fieldname": "token_file",
+   "fieldtype": "Attach",
+   "in_list_view": 1,
+   "label": "Token File"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-07-31 21:18:14.578042",
+ "modified_by": "Administrator",
+ "module": "NGO",
+ "name": "Token PDF",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

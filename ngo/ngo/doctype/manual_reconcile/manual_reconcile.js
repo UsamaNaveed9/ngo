@@ -14,6 +14,7 @@ frappe.ui.form.on('Manual Reconcile', {
 				callback: function(r) {
 						if(r.message) {
 							//console.log(r.message);
+							frm.set_value("total_records", r.message.length);
 							cur_frm.clear_table("code");
 							for(var i=0;i<r.message.length;i++){
 								var childTable = cur_frm.add_child("code");
@@ -33,6 +34,7 @@ frappe.ui.form.on('Manual Reconcile', {
 				callback: function(r) {
 						if(r.message) {
 							//console.log(r.message);
+							frm.set_value("total_records", r.message.length);
 							cur_frm.clear_table("code");
 							for(var i=0;i<r.message.length;i++){
 								var childTable = cur_frm.add_child("code");
@@ -60,18 +62,34 @@ frappe.ui.form.on('Manual Reconcile', {
 					},
 					callback: function(r) {
 							if(r.message) {
-								console.log(r.message);
+								//console.log(r.message[0]);
+								var slip_r = r.message[0];
 									cur_frm.clear_table("slip");
-									for(var i=0;i<r.message.length;i++){
+									for(var i=0;i<slip_r.length;i++){
 										var childTable = cur_frm.add_child("slip");
-										childTable.cheque_no = r.message[i]["cheque_number"]
-										childTable.cheque_date = r.message[i]["cheque_date"]
-										childTable.account_no = r.message[i]["account_no"]
-										childTable.micr_code = r.message[i]["micr_code"]
-										childTable.short_code = r.message[i]["short_code"]
-										childTable.amount = r.message[i]["amount"]
+										childTable.cheque_no = slip_r[i]["cheque_number"]
+										childTable.cheque_date = slip_r[i]["cheque_date"]
+										childTable.account_no = slip_r[i]["account_no"]
+										childTable.micr_code = slip_r[i]["micr_code"]
+										childTable.short_code = slip_r[i]["short_code"]
+										childTable.amount = slip_r[i]["amount"]
+										childTable.image_path = slip_r[i]["image"]
+										var path = slip_r[i]["image"]
 										cur_frm.refresh_fields("slip");
 									}
+
+								var wrapper = frm.get_field("preview_html").$wrapper;
+								
+								frm.toggle_display("preview", path);
+								frm.toggle_display("preview_html", path);
+								
+								if(path){
+									wrapper.html('<div class="img_preview">\
+										<img class="img-responsive" src="'+path+'"></img>\
+										</div>');
+								} else {
+									wrapper.empty();
+								}	
 							}
 						}
 					})
@@ -101,31 +119,32 @@ frappe.ui.form.on('Manual Reconcile', {
 						}
 					})
 
-					frappe.call({
-						method: "ngo.ngo.doctype.manual_reconcile.manual_reconcile.get_re_record",
-						args: {
-								"re_name": frm.doc.reconcile,
-								"code": cur_frm.doc.code[cur_frm.doc.index].code
-						},
-						callback: function(r) {
-								if(r.message) {
-									//console.log(r.message);
-										cur_frm.clear_table("reconcile_details");
-										for(var i=0;i<r.message.length;i++){
-											var childTable = cur_frm.add_child("reconcile_details");
-											childTable.cheque_no = r.message[i]["cheque_no"]
-											childTable.cheque_date = r.message[i]["cheque_date"]
-											childTable.account_no = r.message[i]["account_no"]
-											childTable.micr_code = r.message[i]["micr_code"]
-											childTable.short_code = r.message[i]["short_code"]
-											childTable.amount = r.message[i]["amount"]
-											childTable.match_value = r.message[i]["match_value"]
-											childTable.match_status = r.message[i]["match_status"]
-											cur_frm.refresh_fields("reconcile_details");
-										}
-								}
-							}
-						})
+					// frappe.call({
+					// 	method: "ngo.ngo.doctype.manual_reconcile.manual_reconcile.get_re_record",
+					// 	args: {
+					// 			"re_name": frm.doc.reconcile,
+					// 			"code": cur_frm.doc.code[cur_frm.doc.index].code
+					// 	},
+					// 	callback: function(r) {
+					// 			if(r.message) {
+					// 				//console.log(r.message);
+					// 					cur_frm.clear_table("reconcile_details");
+					// 					for(var i=0;i<r.message.length;i++){
+					// 						var childTable = cur_frm.add_child("reconcile_details");
+					// 						childTable.cheque_no = r.message[i]["cheque_no"]
+					// 						childTable.cheque_date = r.message[i]["cheque_date"]
+					// 						childTable.account_no = r.message[i]["account_no"]
+					// 						childTable.micr_code = r.message[i]["micr_code"]
+					// 						childTable.short_code = r.message[i]["short_code"]
+					// 						childTable.amount = r.message[i]["amount"]
+					// 						childTable.match_value = r.message[i]["match_value"]
+					// 						childTable.match_status = r.message[i]["match_status"]
+					// 						cur_frm.refresh_fields("reconcile_details");
+					// 					}
+					// 			}
+					// 		}
+					// 	})
+					
     		})	
 			
 	},
@@ -152,20 +171,36 @@ frappe.ui.form.on('Manual Reconcile', {
 							"code": cur_frm.doc.code[cur_frm.doc.index].code
 					},
 					callback: function(r) {
-							if(r.message) {
-								console.log(r.message);
-									cur_frm.clear_table("slip");
-									for(var i=0;i<r.message.length;i++){
-										var childTable = cur_frm.add_child("slip");
-										childTable.cheque_no = r.message[i]["cheque_number"]
-										childTable.cheque_date = r.message[i]["cheque_date"]
-										childTable.account_no = r.message[i]["account_no"]
-										childTable.micr_code = r.message[i]["micr_code"]
-										childTable.short_code = r.message[i]["short_code"]
-										childTable.amount = r.message[i]["amount"]
-										cur_frm.refresh_fields("slip");
-									}
-							}
+						if(r.message) {
+							//console.log(r.message[0]);
+							var slip_r = r.message[0];
+								cur_frm.clear_table("slip");
+								for(var i=0;i<slip_r.length;i++){
+									var childTable = cur_frm.add_child("slip");
+									childTable.cheque_no = slip_r[i]["cheque_number"]
+									childTable.cheque_date = slip_r[i]["cheque_date"]
+									childTable.account_no = slip_r[i]["account_no"]
+									childTable.micr_code = slip_r[i]["micr_code"]
+									childTable.short_code = slip_r[i]["short_code"]
+									childTable.amount = slip_r[i]["amount"]
+									childTable.image_path = slip_r[i]["image"]
+									var path = slip_r[i]["image"]
+									cur_frm.refresh_fields("slip");
+								}
+
+							var wrapper = frm.get_field("preview_html").$wrapper;
+							
+							frm.toggle_display("preview", path);
+							frm.toggle_display("preview_html", path);
+							
+							if(path){
+								wrapper.html('<div class="img_preview">\
+									<img class="img-responsive" src="'+path+'"></img>\
+									</div>');
+							} else {
+								wrapper.empty();
+							}	
+						}
 						}
 					})
 
@@ -194,31 +229,31 @@ frappe.ui.form.on('Manual Reconcile', {
 						}
 					})
 
-					frappe.call({
-						method: "ngo.ngo.doctype.manual_reconcile.manual_reconcile.get_re_record",
-						args: {
-								"re_name": frm.doc.reconcile,
-								"code": cur_frm.doc.code[cur_frm.doc.index].code
-						},
-						callback: function(r) {
-								if(r.message) {
-									//console.log(r.message);
-										cur_frm.clear_table("reconcile_details");
-										for(var i=0;i<r.message.length;i++){
-											var childTable = cur_frm.add_child("reconcile_details");
-											childTable.cheque_no = r.message[i]["cheque_no"]
-											childTable.cheque_date = r.message[i]["cheque_date"]
-											childTable.account_no = r.message[i]["account_no"]
-											childTable.micr_code = r.message[i]["micr_code"]
-											childTable.short_code = r.message[i]["short_code"]
-											childTable.amount = r.message[i]["amount"]
-											childTable.match_value = r.message[i]["match_value"]
-											childTable.match_status = r.message[i]["match_status"]
-											cur_frm.refresh_fields("reconcile_details");
-										}
-								}
-							}
-						})
+					// frappe.call({
+					// 	method: "ngo.ngo.doctype.manual_reconcile.manual_reconcile.get_re_record",
+					// 	args: {
+					// 			"re_name": frm.doc.reconcile,
+					// 			"code": cur_frm.doc.code[cur_frm.doc.index].code
+					// 	},
+					// 	callback: function(r) {
+					// 			if(r.message) {
+					// 				//console.log(r.message);
+					// 					cur_frm.clear_table("reconcile_details");
+					// 					for(var i=0;i<r.message.length;i++){
+					// 						var childTable = cur_frm.add_child("reconcile_details");
+					// 						childTable.cheque_no = r.message[i]["cheque_no"]
+					// 						childTable.cheque_date = r.message[i]["cheque_date"]
+					// 						childTable.account_no = r.message[i]["account_no"]
+					// 						childTable.micr_code = r.message[i]["micr_code"]
+					// 						childTable.short_code = r.message[i]["short_code"]
+					// 						childTable.amount = r.message[i]["amount"]
+					// 						childTable.match_value = r.message[i]["match_value"]
+					// 						childTable.match_status = r.message[i]["match_status"]
+					// 						cur_frm.refresh_fields("reconcile_details");
+					// 					}
+					// 			}
+					// 		}
+					// 	})
     		})
 		}
 	},
@@ -245,20 +280,36 @@ frappe.ui.form.on('Manual Reconcile', {
 							"code": cur_frm.doc.code[cur_frm.doc.index].code
 					},
 					callback: function(r) {
-							if(r.message) {
-								console.log(r.message);
-									cur_frm.clear_table("slip");
-									for(var i=0;i<r.message.length;i++){
-										var childTable = cur_frm.add_child("slip");
-										childTable.cheque_no = r.message[i]["cheque_number"]
-										childTable.cheque_date = r.message[i]["cheque_date"]
-										childTable.account_no = r.message[i]["account_no"]
-										childTable.micr_code = r.message[i]["micr_code"]
-										childTable.short_code = r.message[i]["short_code"]
-										childTable.amount = r.message[i]["amount"]
-										cur_frm.refresh_fields("slip");
-									}
-							}
+						if(r.message) {
+							//console.log(r.message[0]);
+							var slip_r = r.message[0];
+								cur_frm.clear_table("slip");
+								for(var i=0;i<slip_r.length;i++){
+									var childTable = cur_frm.add_child("slip");
+									childTable.cheque_no = slip_r[i]["cheque_number"]
+									childTable.cheque_date = slip_r[i]["cheque_date"]
+									childTable.account_no = slip_r[i]["account_no"]
+									childTable.micr_code = slip_r[i]["micr_code"]
+									childTable.short_code = slip_r[i]["short_code"]
+									childTable.amount = slip_r[i]["amount"]
+									childTable.image_path = slip_r[i]["image"]
+									var path = slip_r[i]["image"]
+									cur_frm.refresh_fields("slip");
+								}
+
+							var wrapper = frm.get_field("preview_html").$wrapper;
+							
+							frm.toggle_display("preview", path);
+							frm.toggle_display("preview_html", path);
+							
+							if(path){
+								wrapper.html('<div class="img_preview">\
+									<img class="img-responsive" src="'+path+'"></img>\
+									</div>');
+							} else {
+								wrapper.empty();
+							}	
+						}
 						}
 					})
 
@@ -287,31 +338,31 @@ frappe.ui.form.on('Manual Reconcile', {
 						}
 					})
 
-					frappe.call({
-						method: "ngo.ngo.doctype.manual_reconcile.manual_reconcile.get_re_record",
-						args: {
-								"re_name": frm.doc.reconcile,
-								"code": cur_frm.doc.code[cur_frm.doc.index].code
-						},
-						callback: function(r) {
-								if(r.message) {
-									//console.log(r.message);
-										cur_frm.clear_table("reconcile_details");
-										for(var i=0;i<r.message.length;i++){
-											var childTable = cur_frm.add_child("reconcile_details");
-											childTable.cheque_no = r.message[i]["cheque_no"]
-											childTable.cheque_date = r.message[i]["cheque_date"]
-											childTable.account_no = r.message[i]["account_no"]
-											childTable.micr_code = r.message[i]["micr_code"]
-											childTable.short_code = r.message[i]["short_code"]
-											childTable.amount = r.message[i]["amount"]
-											childTable.match_value = r.message[i]["match_value"]
-											childTable.match_status = r.message[i]["match_status"]
-											cur_frm.refresh_fields("reconcile_details");
-										}
-								}
-							}
-						})
+					// frappe.call({
+					// 	method: "ngo.ngo.doctype.manual_reconcile.manual_reconcile.get_re_record",
+					// 	args: {
+					// 			"re_name": frm.doc.reconcile,
+					// 			"code": cur_frm.doc.code[cur_frm.doc.index].code
+					// 	},
+					// 	callback: function(r) {
+					// 			if(r.message) {
+					// 				//console.log(r.message);
+					// 					cur_frm.clear_table("reconcile_details");
+					// 					for(var i=0;i<r.message.length;i++){
+					// 						var childTable = cur_frm.add_child("reconcile_details");
+					// 						childTable.cheque_no = r.message[i]["cheque_no"]
+					// 						childTable.cheque_date = r.message[i]["cheque_date"]
+					// 						childTable.account_no = r.message[i]["account_no"]
+					// 						childTable.micr_code = r.message[i]["micr_code"]
+					// 						childTable.short_code = r.message[i]["short_code"]
+					// 						childTable.amount = r.message[i]["amount"]
+					// 						childTable.match_value = r.message[i]["match_value"]
+					// 						childTable.match_status = r.message[i]["match_status"]
+					// 						cur_frm.refresh_fields("reconcile_details");
+					// 					}
+					// 			}
+					// 		}
+					// 	})
     		})
 		}
 	}

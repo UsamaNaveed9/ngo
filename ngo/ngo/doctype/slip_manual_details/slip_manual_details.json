@@ -1,0 +1,83 @@
+{
+ "actions": [],
+ "creation": "2022-08-06 13:11:22.623085",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "cheque_no",
+  "cheque_date",
+  "account_no",
+  "micr_code",
+  "column_break_5",
+  "short_code",
+  "amount",
+  "image_path"
+ ],
+ "fields": [
+  {
+   "columns": 1,
+   "fieldname": "cheque_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Cheque No"
+  },
+  {
+   "columns": 1,
+   "fieldname": "cheque_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Cheque Date"
+  },
+  {
+   "columns": 2,
+   "fieldname": "account_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Account No"
+  },
+  {
+   "columns": 2,
+   "fieldname": "micr_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "MICR Code"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "columns": 1,
+   "fieldname": "short_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Short Code"
+  },
+  {
+   "columns": 1,
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount"
+  },
+  {
+   "fieldname": "image_path",
+   "fieldtype": "Data",
+   "label": "Image Path",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-08-06 13:11:22.623085",
+ "modified_by": "Administrator",
+ "module": "NGO",
+ "name": "Slip Manual Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

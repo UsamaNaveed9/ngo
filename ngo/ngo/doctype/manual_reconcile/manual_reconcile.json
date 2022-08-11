@@ -1,27 +1,42 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "field:select_event",
  "creation": "2022-07-05 16:02:53.679576",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "reconcile",
-  "get_data",
+  "select_event",
   "column_break_3",
+  "reconcile",
   "match_status",
-  "section_break_5",
+  "get_data",
   "code",
-  "column_break_7",
+  "section_break_5",
   "index",
+  "column_break_8",
+  "total_records",
   "column_break_9",
   "previous",
   "column_break_11",
   "next",
+  "column_break_14",
+  "reconcile_status",
+  "column_break_16",
+  "note_or_proof",
+  "column_break_18",
+  "remarks",
+  "column_break_20",
+  "done",
   "section_break_11",
   "slip",
   "bank_statement",
-  "reconcile_details"
+  "reconcile_details",
+  "preview_section",
+  "preview_html",
+  "manually_reconciled_records_section",
+  "records"
  ],
  "fields": [
   {
@@ -50,10 +65,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "column_break_7",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "previous",
    "fieldtype": "Button",
    "label": "Previous"
@@ -75,17 +86,18 @@
    "fieldname": "slip",
    "fieldtype": "Table",
    "label": "Slip",
-   "options": "Manual Details"
+   "options": "Slip Manual Details"
   },
   {
    "fieldname": "bank_statement",
    "fieldtype": "Table",
    "label": "Bank Statement",
-   "options": "Manual Details"
+   "options": "BS Manual Details"
   },
   {
    "fieldname": "reconcile_details",
    "fieldtype": "Table",
+   "hidden": 1,
    "label": "Reconcile Details",
    "options": "Reconcile Details"
   },
@@ -96,8 +108,8 @@
   {
    "fieldname": "index",
    "fieldtype": "Int",
-   "hidden": 1,
-   "label": "Index"
+   "label": "Index",
+   "read_only": 1
   },
   {
    "fieldname": "code",
@@ -105,12 +117,86 @@
    "hidden": 1,
    "label": "Code",
    "options": "Code"
+  },
+  {
+   "fieldname": "select_event",
+   "fieldtype": "Link",
+   "label": "Select Event",
+   "options": "Event Master",
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "reconcile_status",
+   "fieldtype": "Select",
+   "label": "Reconcile Status",
+   "options": "\nManually Reconcile"
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "note_or_proof",
+   "fieldtype": "Attach",
+   "label": "Note or Proof"
+  },
+  {
+   "fieldname": "column_break_18",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "preview_section",
+   "fieldtype": "Section Break",
+   "label": "Preview"
+  },
+  {
+   "fieldname": "preview_html",
+   "fieldtype": "HTML",
+   "label": "Preview HTML"
+  },
+  {
+   "fieldname": "manually_reconciled_records_section",
+   "fieldtype": "Section Break",
+   "label": "Manually Reconciled Records"
+  },
+  {
+   "fieldname": "records",
+   "fieldtype": "Table",
+   "label": "Records",
+   "options": "Manually Reconciled Records"
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "done",
+   "fieldtype": "Button",
+   "label": "Done"
+  },
+  {
+   "fieldname": "total_records",
+   "fieldtype": "Int",
+   "label": "Total Records"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-07-21 00:22:57.687361",
+ "modified": "2022-08-10 15:33:40.008007",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Manual Reconcile",

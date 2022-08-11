@@ -74,6 +74,17 @@ frappe.ui.form.on('Donor', {
 		if(elect_l > ch_l){
 			frappe.throw(__('Electronic Limit greater than Cheque Limit'))
 		}
+		if (frm.doc.pan_number.length < 10 || frm.doc.pan_number.length > 10 ){
+            frappe.throw(__('Enter a valid PAN Number'))
+        }
+		if (frm.doc.aadhar.length > 12 ){
+            frappe.throw(__('Enter a valid Aadhar'))
+        }
+		if ( cur_frm.doc.donor_type == "Individual"){
+			if (frm.doc.pan_number[3] != "P"){
+				frappe.throw(__('Donor Type Individual, The 4th character of PAN Number must be "P"'))
+			}
+		}
 	},
 	electronic_trans_limit: function(frm){
 		var ch_l = frm.doc.cheque_trans_limit;
@@ -81,5 +92,21 @@ frappe.ui.form.on('Donor', {
 		if(elect_l > ch_l){
 			frappe.throw(__('Electronic Limit greater than Cheque Limit'))
 		}
+	},
+	pan_number: function(frm){
+		if (frm.doc.pan_number.length < 10 || frm.doc.pan_number.length > 10 ){
+            frappe.throw(__('Enter a valid PAN Number'))
+        }
+		if ( cur_frm.doc.donor_type == "Individual"){
+			if (frm.doc.pan_number[3] != "P"){
+				frappe.throw(__('Donor Type Individual, The 4th character of PAN Number must be "P"'))
+			}
+		}
+	},
+	aadhar: function(frm){
+		if (frm.doc.aadhar.length > 12 ){
+            frappe.throw(__('Enter a valid Aadhar'))
+        }
 	}
+
 });

@@ -1,13 +1,14 @@
 {
  "actions": [],
  "allow_import": 1,
- "autoname": "format:Slip-{######}",
+ "autoname": "format:Slip-Batch-{######}",
  "creation": "2022-04-28 16:24:04.255494",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "slip_date",
+  "token_pdfs",
   "column_break_3",
   "deposit_account",
   "deposit_bank",
@@ -46,12 +47,18 @@
    "fieldtype": "Link",
    "label": "Deposit Account",
    "options": "Bank Account"
+  },
+  {
+   "fieldname": "token_pdfs",
+   "fieldtype": "Table",
+   "label": "Token PDFs",
+   "options": "Token PDF"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-07-05 10:51:41.565115",
+ "modified": "2022-07-31 21:21:10.428001",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Slip Details",
