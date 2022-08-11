@@ -2,6 +2,9 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Manual Reconcile', {
+	refresh(frm) {
+		$(".grid-add-row").hide();
+	},
 	get_data: function(frm){
 		frm.set_value("index", 0)
 		if(cur_frm.doc.reconcile && cur_frm.doc.match_status != "All Records"){
