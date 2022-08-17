@@ -7,6 +7,7 @@ frappe.ui.form.on('Manual Reconcile', {
 	},
 	get_data: function(frm){
 		frm.set_value("index", 0)
+		frm.set_value("record", cur_frm.doc.index + 1)
 		if(cur_frm.doc.reconcile && cur_frm.doc.match_status != "All Records"){
 			frappe.call({
 				method: "ngo.ngo.doctype.manual_reconcile.manual_reconcile.reconcile_fun",
@@ -37,7 +38,7 @@ frappe.ui.form.on('Manual Reconcile', {
 				callback: function(r) {
 						if(r.message) {
 							//console.log(r.message);
-							frm.set_value("total_records", r.message.length);
+							frm.set_value("total_records", r.message.length + 1);
 							cur_frm.clear_table("code");
 							for(var i=0;i<r.message.length;i++){
 								var childTable = cur_frm.add_child("code");
@@ -153,6 +154,7 @@ frappe.ui.form.on('Manual Reconcile', {
 	},
 	previous: function(frm){
 		frm.set_value("index", cur_frm.doc.index - 1);
+		frm.set_value("record", cur_frm.doc.record - 1);
 		let idx = cur_frm.doc.index;
 		if (idx<0){
 			frappe.throw("No Data")
@@ -262,6 +264,7 @@ frappe.ui.form.on('Manual Reconcile', {
 	},
 	next: function(frm){
 		frm.set_value("index", cur_frm.doc.index + 1);
+		frm.set_value("record", cur_frm.doc.record + 1);
 		let idx = cur_frm.doc.index;
 		if (idx>cur_frm.doc.code.length){
 			frappe.throw("No Data")
@@ -368,5 +371,32 @@ frappe.ui.form.on('Manual Reconcile', {
 					// 	})
     		})
 		}
+	},
+	done: function(frm){
+		let count = 0;
+		let idx = 0;
+		for(var i=0; i<cur_frm.doc.records.length; i++){
+			if(cur_frm.doc.records[i].id == cur_frm.doc.code[cur_frm.doc.index].code ){
+				count = 1;
+				idx = i;
+			}
+		}
+		if(count == 1){
+			cur_frm.doc.records[idx].id = cur_frm.doc.code[cur_frm.doc.index].code
+			cur_frm.doc.records[idx].reconcile_status = cur_frm.doc.reconcile_status
+			cur_frm.doc.records[idx].note_or_proof = cur_frm.doc.note_or_proof
+			cur_frm.doc.records[idx].remarks = cur_frm.doc.remarks
+			cur_frm.refresh_fields("records");
+		}
+		else{
+			var rec = cur_frm.add_child("records");
+			rec.id = cur_frm.doc.code[cur_frm.doc.index].code
+			rec.reconcile_status = cur_frm.doc.reconcile_status
+			rec.note_or_proof = cur_frm.doc.note_or_proof
+			rec.remarks = cur_frm.doc.remarks
+			cur_frm.refresh_fields("records");
+		}
+		frm.set_value("note_or_proof","");
+		cur_frm.refresh_fields("note_or_proof");
 	}
 });
