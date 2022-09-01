@@ -1,12 +1,13 @@
 {
  "actions": [],
  "allow_import": 1,
- "autoname": "format:Slip-Batch-{######}",
+ "autoname": "naming_series:",
  "creation": "2022-04-28 16:24:04.255494",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "naming_series",
   "slip_date",
   "token_pdfs",
   "column_break_3",
@@ -53,12 +54,18 @@
    "fieldtype": "Table",
    "label": "Token PDFs",
    "options": "Token PDF"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "Slip-Batch-.YY.-"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-07-31 21:21:10.428001",
+ "modified": "2022-08-30 18:40:04.014100",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Slip Details",

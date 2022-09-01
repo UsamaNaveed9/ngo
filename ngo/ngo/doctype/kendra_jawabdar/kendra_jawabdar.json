@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_import": 1,
- "autoname": "KJ.{first_name}.{last_name}",
+ "autoname": "format:{first_name}-{last_name}",
  "creation": "2022-04-28 14:56:14.119298",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -12,7 +12,7 @@
   "column_break_3",
   "last_name",
   "section_break_4",
-  "kendra_jawabdar_centre"
+  "kendra_jawabdar_center"
  ],
  "fields": [
   {
@@ -35,19 +35,19 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "kendra_jawabdar_centre",
-   "fieldtype": "Table",
-   "label": "Kendra Jawabdar Centre",
-   "options": "Kendra Jawabdar Centre"
-  },
-  {
    "fieldname": "column_break_3",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "kendra_jawabdar_center",
+   "fieldtype": "Table",
+   "label": "Kendra Jawabdar Center",
+   "options": "Kendra Jawabdar Center"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-06-07 13:44:21.006653",
+ "modified": "2022-09-01 14:21:35.993864",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Kendra Jawabdar",

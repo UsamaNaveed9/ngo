@@ -1,11 +1,12 @@
 {
  "actions": [],
- "autoname": "format:Rec-{######}",
+ "autoname": "naming_series:",
  "creation": "2022-07-04 12:29:31.394558",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "naming_series",
   "from_date",
   "to_date",
   "get_slip_records",
@@ -75,12 +76,18 @@
    "hidden": 1,
    "label": "Slip to Statement Reconcile",
    "options": "Reconcile Details"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "Auto-Reconcile-"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-07-21 00:20:08.458398",
+ "modified": "2022-08-30 13:48:32.207097",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Reconcile",

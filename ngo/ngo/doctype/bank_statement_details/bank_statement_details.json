@@ -1,13 +1,15 @@
 {
  "actions": [],
  "allow_import": 1,
- "autoname": "format:BS-{#####}",
+ "autoname": "naming_series:",
  "creation": "2022-04-28 16:29:02.795557",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "naming_series",
   "bank_account",
+  "bank_abbr",
   "column_break_3",
   "date",
   "to_date",
@@ -45,12 +47,24 @@
    "fieldtype": "Table",
    "label": "Statement Details",
    "options": "Statement Details"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "BS-.{bank_abbr}.-"
+  },
+  {
+   "fetch_from": "bank_account.bank_abbr",
+   "fieldname": "bank_abbr",
+   "fieldtype": "Data",
+   "label": "Bank Abbr"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-07-04 11:12:40.012807",
+ "modified": "2022-08-30 18:46:36.614893",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Bank Statement Details",
