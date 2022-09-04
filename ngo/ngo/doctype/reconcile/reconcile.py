@@ -7,7 +7,7 @@ from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
 import json
-from fuzzywuzzy import fuzz
+#from fuzzywuzzy import fuzz
 
 class Reconcile(Document):
 	pass
@@ -34,7 +34,7 @@ def reconcile_fun(slips , bank_statement):
 	for b in bank_record:
 		match = 0
 		for s in slip_records:
-			per = fuzz.ratio(b.code, s.code)
+			#per = fuzz.ratio(b.code, s.code)
 			if per > 95 :
 				row_list['code'] = b.code
 				if b.san == s.short_code:
