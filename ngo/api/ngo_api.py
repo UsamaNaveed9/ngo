@@ -74,6 +74,7 @@ def create_update_donor(data, donor_id=None):
         donor.mobile_number =  data.get("mobile_number")#m
         donor.aadhar =  data.get("aadhar")#m
         donor.email =  data.get("email") #m
+        donor.pan_number =  data.get("pan_number") #m
 
         if data.get("middle_name"):
             donor.middle_name =  data.get("middle_name")
