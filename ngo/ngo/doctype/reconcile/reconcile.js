@@ -56,7 +56,7 @@ frappe.ui.form.on('Reconcile', {
 											childTable.match_value = r.message[i]["match"]
 											childTable.match_status = r.message[i]["match_status"]
 											childTable.code = r.message[i]["code"]
-											cur_frm.refresh_fields("reconcile_detail");
+											cur_frm.refresh_fields("reconcile_one");
 										}
 
 										//cur_frm.save();
