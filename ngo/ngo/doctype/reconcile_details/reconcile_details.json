@@ -14,7 +14,8 @@
   "amount",
   "match_value",
   "match_status",
-  "code"
+  "code",
+  "remarks"
  ],
  "fields": [
   {
@@ -35,6 +36,7 @@
    "columns": 2,
    "fieldname": "account_no",
    "fieldtype": "Data",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Account No"
   },
@@ -82,12 +84,19 @@
    "fieldtype": "Int",
    "in_list_view": 1,
    "label": "Match"
+  },
+  {
+   "columns": 2,
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Remarks"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-08-30 13:50:17.273750",
+ "modified": "2022-09-12 15:28:47.870473",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Reconcile Details",
