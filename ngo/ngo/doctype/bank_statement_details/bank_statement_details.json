@@ -10,6 +10,7 @@
   "naming_series",
   "bank_account",
   "bank_abbr",
+  "account",
   "column_break_3",
   "date",
   "to_date",
@@ -52,19 +53,27 @@
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Series",
-   "options": "BS-.{bank_abbr}.-"
+   "options": "BS-.{account}.-"
   },
   {
    "fetch_from": "bank_account.bank_abbr",
    "fieldname": "bank_abbr",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Bank Abbr"
+  },
+  {
+   "fetch_from": "bank_account.account",
+   "fieldname": "account",
+   "fieldtype": "Data",
+   "label": "Account",
+   "read_only": 1
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-08-30 18:46:36.614893",
+ "modified": "2022-09-13 16:02:15.361375",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Bank Statement Details",
