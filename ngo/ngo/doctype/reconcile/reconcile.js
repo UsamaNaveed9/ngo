@@ -49,12 +49,12 @@ frappe.ui.form.on('Reconcile', {
 										var childTable = cur_frm.add_child("reconcile_one");
 											childTable.cheque_no = r.message[i]["cheque_no"]
 											childTable.cheque_date = r.message[i]["cheque_date"]
-											childTable.account_no = r.message[i]["account_no"]
 											childTable.micr_code = r.message[i]["micr_code"]
 											childTable.short_code = r.message[i]["short_code"]
 											childTable.amount = r.message[i]["amount"]
 											childTable.match_value = r.message[i]["match"]
 											childTable.match_status = r.message[i]["match_status"]
+											childTable.remarks = r.message[i]["remarks"]
 											childTable.code = r.message[i]["code"]
 											cur_frm.refresh_fields("reconcile_one");
 										}
