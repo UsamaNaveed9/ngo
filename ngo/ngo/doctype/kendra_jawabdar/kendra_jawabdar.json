@@ -12,7 +12,7 @@
   "column_break_3",
   "last_name",
   "section_break_4",
-  "kendra_jawabdar_center"
+  "list_of_authorized_centres"
  ],
  "fields": [
   {
@@ -39,15 +39,15 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "kendra_jawabdar_center",
+   "fieldname": "list_of_authorized_centres",
    "fieldtype": "Table",
-   "label": "Kendra Jawabdar Center",
-   "options": "Kendra Jawabdar Center"
+   "label": "List of Authorized Centres",
+   "options": "List of Authorized Centres"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-09-01 14:21:35.993864",
+ "modified": "2022-09-19 15:42:37.509866",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Kendra Jawabdar",

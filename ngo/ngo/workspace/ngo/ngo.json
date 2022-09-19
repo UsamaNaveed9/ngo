@@ -131,7 +131,7 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Center(Kendra)",
+   "label": "Centre(Kendra)",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -139,7 +139,7 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Center",
+   "label": "Tree of Centres",
    "link_to": "Territory",
    "link_type": "DocType",
    "onboard": 0,
@@ -150,15 +150,6 @@
    "is_query_report": 0,
    "label": "Kendra Jawabdar",
    "link_to": "Kendra Jawabdar",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Kendra",
-   "link_to": "Kendra",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -215,7 +206,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-09-12 15:21:51.941815",
+ "modified": "2022-09-19 15:40:41.606527",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "NGO",
