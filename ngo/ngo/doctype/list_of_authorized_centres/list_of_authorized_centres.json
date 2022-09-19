@@ -1,0 +1,42 @@
+{
+ "actions": [],
+ "creation": "2022-04-28 14:58:48.104670",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "centres",
+  "eligible_to_electronic_payment"
+ ],
+ "fields": [
+  {
+   "fieldname": "centres",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Centres",
+   "options": "Territory"
+  },
+  {
+   "columns": 2,
+   "default": "0",
+   "fetch_from": "centres.eligible_to_electronic_payment",
+   "fieldname": "eligible_to_electronic_payment",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Eligible to Electronic Payment",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-09-19 16:54:18.922821",
+ "modified_by": "Administrator",
+ "module": "NGO",
+ "name": "List of Authorized Centres",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
