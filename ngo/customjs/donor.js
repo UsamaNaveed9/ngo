@@ -16,7 +16,16 @@ frappe.ui.form.on('Donor', {
 					'link_name': doc.name
 				}
 			}
-		})
+		});
+
+		frm.fields_dict['account'].grid.get_field("bank_account").get_query = function(doc, cdt, cdn) {
+			return {
+				filters: [
+					['Bank Account', 'donor_id', '=', frm.doc.name ],
+					['Bank Account', 'is_default', '=', '1' ]	
+				]
+			}
+		}
 	},
 	country: function(frm){
 	    var country = cur_frm.doc.country;

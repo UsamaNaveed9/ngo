@@ -10,87 +10,120 @@ frappe.ui.form.on('Event Master', {
 		}
 	},
 	setup: function(frm) {
-	    var country = cur_frm.doc.country; 
-		frm.set_query("region", function() {
-			return {
-				filters: [
-					["Territory","parent_territory", "in", country]
-				]
-			}
-		});
+		if(cur_frm.doc.country){
+			var country = cur_frm.doc.country; 
+			frm.set_query("region", function() {
+				return {
+					filters: [
+						["Territory","parent_territory", "in", country]
+					]
+				}
+			});
+		}
+		if(cur_frm.doc.country){
+	    	var country = cur_frm.doc.country;
+	    	frm.set_query("region", function(){
+	        	return {
+	            	filters: [
+	                	["Territory","parent_territory", "=", country ]        
+	            	]
+	        	}
+	    	});
+		}	
 	},
 	country: function(frm){
-	    var country = cur_frm.doc.country;
-	    frm.set_query("region", function(){
-	        return {
-	            filters: [
-	                ["Territory","parent_territory", "=", country ]        
-	            ]
-	        }
-	    })
+		if(cur_frm.doc.country){
+	    	var country = cur_frm.doc.country;
+	    	frm.set_query("region", function(){
+	        	return {
+	            	filters: [
+	                	["Territory","parent_territory", "=", country ]        
+	            	]
+	        	}
+	    	});
+		}
 	},
 	region: function(frm){
-	    var region = cur_frm.doc.region;
-	    frm.set_query("state", function(){
-	        return {
-	            filters: [
-	                ["Territory","parent_territory", "=", region ]        
-	            ]
-	        }
-	    })
+		if(cur_frm.doc.region){
+			var region = cur_frm.doc.region;
+	    	frm.set_query("state", function(){
+	        	return {
+	            	filters: [
+	                	["Territory","parent_territory", "=", region ]        
+	            	]
+	        	}
+	   		});
+		}   
 	},
 	state: function(frm){
-	    var state = cur_frm.doc.state;
-	    frm.set_query("district", function(){
-	        return {
-	            filters: [
-	                ["Territory","parent_territory", "=", state ]        
-	            ]
-	        }
-	    })
+		if(cur_frm.doc.state){
+			var state = cur_frm.doc.state;
+	    	frm.set_query("district", function(){
+	        	return {
+	            	filters: [
+	                	["Territory","parent_territory", "=", state ]        
+	            	]
+	        	}
+	    	});
+		} 
 	},
     district: function(frm){
-	    var dist = cur_frm.doc.district;
-	    frm.set_query("zone", function(){
-	        return {
-	            filters: [
-	                ["Territory","parent_territory", "=", dist ]        
-	            ]
-	        }
-	    })
+		if(cur_frm.doc.district){
+			var dist = cur_frm.doc.district;
+	    	frm.set_query("zone", function(){
+	       		return {
+	            	filters: [
+	                	["Territory","parent_territory", "=", dist ]        
+	            	]
+	        	}
+	    	});	
+		} 
 	},
 	zone: function(frm){
-	    var zone = cur_frm.doc.zone;
-	    frm.set_query("centre", function(){
-	        return {
-	            filters: [
-	                ["Territory","parent_territory", "=", zone ]        
-	            ]
-	        }
-	    })
+		if(cur_frm.doc.zone){
+			var zone = cur_frm.doc.zone;
+	    	frm.set_query("centre", function(){
+	        	return {
+	            	filters: [
+	                	["Territory","parent_territory", "=", zone ]        
+	            	]
+	        	}
+	    	});
+		}    
 	},
 	get_participants: function(frm){
-		let e_status = frm.doc.donor_status;
-		let a_status = frm.doc.active_status;
-		let country = frm.doc.country;
-		let region = frm.doc.region;
-		let state = frm.doc.state;
-		let district = frm.doc.district;
-		let zone = frm.doc.zone;
-		let centre = frm.doc.centre;
+		var d = {}
+		if(frm.doc.donor_status){
+			d["status"] = frm.doc.donor_status
+		}
+		if(frm.doc.active_status){
+			d["active_status"] = frm.doc.active_status
+		}
+		if(frm.doc.country){
+			d["country"] = frm.doc.country
+		}
+		if(frm.doc.region){
+			d["region"] = frm.doc.region
+		}
+		if(frm.doc.state){
+			d["state"] = frm.doc.state
+		}
+		if(frm.doc.district){
+			d["district"] = frm.doc.district
+		}
+		if(frm.doc.zone){
+			d["zone"] = frm.doc.zone
+		}
+		if(frm.doc.centre){
+			d["locality"] = frm.doc.centre
+		}
+
+		//console.log(d)
 		
 		frappe.db.get_list('Donor', {
 			fields: ['name','donor_name','last_name','locality'],
-			filters: {
-				status: e_status,
-				active_status: a_status,
-				country: country,
-				region: region,
-				state: state,
-				district: district,
-				zone: zone,
-				locality: centre
-			}
+			filters: d,
+			limit: 10000,
 		}).then(records => {
 			cur_frm.clear_table("event_participants");
 			for(var rec in records){
