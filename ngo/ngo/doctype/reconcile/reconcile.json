@@ -63,7 +63,7 @@
   {
    "fieldname": "reconcile_one",
    "fieldtype": "Table",
-   "label": "Statement to Slip Reconcile",
+   "label": "Reconcile Details",
    "options": "Reconcile Details"
   },
   {
@@ -88,7 +88,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-09-12 15:23:44.536430",
+ "modified": "2022-10-01 13:59:13.990486",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Reconcile",

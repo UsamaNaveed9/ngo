@@ -87,7 +87,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Clearing Status",
-   "options": "\nDEPOSITED\nDEPOSITED\nRETURNED"
+   "options": "DEPOSITED\nRETURNED"
   },
   {
    "columns": 1,
@@ -145,7 +145,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-08-17 14:30:41.911798",
+ "modified": "2022-10-01 12:16:16.770630",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Slip Cheque Details",
