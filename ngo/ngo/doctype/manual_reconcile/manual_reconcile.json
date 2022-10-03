@@ -59,7 +59,7 @@
    "fieldname": "match_status",
    "fieldtype": "Select",
    "label": "Match Status",
-   "options": "\nAll Records\nNo Match\nOne Match\nTwo Match\nThree Match\nFour Match\nFully Match"
+   "options": "\nAll Records\nNo Match\nOne Match\nTwo Match\nThree Match\nFour Match\nFully Match\nNot In Bank Statement\nNot In Slip"
   },
   {
    "fieldname": "section_break_5",
@@ -203,7 +203,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-09-19 16:08:16.163130",
+ "modified": "2022-10-02 13:42:56.481396",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Manual Reconcile",

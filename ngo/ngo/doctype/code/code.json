@@ -5,7 +5,8 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "code"
+  "code",
+  "checked_code"
  ],
  "fields": [
   {
@@ -13,12 +14,17 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Code"
+  },
+  {
+   "fieldname": "checked_code",
+   "fieldtype": "Data",
+   "label": "Checked Code"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-07-17 19:13:26.079297",
+ "modified": "2022-10-02 13:27:57.402120",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Code",

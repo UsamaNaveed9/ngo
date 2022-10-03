@@ -15,28 +15,25 @@
  ],
  "fields": [
   {
-   "columns": 1,
    "fieldname": "cheque_no",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Cheque No"
   },
   {
-   "columns": 1,
    "fieldname": "cheque_date",
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "Cheque Date"
   },
   {
-   "columns": 2,
    "fieldname": "account_no",
    "fieldtype": "Data",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Account No"
   },
   {
-   "columns": 2,
    "fieldname": "micr_code",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -47,14 +44,12 @@
    "fieldtype": "Column Break"
   },
   {
-   "columns": 1,
    "fieldname": "short_code",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Short Code"
   },
   {
-   "columns": 1,
    "fieldname": "amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -64,7 +59,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-07-07 11:13:26.074241",
+ "modified": "2022-10-02 13:55:08.280637",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "BS Manual Details",

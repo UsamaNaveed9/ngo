@@ -12,7 +12,7 @@ class ManualReconcile(Document):
 def reconcile_fun(rec, status):
 	rec_name = rec
 	status = status
-	rec_record = frappe.db.sql('''select code from `tabReconcile Details` 
+	rec_record = frappe.db.sql('''select code,checked_code from `tabReconcile Details` 
 	where `tabReconcile Details`.parent = "{0}" and `tabReconcile Details`.match_status = "{1}"'''.format(rec_name,status),as_dict = 1)
 
 	return rec_record
@@ -20,18 +20,18 @@ def reconcile_fun(rec, status):
 @frappe.whitelist()
 def reconcile_funAll(rec):
 	rec_name = rec
-	rec_record = frappe.db.sql('''select code from `tabReconcile Details` 
+	rec_record = frappe.db.sql('''select code,checked_code from `tabReconcile Details` 
 	where `tabReconcile Details`.parent = "{0}" '''.format(rec_name),as_dict = 1)
 
 	return rec_record
 
 @frappe.whitelist()
-def get_slip_record(slips, code):
+def get_slip_record(slips, checked_code):
 	slipss = json.loads(slips)
 	slip_records = []
 	for sl in slipss:
 		slip_record = frappe.db.sql('''select cheque_date,cheque_number,account_no,micr_code,short_code,amount,image from `tabSlip Cheque Details` 
-							where `tabSlip Cheque Details`.parent = "{0}" and `tabSlip Cheque Details`.code = "{1}"'''.format(sl,code),as_dict = 1)
+							where `tabSlip Cheque Details`.parent = "{0}" and `tabSlip Cheque Details`.code = "{1}"'''.format(sl,checked_code),as_dict = 1)
 		if slip_record:					
 			slip_records.append(slip_record)
 

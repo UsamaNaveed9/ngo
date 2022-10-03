@@ -476,7 +476,8 @@ def reconcile_fun(slips , bank_statement):
 								for value in elem.values()]
 		value = sp.code
 		if not value in list_of_all_values:
-			row_list['code'] = sp.code
+			row_list['code'] = ""
+			row_list['checked_code'] = sp.code
 			row_list['cheque_no'] = sp.cheque_number
 			row_list['cheque_date'] = str(sp.cheque_date)
 			row_list['micr_code'] = sp.micr_code
@@ -497,6 +498,7 @@ def reconcile_fun(slips , bank_statement):
 		value = br.code
 		if not value in list_of_all_values:
 			row_list['code'] = br.code
+			row_list['checked_code'] = ""
 			row_list['cheque_no'] = br.cheque_no
 			row_list['cheque_date'] = str(br.cheque_date)
 			row_list['micr_code'] = br.micr
