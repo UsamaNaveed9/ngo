@@ -113,7 +113,7 @@ def reconcile_fun(slips , bank_statement):
 								for value in elem.values()]									
 				bank_code = row_list['code']
 				slip_code = row_list['checked_code']
-				if not bank_code in list_of_all_values and slip_code in list_of_all_values:
+				if not bank_code in list_of_all_values and not slip_code in list_of_all_values:
 					row_list_copy = row_list.copy()
 					fulldata.append(row_list_copy)
 
@@ -203,7 +203,7 @@ def reconcile_fun(slips , bank_statement):
 								for value in elem.values()]
 				bank_code = row_list['code']
 				slip_code = row_list['checked_code']
-				if not bank_code in list_of_all_values and slip_code in list_of_all_values:
+				if not bank_code in list_of_all_values and not slip_code in list_of_all_values:
 					row_list_copy = row_list.copy()
 					fulldata.append(row_list_copy)
 
@@ -292,7 +292,7 @@ def reconcile_fun(slips , bank_statement):
 								for value in elem.values()]
 				bank_code = row_list['code']
 				slip_code = row_list['checked_code']
-				if not bank_code in list_of_all_values and slip_code in list_of_all_values:
+				if not bank_code in list_of_all_values and not slip_code in list_of_all_values:
 					row_list_copy = row_list.copy()
 					fulldata.append(row_list_copy)
 
@@ -381,7 +381,7 @@ def reconcile_fun(slips , bank_statement):
 								for value in elem.values()]
 				bank_code = row_list['code']
 				slip_code = row_list['checked_code']
-				if not bank_code in list_of_all_values and slip_code in list_of_all_values:
+				if not bank_code in list_of_all_values and not slip_code in list_of_all_values:
 					row_list_copy = row_list.copy()
 					fulldata.append(row_list_copy)
 
@@ -470,7 +470,7 @@ def reconcile_fun(slips , bank_statement):
 								for value in elem.values()]
 				bank_code = row_list['code']
 				slip_code = row_list['checked_code']
-				if not bank_code in list_of_all_values and slip_code in list_of_all_values:
+				if not bank_code in list_of_all_values and not slip_code in list_of_all_values:
 					row_list_copy = row_list.copy()
 					fulldata.append(row_list_copy)
 
