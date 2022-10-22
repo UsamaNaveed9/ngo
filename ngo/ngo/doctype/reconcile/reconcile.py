@@ -476,6 +476,274 @@ def reconcile_fun(slips , bank_statement):
 
 		idx +=1
 
+	if len(fulldata) < 1:
+		idx = 0
+	
+	for b in bank_record:
+		match = 0
+		for s in slip_records:
+			per = fuzz.ratio(b.code, s.code)
+			#perc.append(per)
+			if per > 70:
+				match = 0
+				row_list['not_matching_fields'] = ""
+				row_list['values'] = ""
+				row_list['code'] = b.code
+				if b.cheque_no == s.cheque_number:
+					match +=1
+					row_list['cheque_no'] = b.cheque_no
+				else:
+					row_list['cheque_no'] = b.cheque_no
+					row_list['not_matching_fields'] = row_list['not_matching_fields'] + "," + "Cheque No"
+					row_list['values'] = row_list['values'] + "," + s.cheque_number
+
+				if b.cheque_date == s.cheque_date:
+					match +=1
+					row_list['cheque_date'] = b.cheque_date
+				else:
+					row_list['cheque_date'] = b.cheque_date
+					row_list['not_matching_fields'] = row_list['not_matching_fields'] + "," + "Cheque Date"
+					row_list['values'] = row_list['values'] + "," + str(s.cheque_date)
+
+				if b.micr == s.micr_code:
+					match +=1
+					row_list['micr_code'] = b.micr
+				else:
+					row_list['micr_code'] = b.micr
+					row_list['not_matching_fields'] = row_list['not_matching_fields'] + "," + "MICR Code"
+					row_list['values'] = row_list['values'] + "," + s.micr_code
+
+				if b.san == s.short_code:
+					match += 1
+					row_list['short_code'] = b.san
+				else:
+					row_list['short_code'] = b.san
+					row_list['not_matching_fields'] = row_list['not_matching_fields'] + "," + "Short Code"
+					row_list['values'] = row_list['values'] + "," + s.short_code
+
+				if b.amount == s.amount:
+					match +=1
+					row_list['amount'] = b.amount
+				else:
+					row_list['amount'] = b.amount
+					row_list['not_matching_fields'] = row_list['not_matching_fields'] + "," + "Amount"
+					row_list['values'] = row_list['values'] + "," + str(s.amount)
+				row_list['main_from'] = "Bank Statement"
+				row_list['checked_code'] = s.code			
+
+				if match == 0:
+					row_list['match'] = match
+					row_list['match_status'] = "No Match"
+					row_list['checked_code'] = ""
+				elif match == 1:
+					row_list['match'] = match
+					row_list['match_status'] = "One Match"
+				elif match == 2:
+					row_list['match'] = match
+					row_list['match_status'] = "Two Match"
+				elif match == 3:
+					row_list['match'] = match
+					row_list['match_status'] = "Three Match"
+				elif match == 4:
+					row_list['match'] = match
+					row_list['match_status'] = "Four Match"
+				elif match == 5:
+					row_list['match'] = match
+					row_list['match_status'] = "Fully Match"
+
+				if idx == 0:
+					row_list_copy = row_list.copy()
+					fulldata.append(row_list_copy)
+		
+				list_of_all_values = [value for elem in fulldata
+								for value in elem.values()]
+				bank_code = row_list['code']
+				slip_code = row_list['checked_code']
+				if not bank_code in list_of_all_values and not slip_code in list_of_all_values:
+					row_list_copy = row_list.copy()
+					fulldata.append(row_list_copy)
+
+		idx +=1
+
+	if len(fulldata) < 1:
+		idx = 0
+	
+	for b in bank_record:
+		match = 0
+		for s in slip_records:
+			per = fuzz.ratio(b.code, s.code)
+			#perc.append(per)
+			if per > 60:
+				match = 0
+				row_list['not_matching_fields'] = ""
+				row_list['values'] = ""
+				row_list['code'] = b.code
+				if b.cheque_no == s.cheque_number:
+					match +=1
+					row_list['cheque_no'] = b.cheque_no
+				else:
+					row_list['cheque_no'] = b.cheque_no
+					row_list['not_matching_fields'] = row_list['not_matching_fields'] + "," + "Cheque No"
+					row_list['values'] = row_list['values'] + "," + s.cheque_number
+
+				if b.cheque_date == s.cheque_date:
+					match +=1
+					row_list['cheque_date'] = b.cheque_date
+				else:
+					row_list['cheque_date'] = b.cheque_date
+					row_list['not_matching_fields'] = row_list['not_matching_fields'] + "," + "Cheque Date"
+					row_list['values'] = row_list['values'] + "," + str(s.cheque_date)
+
+				if b.micr == s.micr_code:
+					match +=1
+					row_list['micr_code'] = b.micr
+				else:
+					row_list['micr_code'] = b.micr
+					row_list['not_matching_fields'] = row_list['not_matching_fields'] + "," + "MICR Code"
+					row_list['values'] = row_list['values'] + "," + s.micr_code
+
+				if b.san == s.short_code:
+					match += 1
+					row_list['short_code'] = b.san
+				else:
+					row_list['short_code'] = b.san
+					row_list['not_matching_fields'] = row_list['not_matching_fields'] + "," + "Short Code"
+					row_list['values'] = row_list['values'] + "," + s.short_code
+
+				if b.amount == s.amount:
+					match +=1
+					row_list['amount'] = b.amount
+				else:
+					row_list['amount'] = b.amount
+					row_list['not_matching_fields'] = row_list['not_matching_fields'] + "," + "Amount"
+					row_list['values'] = row_list['values'] + "," + str(s.amount)
+				row_list['main_from'] = "Bank Statement"
+				row_list['checked_code'] = s.code			
+
+				if match == 0:
+					row_list['match'] = match
+					row_list['match_status'] = "No Match"
+					row_list['checked_code'] = ""
+				elif match == 1:
+					row_list['match'] = match
+					row_list['match_status'] = "One Match"
+				elif match == 2:
+					row_list['match'] = match
+					row_list['match_status'] = "Two Match"
+				elif match == 3:
+					row_list['match'] = match
+					row_list['match_status'] = "Three Match"
+				elif match == 4:
+					row_list['match'] = match
+					row_list['match_status'] = "Four Match"
+				elif match == 5:
+					row_list['match'] = match
+					row_list['match_status'] = "Fully Match"
+
+				if idx == 0:
+					row_list_copy = row_list.copy()
+					fulldata.append(row_list_copy)
+		
+				list_of_all_values = [value for elem in fulldata
+								for value in elem.values()]
+				bank_code = row_list['code']
+				slip_code = row_list['checked_code']
+				if not bank_code in list_of_all_values and not slip_code in list_of_all_values:
+					row_list_copy = row_list.copy()
+					fulldata.append(row_list_copy)
+
+		idx +=1
+		
+	if len(fulldata) < 1:
+		idx = 0
+	
+	for b in bank_record:
+		match = 0
+		for s in slip_records:
+			per = fuzz.ratio(b.code, s.code)
+			#perc.append(per)
+			if per > 50:
+				match = 0
+				row_list['not_matching_fields'] = ""
+				row_list['values'] = ""
+				row_list['code'] = b.code
+				if b.cheque_no == s.cheque_number:
+					match +=1
+					row_list['cheque_no'] = b.cheque_no
+				else:
+					row_list['cheque_no'] = b.cheque_no
+					row_list['not_matching_fields'] = row_list['not_matching_fields'] + "," + "Cheque No"
+					row_list['values'] = row_list['values'] + "," + s.cheque_number
+
+				if b.cheque_date == s.cheque_date:
+					match +=1
+					row_list['cheque_date'] = b.cheque_date
+				else:
+					row_list['cheque_date'] = b.cheque_date
+					row_list['not_matching_fields'] = row_list['not_matching_fields'] + "," + "Cheque Date"
+					row_list['values'] = row_list['values'] + "," + str(s.cheque_date)
+
+				if b.micr == s.micr_code:
+					match +=1
+					row_list['micr_code'] = b.micr
+				else:
+					row_list['micr_code'] = b.micr
+					row_list['not_matching_fields'] = row_list['not_matching_fields'] + "," + "MICR Code"
+					row_list['values'] = row_list['values'] + "," + s.micr_code
+
+				if b.san == s.short_code:
+					match += 1
+					row_list['short_code'] = b.san
+				else:
+					row_list['short_code'] = b.san
+					row_list['not_matching_fields'] = row_list['not_matching_fields'] + "," + "Short Code"
+					row_list['values'] = row_list['values'] + "," + s.short_code
+
+				if b.amount == s.amount:
+					match +=1
+					row_list['amount'] = b.amount
+				else:
+					row_list['amount'] = b.amount
+					row_list['not_matching_fields'] = row_list['not_matching_fields'] + "," + "Amount"
+					row_list['values'] = row_list['values'] + "," + str(s.amount)
+				row_list['main_from'] = "Bank Statement"
+				row_list['checked_code'] = s.code			
+
+				if match == 0:
+					row_list['match'] = match
+					row_list['match_status'] = "No Match"
+					row_list['checked_code'] = ""
+				elif match == 1:
+					row_list['match'] = match
+					row_list['match_status'] = "One Match"
+				elif match == 2:
+					row_list['match'] = match
+					row_list['match_status'] = "Two Match"
+				elif match == 3:
+					row_list['match'] = match
+					row_list['match_status'] = "Three Match"
+				elif match == 4:
+					row_list['match'] = match
+					row_list['match_status'] = "Four Match"
+				elif match == 5:
+					row_list['match'] = match
+					row_list['match_status'] = "Fully Match"
+
+				if idx == 0:
+					row_list_copy = row_list.copy()
+					fulldata.append(row_list_copy)
+		
+				list_of_all_values = [value for elem in fulldata
+								for value in elem.values()]
+				bank_code = row_list['code']
+				slip_code = row_list['checked_code']
+				if not bank_code in list_of_all_values and not slip_code in list_of_all_values:
+					row_list_copy = row_list.copy()
+					fulldata.append(row_list_copy)
+
+		idx +=1
+		
+
 	for sp in slip_records:
 		list_of_all_values = [value for elem in fulldata
 								for value in elem.values()]
