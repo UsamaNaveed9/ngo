@@ -14,10 +14,10 @@
   "match_value",
   "match_status",
   "column_break_5",
-  "code",
   "not_matching_fields",
   "values",
   "main_from",
+  "code",
   "checked_code"
  ],
  "fields": [
@@ -70,7 +70,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Match Status",
-   "options": "\nNo Match\nOne Match\nTwo Match\nThree Match\nFour Match\nFully Match\nNot In Bank Statement\nNot In Slip"
+   "options": "\nNo Match\nOne Match\nTwo Match\nThree Match\nFour Match\nFully Match\nNo Match for Bank Statement\nNo Match for Slip line"
   },
   {
    "fieldname": "column_break_5",
@@ -79,7 +79,8 @@
   {
    "fieldname": "code",
    "fieldtype": "Data",
-   "label": "Code"
+   "label": "Bank S Code",
+   "read_only": 1
   },
   {
    "columns": 1,
@@ -108,14 +109,14 @@
   {
    "fieldname": "checked_code",
    "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Checked Code"
+   "label": "Slip Code",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-10-01 17:09:14.914758",
+ "modified": "2022-11-24 17:49:47.852400",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Reconcile Details",

@@ -5,12 +5,34 @@ frappe.ui.form.on('Reconcile', {
 	// refresh: function(frm) {
 
 	// }
+	onload: function(frm) {
+		frm.set_query('bank_account', function(doc) {
+			return {
+				filters: {
+					'is_company_account': 1,
+				}
+			}
+		});
+	},
+	refresh: function(frm) {
+		frm.set_query('bank_statement', function(doc) {
+			return {
+				filters: {
+					'bank_account': frm.doc.bank_account,
+				}
+			}
+		});
+	},
 	get_slip_records: function(frm){
 		var t_date = cur_frm.doc.to_date;
 		var f_date = cur_frm.doc.from_date;
+		var bank = cur_frm.doc.bank_account;
 		frappe.db.get_list('Slip Details', {
 			fields: ['name'],
-			filters: [["slip_date","between",[f_date,t_date]]]
+			filters:[
+						["slip_date","between",[f_date,t_date]],
+						["deposit_account","=",bank]
+					]
 		}).then(records => {
 			//console.log(records,records.length);
 			if(records.length >=1 ){
@@ -41,9 +63,11 @@ frappe.ui.form.on('Reconcile', {
 								"slips": slips_name,
 								"bank_statement": frm.doc.bank_statement
 						},
+						freeze: true,
+    					freeze_message: "Processing",
 						callback: function(r) {
 								if(r.message) {
-									console.log(r.message);
+									//console.log(r.message);
 								 	cur_frm.clear_table("reconcile_one");
 									for(var i=0;i<r.message.length;i++){
 										var childTable = cur_frm.add_child("reconcile_one");

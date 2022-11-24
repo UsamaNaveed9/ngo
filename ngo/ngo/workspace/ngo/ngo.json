@@ -43,6 +43,15 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Cheque List",
+   "link_to": "Cheque",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Banking",
    "link_type": "DocType",
    "onboard": 0,
@@ -206,7 +215,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-09-19 15:40:41.606527",
+ "modified": "2022-11-17 15:42:07.320630",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "NGO",

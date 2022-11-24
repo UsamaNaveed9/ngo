@@ -53,7 +53,7 @@
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Series",
-   "options": "BS-.{account}.-"
+   "options": "BS-.{bank_account}.-"
   },
   {
    "fetch_from": "bank_account.bank_abbr",
@@ -73,7 +73,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-09-13 16:02:15.361375",
+ "modified": "2022-11-24 15:49:35.457134",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Bank Statement Details",

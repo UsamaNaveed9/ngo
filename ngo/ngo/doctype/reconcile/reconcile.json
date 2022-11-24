@@ -7,17 +7,16 @@
  "engine": "InnoDB",
  "field_order": [
   "event",
+  "bank_account",
   "from_date",
   "to_date",
+  "column_break_3",
   "get_slip_records",
   "slips",
-  "column_break_3",
   "bank_statement",
   "process",
   "section_break_5",
-  "reconcile_one",
-  "section_break_10",
-  "reconcile_two"
+  "reconcile_one"
  ],
  "fields": [
   {
@@ -67,28 +66,23 @@
    "options": "Reconcile Details"
   },
   {
-   "fieldname": "section_break_10",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "reconcile_two",
-   "fieldtype": "Table",
-   "hidden": 1,
-   "label": "Slip to Statement Reconcile",
-   "options": "Reconcile Details"
-  },
-  {
    "fieldname": "event",
    "fieldtype": "Link",
    "label": "Event",
    "options": "Event Master",
    "unique": 1
+  },
+  {
+   "fieldname": "bank_account",
+   "fieldtype": "Link",
+   "label": "Bank Account",
+   "options": "Bank Account"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-10-01 13:59:13.990486",
+ "modified": "2022-11-24 15:54:00.786024",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Reconcile",

@@ -59,13 +59,13 @@
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Series",
-   "options": "Slip-Batch-.YY.-"
+   "options": "Slip-.{deposit_account}.-.YY.-"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-08-30 18:40:04.014100",
+ "modified": "2022-11-24 15:46:13.421953",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Slip Details",
