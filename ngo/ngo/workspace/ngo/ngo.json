@@ -131,6 +131,15 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Reconciled Results",
+   "link_to": "Reconciled Results",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Manual Reconcile",
    "link_to": "Manual Reconcile",
    "link_type": "DocType",
@@ -215,7 +224,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-11-17 15:42:07.320630",
+ "modified": "2023-02-06 16:57:29.791910",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "NGO",
