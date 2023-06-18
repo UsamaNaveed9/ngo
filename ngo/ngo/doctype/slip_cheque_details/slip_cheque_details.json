@@ -8,19 +8,24 @@
   "deposit_date",
   "token",
   "srno",
+  "cheque_bank",
   "cheque_date",
   "cheque_number",
-  "cheque_bank",
-  "account_no",
   "micr_code",
-  "column_break_6",
   "short_code",
+  "branch_code",
   "amount",
+  "column_break_6",
+  "account_no",
   "donor_name",
   "clearing_status",
   "event_type",
   "event",
   "code",
+  "amount_mis_code",
+  "micr_mis_code",
+  "cheque_no_mis_code",
+  "san_miss_code",
   "image"
  ],
  "fields": [
@@ -111,8 +116,7 @@
   {
    "fieldname": "code",
    "fieldtype": "Data",
-   "label": "Code",
-   "read_only": 1
+   "label": "Code"
   },
   {
    "columns": 1,
@@ -140,12 +144,39 @@
    "fieldtype": "Data",
    "label": "Image Path",
    "width": "700px"
+  },
+  {
+   "columns": 1,
+   "fieldname": "branch_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Branch Code"
+  },
+  {
+   "fieldname": "amount_mis_code",
+   "fieldtype": "Data",
+   "label": "Amount Mis Code"
+  },
+  {
+   "fieldname": "micr_mis_code",
+   "fieldtype": "Data",
+   "label": "MICR Mis Code"
+  },
+  {
+   "fieldname": "cheque_no_mis_code",
+   "fieldtype": "Data",
+   "label": "Cheque No Mis Code"
+  },
+  {
+   "fieldname": "san_miss_code",
+   "fieldtype": "Data",
+   "label": "SAN Miss Code"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-10-01 12:16:16.770630",
+ "modified": "2023-06-14 16:49:30.239240",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Slip Cheque Details",

@@ -5,65 +5,26 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "cheque_no",
-  "cheque_date",
-  "account_no",
-  "micr_code",
-  "short_code",
-  "amount",
-  "match_value",
+  "s_cheque_no",
+  "s_cheque_date",
+  "s_micr_code",
+  "s_short_code",
+  "s_amount",
+  "s_code",
   "match_status",
-  "column_break_5",
   "not_matching_fields",
+  "column_break_5",
+  "b_cheque_no",
+  "b_cheque_date",
+  "b_micr_code",
+  "b_short_code",
+  "b_amount",
+  "b_code",
+  "match_value",
   "values",
-  "main_from",
-  "code",
-  "checked_code"
+  "main_from"
  ],
  "fields": [
-  {
-   "columns": 1,
-   "fieldname": "cheque_no",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Cheque No"
-  },
-  {
-   "columns": 1,
-   "fieldname": "cheque_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Cheque Date"
-  },
-  {
-   "columns": 2,
-   "fieldname": "account_no",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "in_list_view": 1,
-   "label": "Account No"
-  },
-  {
-   "columns": 1,
-   "fieldname": "micr_code",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "MICR Code"
-  },
-  {
-   "columns": 1,
-   "fieldname": "short_code",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Short Code"
-  },
-  {
-   "columns": 1,
-   "fieldname": "amount",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Amount"
-  },
   {
    "columns": 1,
    "fieldname": "match_status",
@@ -77,15 +38,10 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "code",
-   "fieldtype": "Data",
-   "label": "Bank S Code",
-   "read_only": 1
-  },
-  {
    "columns": 1,
    "fieldname": "match_value",
    "fieldtype": "Int",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Match"
   },
@@ -99,16 +55,86 @@
   {
    "fieldname": "values",
    "fieldtype": "Small Text",
+   "hidden": 1,
    "label": "Values"
   },
   {
    "fieldname": "main_from",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Main From"
   },
   {
-   "fieldname": "checked_code",
+   "columns": 1,
+   "fieldname": "s_cheque_no",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Slip Cheque No"
+  },
+  {
+   "columns": 1,
+   "fieldname": "s_cheque_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Slip Cheque Date"
+  },
+  {
+   "columns": 1,
+   "fieldname": "s_micr_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Slip MICR Code"
+  },
+  {
+   "columns": 1,
+   "fieldname": "s_short_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Slip Short Code"
+  },
+  {
+   "columns": 1,
+   "fieldname": "s_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Slip Amount"
+  },
+  {
+   "fieldname": "b_cheque_no",
+   "fieldtype": "Data",
+   "label": "Bank Cheque No"
+  },
+  {
+   "fieldname": "b_cheque_date",
+   "fieldtype": "Date",
+   "label": "Bank Cheque Date"
+  },
+  {
+   "fieldname": "b_micr_code",
+   "fieldtype": "Data",
+   "label": "Bank MICR Code"
+  },
+  {
+   "fieldname": "b_short_code",
+   "fieldtype": "Data",
+   "label": "Bank Short Code"
+  },
+  {
+   "fieldname": "b_amount",
+   "fieldtype": "Data",
+   "label": "Bank Amount"
+  },
+  {
+   "fieldname": "b_code",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Bank State Code",
+   "read_only": 1
+  },
+  {
+   "fieldname": "s_code",
+   "fieldtype": "Data",
+   "hidden": 1,
    "label": "Slip Code",
    "read_only": 1
   }
@@ -116,7 +142,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-11-24 17:49:47.852400",
+ "modified": "2023-06-18 11:21:40.002555",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Reconcile Details",
