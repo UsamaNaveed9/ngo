@@ -15,7 +15,8 @@
   "date",
   "to_date",
   "section_break_5",
-  "statement_details"
+  "statement_details",
+  "amended_from"
  ],
  "fields": [
   {
@@ -68,18 +69,29 @@
    "fieldtype": "Data",
    "label": "Account",
    "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Bank Statement Details",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
- "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2022-11-24 15:49:35.457134",
+ "modified": "2023-07-02 15:09:37.780738",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Bank Statement Details",
  "owner": "Administrator",
  "permissions": [
   {
+   "amend": 1,
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -88,7 +100,25 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "select": 1,
    "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],

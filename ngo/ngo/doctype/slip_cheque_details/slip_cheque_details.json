@@ -66,6 +66,7 @@
    "label": "MICR Code"
   },
   {
+   "allow_on_submit": 1,
    "columns": 1,
    "fieldname": "short_code",
    "fieldtype": "Data",
@@ -107,6 +108,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "columns": 1,
    "fieldname": "cheque_number",
    "fieldtype": "Data",
@@ -114,6 +116,7 @@
    "label": "Cheque Number"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "code",
    "fieldtype": "Data",
    "label": "Code"
@@ -153,21 +156,25 @@
    "label": "Branch Code"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "amount_mis_code",
    "fieldtype": "Data",
    "label": "Amount Mis Code"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "micr_mis_code",
    "fieldtype": "Data",
    "label": "MICR Mis Code"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "cheque_no_mis_code",
    "fieldtype": "Data",
    "label": "Cheque No Mis Code"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "san_miss_code",
    "fieldtype": "Data",
    "label": "SAN Miss Code"
@@ -176,7 +183,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-06-14 16:49:30.239240",
+ "modified": "2023-07-02 15:06:49.319860",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Slip Cheque Details",
