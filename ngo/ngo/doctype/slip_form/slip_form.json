@@ -1,0 +1,237 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "autoname": "naming_series:",
+ "creation": "2024-02-28 11:23:34.619623",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "slip_date",
+  "slip_number",
+  "slip_event_code",
+  "lcd_form_pdf_name",
+  "lcd_form_pdf_path",
+  "token_pdfs",
+  "column_break_3",
+  "deposit_account",
+  "deposit_bank",
+  "deposit_date",
+  "internal_slip_number",
+  "slip_event_description",
+  "section_break_5",
+  "cheque_details",
+  "section_break_10",
+  "slip_remark",
+  "slip_receipt_print_status",
+  "column_break_11",
+  "slip_deposited_status",
+  "number_of_cheques_in_slip",
+  "number_of_cheques_deposited_in_slip",
+  "number_of_cheques_returned_or_rejected_in_slip",
+  "total_amount_in_slip",
+  "total_amount_of_deposited_cheques",
+  "attachments_which_are_connected_to_the_slip",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "Slip-.{deposit_account}.-.YY.-"
+  },
+  {
+   "fieldname": "slip_date",
+   "fieldtype": "Date",
+   "label": "Slip Date"
+  },
+  {
+   "fieldname": "token_pdfs",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Token PDFs",
+   "options": "Token PDF"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "deposit_account",
+   "fieldtype": "Link",
+   "label": "Deposit Account",
+   "options": "Bank Account"
+  },
+  {
+   "fetch_from": "deposit_account.bank",
+   "fieldname": "deposit_bank",
+   "fieldtype": "Data",
+   "label": "Deposit Bank"
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_bulk_edit": 1,
+   "fieldname": "cheque_details",
+   "fieldtype": "Table",
+   "label": "Cheque Details",
+   "options": "Slip Cheque Form"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Slip Details",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Slip Details",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "slip_number",
+   "fieldtype": "Data",
+   "label": "Slip Number"
+  },
+  {
+   "fieldname": "internal_slip_number",
+   "fieldtype": "Data",
+   "label": "Internal Slip Number"
+  },
+  {
+   "fieldname": "slip_event_code",
+   "fieldtype": "Data",
+   "label": "Slip Event Code"
+  },
+  {
+   "fieldname": "slip_event_description",
+   "fieldtype": "Data",
+   "label": "Slip Event Description"
+  },
+  {
+   "fieldname": "deposit_date",
+   "fieldtype": "Date",
+   "label": "Deposit Date"
+  },
+  {
+   "fieldname": "lcd_form_pdf_name",
+   "fieldtype": "Data",
+   "label": "LCD Form PDF Name"
+  },
+  {
+   "fieldname": "lcd_form_pdf_path",
+   "fieldtype": "Data",
+   "label": "LCD Form PDF Path"
+  },
+  {
+   "fieldname": "slip_remark",
+   "fieldtype": "Data",
+   "label": "Slip Remark"
+  },
+  {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "slip_deposited_status",
+   "fieldtype": "Select",
+   "label": "Slip Deposited Status",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "slip_receipt_print_status",
+   "fieldtype": "Data",
+   "label": "Slip Receipt Print Status"
+  },
+  {
+   "fieldname": "number_of_cheques_in_slip",
+   "fieldtype": "Data",
+   "label": "Number of Cheques in Slip"
+  },
+  {
+   "fieldname": "number_of_cheques_deposited_in_slip",
+   "fieldtype": "Data",
+   "label": "Number of Cheques Deposited in Slip"
+  },
+  {
+   "fieldname": "number_of_cheques_returned_or_rejected_in_slip",
+   "fieldtype": "Data",
+   "label": "Number of Cheques Returned or Rejected in Slip"
+  },
+  {
+   "fieldname": "total_amount_in_slip",
+   "fieldtype": "Currency",
+   "label": "Total Amount in Slip"
+  },
+  {
+   "fieldname": "total_amount_of_deposited_cheques",
+   "fieldtype": "Currency",
+   "label": "Total Amount of Deposited Cheques"
+  },
+  {
+   "fieldname": "attachments_which_are_connected_to_the_slip",
+   "fieldtype": "Currency",
+   "label": "Attachments which are connected to the slip"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-02-29 14:19:30.951786",
+ "modified_by": "Administrator",
+ "module": "NGO",
+ "name": "Slip Form",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
