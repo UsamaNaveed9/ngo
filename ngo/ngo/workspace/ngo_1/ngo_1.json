@@ -1,7 +1,7 @@
 {
  "category": "Modules",
  "charts": [],
- "creation": "2024-03-12 14:03:35.781240",
+ "creation": "2024-03-12 13:54:22.041836",
  "developer_mode_only": 0,
  "disable_user_customization": 0,
  "docstatus": 0,
@@ -12,7 +12,7 @@
  "idx": 0,
  "is_default": 0,
  "is_standard": 1,
- "label": "NGO",
+ "label": "NGO 1",
  "links": [
   {
    "hidden": 0,
@@ -241,10 +241,10 @@
    "type": "Link"
   }
  ],
- "modified": "2024-03-12 14:08:29.385986",
+ "modified": "2024-03-12 14:02:20.565179",
  "modified_by": "Administrator",
  "module": "NGO",
- "name": "NGO",
+ "name": "NGO 1",
  "owner": "Administrator",
  "pin_to_bottom": 0,
  "pin_to_top": 1,
