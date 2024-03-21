@@ -22,7 +22,7 @@ frappe.ui.form.on('Donor', {
 			return {
 				filters: [
 					['Bank Account', 'donor_id', '=', frm.doc.name ],
-					['Bank Account', 'is_default', '=', '1' ]	
+					
 				]
 			}
 		}
@@ -102,3 +102,32 @@ frappe.ui.form.on('Donor', {
 	}
 
 });
+
+frappe.ui.form.on('Donor Bank detail', {
+    bank_account: function(frm, cdt, cdn){
+        var child_doc = locals[cdt][cdn];
+        frappe.call({
+            method: "ngo.custome_py.donar.get_data_from_bank_donar_details",
+            args: {
+                donar_id: frm.doc.name,
+                account_number: child_doc.bank_account
+            },
+            callback: function(r){
+                if(r.message){
+                    var bank_details = r.message;
+                    $.each(bank_details, function(i, v){
+                        // Set values for fields in the parent form using cur_frm
+                        frappe.model.set_value(cdt, cdn, 'micr_code', v.micr);
+                        frappe.model.set_value(cdt, cdn, 'branch_code', v.branch_code);
+                        frappe.model.set_value(cdt, cdn, "bank", v.bank);
+                        frappe.model.set_value(cdt, cdn, "short_account_number",v.short_account_number);
+                    
+                    });
+                    cur_frm.refresh_field("account");
+                } 
+            }
+        });
+    },
+});
+
+

@@ -55,6 +55,8 @@ def get_donor_list():
                 fields=['bank_account','is_default']
             )
             print("*********",donar["account_details"]  )
+    
+
         return donar_data
     except Exception:
         error = frappe.get_traceback()

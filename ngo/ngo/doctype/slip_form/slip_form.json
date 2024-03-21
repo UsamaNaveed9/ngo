@@ -10,29 +10,29 @@
   "naming_series",
   "slip_date",
   "slip_number",
+  "deposit_account",
+  "deposit_bank",
+  "deposit_date",
+  "column_break_3",
+  "section_break_5",
   "slip_event_code",
   "lcd_form_pdf_name",
   "lcd_form_pdf_path",
   "token_pdfs",
-  "column_break_3",
-  "deposit_account",
-  "deposit_bank",
-  "deposit_date",
   "internal_slip_number",
   "slip_event_description",
-  "section_break_5",
-  "cheque_details",
-  "section_break_10",
   "slip_remark",
   "slip_receipt_print_status",
-  "column_break_11",
   "slip_deposited_status",
+  "section_break_fhagi",
+  "number_of_cheques_returned_or_rejected_in_slip",
+  "attachments_which_are_connected_to_the_slip",
   "number_of_cheques_in_slip",
   "number_of_cheques_deposited_in_slip",
-  "number_of_cheques_returned_or_rejected_in_slip",
-  "total_amount_in_slip",
   "total_amount_of_deposited_cheques",
-  "attachments_which_are_connected_to_the_slip",
+  "total_amount_in_slip",
+  "section_break_ufchl",
+  "cheque_details",
   "amended_from"
  ],
  "fields": [
@@ -71,8 +71,10 @@
    "label": "Deposit Bank"
   },
   {
+   "collapsible": 1,
    "fieldname": "section_break_5",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Other Slip details"
   },
   {
    "allow_bulk_edit": 1,
@@ -80,24 +82,6 @@
    "fieldtype": "Table",
    "label": "Cheque Details",
    "options": "Slip Cheque Form"
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Slip Details",
-   "print_hide": 1,
-   "read_only": 1
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Slip Details",
-   "print_hide": 1,
-   "read_only": 1
   },
   {
    "fieldname": "slip_number",
@@ -140,18 +124,10 @@
    "label": "Slip Remark"
   },
   {
-   "fieldname": "section_break_10",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "slip_deposited_status",
    "fieldtype": "Select",
    "label": "Slip Deposited Status",
    "options": "\nYes\nNo"
-  },
-  {
-   "fieldname": "column_break_11",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "slip_receipt_print_status",
@@ -187,12 +163,29 @@
    "fieldname": "attachments_which_are_connected_to_the_slip",
    "fieldtype": "Currency",
    "label": "Attachments which are connected to the slip"
+  },
+  {
+   "fieldname": "section_break_ufchl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_fhagi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Slip Form",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-02-29 14:19:30.951786",
+ "modified": "2024-03-18 13:45:47.490129",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Slip Form",
