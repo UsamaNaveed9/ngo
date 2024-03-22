@@ -402,3 +402,11 @@ def donar_to_full_name(slip_data,bank_data):
 
 
 
+=======
+
+# import frappe
+from frappe.model.document import Document
+
+class SlipScannerFilePath(Document):
+	pass
+>>>>>>> efea92e019935370294a54d2254fedf2373437eb

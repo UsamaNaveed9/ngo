@@ -1,7 +1,7 @@
 {
  "category": "Modules",
  "charts": [],
- "creation": "2024-03-12 14:03:35.781240",
+ "creation": "2024-03-12 13:49:58.812853",
  "developer_mode_only": 0,
  "disable_user_customization": 0,
  "docstatus": 0,
@@ -12,34 +12,8 @@
  "idx": 0,
  "is_default": 0,
  "is_standard": 1,
- "label": "NGO",
+ "label": "NGO Test",
  "links": [
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Upload",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Slip Scanner File Path",
-   "link_to": "Slip Scanner File Path",
-   "link_type": "DocType",
-   "onboard": 1,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Slip Form",
-   "link_to": "Slip Form",
-   "link_type": "DocType",
-   "onboard": 1,
-   "type": "Link"
-  },
   {
    "hidden": 0,
    "is_query_report": 0,
@@ -248,13 +222,29 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Upload",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Slip Scanner File Path",
+   "link_to": "Slip Scanner File Path",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
-
- "modified": "2024-03-14 23:40:32.547222",
+ "modified": "2024-03-12 13:49:58.812853",
  "modified_by": "Administrator",
  "module": "NGO",
- "name": "NGO",
+ "name": "NGO Test",
  "owner": "Administrator",
  "pin_to_bottom": 0,
  "pin_to_top": 1,

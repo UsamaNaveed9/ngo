@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+
  "creation": "2024-03-12 22:20:20.656276",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -69,6 +70,7 @@
    "fieldtype": "Column Break"
   }
  ],
+ 
  "index_web_pages_for_search": 1,
  "links": [],
  "modified": "2024-03-18 12:11:58.046027",
@@ -76,6 +78,9 @@
  "module": "NGO",
  "name": "Slip Scanner File Path",
  "name_case": "UPPER CASE",
+  }
+ ]
+
  "owner": "Administrator",
  "permissions": [
   {
@@ -86,11 +91,14 @@
    "print": 1,
    "read": 1,
    "report": 1,
+   "print": 1,
+   "read": 1,
    "role": "System Manager",
    "share": 1,
    "write": 1
   }
  ],
+ "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
