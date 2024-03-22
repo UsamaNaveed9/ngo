@@ -5,10 +5,23 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "next",
-  "column_break_7ddhw",
   "previous",
+  "column_break_jqjfu",
+  "next",
+  "column_break_wsryr",
+  "column_break_7ddhw",
+  "column_break_wp0hd",
+  "column_break_e1nc5",
+  "column_break_ucbbi",
+  "column_break_ge2b7",
+  "column_break_0wxnz",
+  "column_break_ptsow",
+  "html_button",
   "section_break_yp4hc",
+  "check_image",
+  "check_image_attched",
+  "section_break_biphr",
+  "amount",
   "deposit_date",
   "token",
   "srno",
@@ -19,7 +32,6 @@
   "short_code",
   "donor_id_number",
   "branch_code",
-  "amount",
   "column_break_6",
   "account_no",
   "donor_name",
@@ -238,12 +250,64 @@
   {
    "fieldname": "section_break_yp4hc",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "check_image",
+   "fieldtype": "Attach Image",
+   "label": "Check Image"
+  },
+  {
+   "fieldname": "check_image_attched",
+   "fieldtype": "Image",
+   "label": "Check image Attched",
+   "options": "check_image"
+  },
+  {
+   "fieldname": "section_break_biphr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "html_button",
+   "fieldtype": "HTML",
+   "label": "HTML BUTTON "
+  },
+  {
+   "fieldname": "column_break_wsryr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_jqjfu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_wp0hd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_e1nc5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_ucbbi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_ge2b7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_0wxnz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_ptsow",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-03-20 23:07:50.724010",
+ "modified": "2024-03-22 00:28:38.070256",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Slip Cheque Form",
