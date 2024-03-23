@@ -57,26 +57,3 @@ frappe.ui.form.on('Slip Scanner File Path',{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
-frappe.ui.form.on('Slip Scanner File Path', {
-	// refresh: function(frm) {
-
-	// }
-});
->>>>>>> efea92e019935370294a54d2254fedf2373437eb

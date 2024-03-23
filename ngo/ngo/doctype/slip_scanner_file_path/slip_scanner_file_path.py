@@ -34,11 +34,10 @@ def read_csv_(dict_list):
 				slip_number = number_[0]
 				slip_number_lst.append(slip_number)
 			bank_details = row.get("C")	
-			
+
 
 
 			if isinstance(bank_details,str):
-				
 				bank_details = bank_details.replace('@', '')
 				bank_details_str = bank_details.split("<")
 				bank_details_str = [r for r in bank_details_str if r]
@@ -95,7 +94,7 @@ def read_csv_(dict_list):
 
 		for value in check_details_list:
 			if value not in list_of_check_number:
-				print(value,"=====")
+				print(value,"===-----==")
 
 
 
@@ -114,14 +113,9 @@ def read_csv_(dict_list):
 
 
 		for value in set(unique_account_number_lst):
-			
 			bank_donar_details = frappe.db.get_all("Donor Bank detail",{"unique_account_number__":value}, ["bank_account","unique_account_number__"] )
-			
 			[ bank_dict.append(row) for row in bank_donar_details if row ]
-
-			[bank_name_lst.append(row.get("bank_account")) for row in bank_donar_details if row.get("bank_account") ]
-
-
+			[bank_name_lst.append(row.get("bank_account")) for row in bank_donar_details if row.get("bank_account")]
 		slip_data = merged_dict_(filter_dict,bank_dict)
 
 		
@@ -402,11 +396,3 @@ def donar_to_full_name(slip_data,bank_data):
 
 
 
-=======
-
-# import frappe
-from frappe.model.document import Document
-
-class SlipScannerFilePath(Document):
-	pass
->>>>>>> efea92e019935370294a54d2254fedf2373437eb
