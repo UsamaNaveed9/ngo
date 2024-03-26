@@ -352,9 +352,9 @@ def map_donar_id_with_bank_account(slip_data,bank_data):
 
 			bank_account_number = bank_account_name.split(" - ")[0]  # Extract the bank account number
 			donor_id = bank_number_to_donor_id.get(bank_account_number)
-		
-		if donor_id:
-			 slip['donor_id'] = donor_id
+			
+			if donor_id:
+				 slip['donor_id'] = donor_id
 	
 		return slip_data
 
