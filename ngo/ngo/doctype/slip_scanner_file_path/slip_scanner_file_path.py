@@ -6,8 +6,12 @@ import frappe
 from frappe.model.document import Document
 from datetime import datetime
 import os
-
 import requests
+
+from itertools import groupby
+from operator import itemgetter
+
+
 
 class SlipScannerFilePath(Document):
 	def autoname(self):
@@ -17,7 +21,7 @@ class SlipScannerFilePath(Document):
 	
 
 
-def read_csv_(dict_list):
+def read_csv_(dict_list,df):
 		
 		filter_dict = []
 		slip_number_lst = []
@@ -63,41 +67,42 @@ def read_csv_(dict_list):
 							"micr_code": micr_code,
 							"short_account_number": short_account_number,
 							"branch_code": branch_code,
-							"check_path_number":number
+							"check_path_number":number,
+
 
 						})
 						
 					else:
-
 						filter_dict.append({
 							"date_of_slip": date_of_slip,
 							"slip_number": slip_number,
 							"missing_check_":number,
 							"check_path_number":number
-
 						})
-
 						missing_check_details.append(number)
-
-
-		df = pd.read_csv("/home/milind/Downloads/SVS_ScannedCheques267c79(1).csv",names=['A', 'B', 'C'])
-
-		check_details_list = df['B'].tolist()
-
 
 
 		list_of_check_number = []
 		for row in filter_dict:
 			list_of_check_number.append(row.get("check_path_number"))
 
+		df = df[["A","B"]]
+
+		dict_list_for_records_map = df.to_dict('records')
+
+		pattern = r'\\([^\\$]+)\$'
+		for row in dict_list_for_records_map:
+			if row.get("B") not in list_of_check_number:
+				match1 = re.search(pattern, row['B'])
+				extracted_substring1 = match1.group(1) if match1 else None
+				row["slip_number"] = extracted_substring1 
+				row["date_of_slip"] = row.get("A")
+				row["missing_check_"] = row.get("B")
+				row.pop("A")
+				row.pop("B")
+				filter_dict.append(row)
 		
-
-		for value in check_details_list:
-			if value not in list_of_check_number:
-				print(value,"===-----==")
-
-
-
+		
 		unique_account_number_lst = []
 		for row in filter_dict:
 			micr_code = row.get("micr_code")
@@ -124,10 +129,9 @@ def read_csv_(dict_list):
 
 		donar_id_lst = []
 		bank_details_lst = []
-
+		
 		for row in set(bank_name_lst):
 			bank_details = frappe.db.get_all("Bank Account",{"name":row}, ["name","donor_id","bank_account_no"])
-			
 			if bank_details:
 				bank_details_lst.append(bank_details[0])
 			
@@ -160,8 +164,9 @@ def read_csv_(dict_list):
 
 				row["date_of_slip"] = formatted_date
 
+		
 
-		# return filter_dict,slip_number_lst
+		return filter_dict,slip_number_lst
 
 
 				
@@ -170,65 +175,105 @@ def read_csv_(dict_list):
 	
 def crete_entries_in_slip_form(filter_dict,slip_number_lst):
 	
-	existing_slip_number = []
+	slip_number_created = []
 	
+	
+
+	existing_slip_number = []
 	slip_number_lst_created_ = frappe.db.get_all("Slip Form",["slip_number"])
 	
 	for row in slip_number_lst_created_:
 		existing_slip_number.append(row.get("slip_number"))
 
 	slip_number_created = []
+	filter_dict.sort(key=itemgetter('slip_number'))  # Ensure data is sorted based on the grouping key
+	grouped_data = {key: list(group) for key, group in groupby(filter_dict, key=itemgetter('slip_number'))}
+
 	
-	for slip_number in slip_number_lst:
+	for slip_number,group_data in grouped_data.items():
 		if slip_number not in  existing_slip_number:
-			frappe.msgprint("Records Creation Started")          
-			for row in filter_dict:
-				slip_number = row.get("slip_number")
-				slip_exists = frappe.db.exists("Slip Form", {"slip_number": slip_number})
-				if slip_exists:
-					slip_form_doc = frappe.get_doc("Slip Form", {"slip_number": slip_number})
-					sr_number = len(slip_form_doc.cheque_details) + 1 
-					slip_form_doc.append("cheque_details",{
-						"srno":sr_number,
-						"cheque_number": row.get("check_number"),
-						"micr_code": row.get("micr_code"),
-						"branch_code": row.get("branch_code"),
-						"short_code": row.get("short_account_number"),
-						"donor_id_number":row.get("donor_id"),
-						"bank_account": row.get("account_no"),
-						"donor_name": row.get("full_name"),       
-						"cheque_date": row.get("date_of_slip"),
-						"account_no":row.get("bank_account"),
-						"clearing_status":"CREATED" 
+			slip_exists = frappe.db.exists("Slip Form", {"slip_number": slip_number})
+			if slip_exists:
+				slip_form_doc = frappe.get_doc("Slip Form", {"slip_number": slip_number})
+			else:
+				slip_form_doc = frappe.new_doc("Slip Form")
+				slip_form_doc.slip_number = slip_number
+			for sr_number , row  in  enumerate(group_data):
+				sr_number = sr_number + 1
+				slip_form_doc.append("cheque_details",{
+					"srno":sr_number,
+					"cheque_number": row.get("check_number"),
+					"micr_code": row.get("micr_code"),
+					"branch_code": row.get("branch_code"),
+					"short_code": row.get("short_account_number"),
+					"donor_id_number":row.get("donor_id"),
+					"bank_account": row.get("account_no"),
+					"donor_name": row.get("full_name"),       
+					"cheque_date": row.get("date_of_slip"),
+					"account_no":row.get("bank_account"),
+					"clearing_status":"CREATED",
+					"missing_check_details":row.get("missing_check_") 
 
-					})
-					slip_number_ = row.get("slip_number")
-					slip_form_doc.save()
-				else:
-					slip = frappe.new_doc("Slip Form")
-					slip_number = row.get("slip_number")
-					slip.slip_number = slip_number
-					slip.append("cheque_details", {
-						"srno":1,
-						"cheque_number": row.get("check_number"),
-						"micr_code": row.get("micr_code"),
-						"branch_code": row.get("branch_code"),
-						"short_code": row.get("short_account_number"),
-						"donor_id_number":row.get("donor_id"),
-						"bank_account": row.get("account_no"),
-						"donor_name": row.get("full_name"),       
-						"cheque_date": row.get("date_of_slip"),
-						"account_no":row.get("bank_account"), 
-						"clearing_status":"CREATED"
-
-					})
-					
-					slip.insert()
-					slip_number_ = row.get("slip_number")
-					slip_number_created.append(slip_number)			
-	
+				})
+			slip_number_created.append(slip_number)	
+			slip_form_doc.save()
+			
+			
 	
 	return len(slip_number_created)
+	
+
+	# for slip_number in slip_number_lst:
+	# 	if slip_number not in  existing_slip_number:
+	# 		frappe.msgprint("Records Creation Started")          
+	# 		for row in filter_dict:
+	# 			slip_number = row.get("slip_number")
+	# 			slip_exists = frappe.db.exists("Slip Form", {"slip_number": slip_number})
+	# 			if slip_exists:
+	# 				slip_form_doc = frappe.get_doc("Slip Form", {"slip_number": slip_number})
+	# 				sr_number = len(slip_form_doc.cheque_details) + 1 
+	# 				slip_form_doc.append("cheque_details",{
+	# 					"srno":sr_number,
+	# 					"cheque_number": row.get("check_number"),
+	# 					"micr_code": row.get("micr_code"),
+	# 					"branch_code": row.get("branch_code"),
+	# 					"short_code": row.get("short_account_number"),
+	# 					"donor_id_number":row.get("donor_id"),
+	# 					"bank_account": row.get("account_no"),
+	# 					"donor_name": row.get("full_name"),       
+	# 					"cheque_date": row.get("date_of_slip"),
+	# 					"account_no":row.get("bank_account"),
+	# 					"clearing_status":"CREATED",
+	# 					"missing_check_details":row.get("missing_check_") 
+
+	# 				})
+	# 				slip_number_ = row.get("slip_number")
+	# 				slip_form_doc.save()
+	# 			else:
+	# 				slip = frappe.new_doc("Slip Form")
+	# 				slip_number = row.get("slip_number")
+	# 				slip.slip_number = slip_number
+	# 				slip.append("cheque_details", {
+	# 					"srno":1,
+	# 					"cheque_number": row.get("check_number"),
+	# 					"micr_code": row.get("micr_code"),
+	# 					"branch_code": row.get("branch_code"),
+	# 					"short_code": row.get("short_account_number"),
+	# 					"donor_id_number":row.get("donor_id"),
+	# 					"bank_account": row.get("account_no"),
+	# 					"donor_name": row.get("full_name"),       
+	# 					"cheque_date": row.get("date_of_slip"),
+	# 					"account_no":row.get("bank_account"), 
+	# 					"clearing_status":"CREATED",
+	# 					"missing_check_details":row.get("missing_check_")
+
+	# 				})					
+	# 				# slip.insert()
+	# 				slip_number_ = row.get("slip_number")
+	# 				slip_number_created.append(slip_number)			
+	
+	
+	# return len(slip_number_created)
 
 
 	
@@ -254,27 +299,9 @@ def read_csv(file):
 
 	dict_list = df.to_dict('records')
 
-	# df = df.rename(columns={'A': 'Date_Time', 'B': 'check_details', 'C': 'bank_details'})
-	# df['Date_Time'] = pd.to_datetime(df['Date_Time'], format='%d-%m-%y %H:%M')
-	# df.insert(0, 'Date', df['Date_Time'].dt.date)
-	# df.drop(columns=['Date_Time'], inplace=True)
-	# pattern = r'\\([^\\$]+)\$'
-	# df['Slip_number'] = df['check_details'].str.extract(pattern)
-	# df['Bank_Details_Split'] = df['bank_details'].str.split('<')
-	# for row in dict_list:
-	# 	Bank_Details_Split = row.get("Bank_Details_Split")
-	# 	print()
-	# 	# Bank_Details_Split= [value  for value in Bank_Details_Split if value]
-	# 	Bank_Details_Split = ",".join(Bank_Details_Split)
-	# 	Bank_Details_Split = Bank_Details_Split.split(":")
-	# 	Bank_Details_Split = ",".join(Bank_Details_Split)
-	# 	Bank_Details_Split = Bank_Details_Split.split(",")
-	# 	row["Bank_Details_Split"] = Bank_Details_Split
 	
+	filter_dict,slip_number_lst = read_csv_(dict_list,df)
 	
-
-
-	filter_dict,slip_number_lst = read_csv_(dict_list)
 	
 	return crete_entries_in_slip_form(filter_dict, slip_number_lst)
 

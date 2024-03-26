@@ -10,11 +10,8 @@ frappe.ui.form.on('Slip Scanner File Path',{
 				}
 			};
 		});
-		
 		frm.trigger("get_todays_date")	
-
 	},
-	
 	upload:function(frm){
 		frappe.call({
 					method: "ngo.ngo.doctype.slip_scanner_file_path.slip_scanner_file_path.read_csv",
@@ -32,7 +29,6 @@ frappe.ui.form.on('Slip Scanner File Path',{
 					}
 				});
 			},
-
 	get_todays_date:function(frm){
 		var today = new Date();
 		// Get the current date
