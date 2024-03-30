@@ -10,7 +10,7 @@ import requests
 
 from itertools import groupby
 from operator import itemgetter
-
+import json
 
 
 class SlipScannerFilePath(Document):
@@ -68,6 +68,10 @@ def read_csv_(dict_list,df):
 							"short_account_number": short_account_number,
 							"branch_code": branch_code,
 							"check_path_number":number,
+							"bank_accounts":row.get("bank_accounts"),
+							"account_name":row.get("account_name"),
+							"deposit_date":row.get("deposit_date")
+
 
 
 						})
@@ -77,7 +81,11 @@ def read_csv_(dict_list,df):
 							"date_of_slip": date_of_slip,
 							"slip_number": slip_number,
 							"missing_check_":number,
-							"check_path_number":number
+							"check_path_number":number,
+							"bank_accounts":row.get("bank_accounts"),
+							"account_name":row.get("account_name"),
+							"deposit_date":row.get("deposit_date")
+
 						})
 						missing_check_details.append(number)
 
@@ -191,6 +199,7 @@ def crete_entries_in_slip_form(filter_dict,slip_number_lst):
 
 	
 	for slip_number,group_data in grouped_data.items():
+		
 		if slip_number not in  existing_slip_number:
 			slip_exists = frappe.db.exists("Slip Form", {"slip_number": slip_number})
 			if slip_exists:
@@ -198,6 +207,12 @@ def crete_entries_in_slip_form(filter_dict,slip_number_lst):
 			else:
 				slip_form_doc = frappe.new_doc("Slip Form")
 				slip_form_doc.slip_number = slip_number
+				slip_form_doc.deposit_account = group_data[0].get("bank_accounts")
+				slip_form_doc.deposit_bank = group_data[0].get("account_name")
+				slip_form_doc.deposit_date = group_data[0].get("deposit_date")
+		
+
+
 			for sr_number , row  in  enumerate(group_data):
 				sr_number = sr_number + 1
 				slip_form_doc.append("cheque_details",{
@@ -223,69 +238,9 @@ def crete_entries_in_slip_form(filter_dict,slip_number_lst):
 	return len(slip_number_created)
 	
 
-	# for slip_number in slip_number_lst:
-	# 	if slip_number not in  existing_slip_number:
-	# 		frappe.msgprint("Records Creation Started")          
-	# 		for row in filter_dict:
-	# 			slip_number = row.get("slip_number")
-	# 			slip_exists = frappe.db.exists("Slip Form", {"slip_number": slip_number})
-	# 			if slip_exists:
-	# 				slip_form_doc = frappe.get_doc("Slip Form", {"slip_number": slip_number})
-	# 				sr_number = len(slip_form_doc.cheque_details) + 1 
-	# 				slip_form_doc.append("cheque_details",{
-	# 					"srno":sr_number,
-	# 					"cheque_number": row.get("check_number"),
-	# 					"micr_code": row.get("micr_code"),
-	# 					"branch_code": row.get("branch_code"),
-	# 					"short_code": row.get("short_account_number"),
-	# 					"donor_id_number":row.get("donor_id"),
-	# 					"bank_account": row.get("account_no"),
-	# 					"donor_name": row.get("full_name"),       
-	# 					"cheque_date": row.get("date_of_slip"),
-	# 					"account_no":row.get("bank_account"),
-	# 					"clearing_status":"CREATED",
-	# 					"missing_check_details":row.get("missing_check_") 
-
-	# 				})
-	# 				slip_number_ = row.get("slip_number")
-	# 				slip_form_doc.save()
-	# 			else:
-	# 				slip = frappe.new_doc("Slip Form")
-	# 				slip_number = row.get("slip_number")
-	# 				slip.slip_number = slip_number
-	# 				slip.append("cheque_details", {
-	# 					"srno":1,
-	# 					"cheque_number": row.get("check_number"),
-	# 					"micr_code": row.get("micr_code"),
-	# 					"branch_code": row.get("branch_code"),
-	# 					"short_code": row.get("short_account_number"),
-	# 					"donor_id_number":row.get("donor_id"),
-	# 					"bank_account": row.get("account_no"),
-	# 					"donor_name": row.get("full_name"),       
-	# 					"cheque_date": row.get("date_of_slip"),
-	# 					"account_no":row.get("bank_account"), 
-	# 					"clearing_status":"CREATED",
-	# 					"missing_check_details":row.get("missing_check_")
-
-	# 				})					
-	# 				# slip.insert()
-	# 				slip_number_ = row.get("slip_number")
-	# 				slip_number_created.append(slip_number)			
-	
-	
-	# return len(slip_number_created)
-
-
-	
-
-
-
-
-
-
 			
 @frappe.whitelist()
-def read_csv(file):
+def read_csv(file,doc):
 	
 	file_doc = frappe.get_doc("File",{"file_url":file})
 	
@@ -295,9 +250,28 @@ def read_csv(file):
 
 	file = get_absolute_path(file_url)
 
+	doc = json.loads(doc)
+
+	bank_accounts = doc.get("bank_accounts")
+
+	account_name = doc.get("account_name")
+
+	deposit_date = doc.get("deposit_date")
+
+		
+
 	df = pd.read_csv(file,names=['A', 'B', 'C'])
 
 	dict_list = df.to_dict('records')
+
+	for row in dict_list:
+
+		row["bank_accounts"] = bank_accounts
+		row["account_name"] = account_name
+		row["deposit_date"] = deposit_date
+
+
+	
 
 	
 	filter_dict,slip_number_lst = read_csv_(dict_list,df)

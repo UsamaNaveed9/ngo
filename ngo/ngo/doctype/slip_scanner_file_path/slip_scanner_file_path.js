@@ -17,6 +17,7 @@ frappe.ui.form.on('Slip Scanner File Path',{
 					method: "ngo.ngo.doctype.slip_scanner_file_path.slip_scanner_file_path.read_csv",
 					args: {
 						file: frm.doc.slip_scanner_file_path,
+						doc:frm.doc
 					},
 					freeze:true,
 					freeze_message:"Record Creation is Started. Please Wait......",
