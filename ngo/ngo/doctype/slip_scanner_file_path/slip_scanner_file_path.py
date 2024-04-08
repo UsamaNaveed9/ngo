@@ -38,9 +38,6 @@ def read_csv_(dict_list,df):
 				slip_number = number_[0]
 				slip_number_lst.append(slip_number)
 			bank_details = row.get("C")	
-
-
-
 			if isinstance(bank_details,str):
 				bank_details = bank_details.replace('@', '')
 				bank_details_str = bank_details.split("<")
@@ -125,13 +122,17 @@ def read_csv_(dict_list,df):
 		bank_dict = []
 
 
+
+
 		for value in set(unique_account_number_lst):
 			bank_donar_details = frappe.db.get_all("Donor Bank detail",{"unique_account_number__":value}, ["bank_account","unique_account_number__"] )
+
 			[ bank_dict.append(row) for row in bank_donar_details if row ]
 			[bank_name_lst.append(row.get("bank_account")) for row in bank_donar_details if row.get("bank_account")]
-		slip_data = merged_dict_(filter_dict,bank_dict)
-
 		
+
+
+		slip_data = merged_dict_(filter_dict,bank_dict)
 
 
 
@@ -140,35 +141,31 @@ def read_csv_(dict_list,df):
 		
 		for row in set(bank_name_lst):
 			bank_details = frappe.db.get_all("Bank Account",{"name":row}, ["name","donor_id","bank_account_no"])
+
 			if bank_details:
 				bank_details_lst.append(bank_details[0])
-			
-
+				
 
 		[ donar_id_lst.append(row.get("donor_id")) for row in bank_details_lst if row.get("donor_id") ]
+			
+
 		slip_data = map_donar_id_with_bank_account(slip_data,bank_details_lst)
 
 
+		
 		donar_details_lst = []
 
 		for value in set(donar_id_lst):
 			donar_details= frappe.db.get_all("Donor",{"name":value}, ["name","donor_name" ,"middle_name" ,"last_name"])
-
+			
 			if donar_details:
 				donar_details_lst.append(donar_details[0])
 
 
-
-
 		filter_dict = donar_to_full_name(slip_data,donar_details_lst)
 
-		new = {"donor_id":"DN-04655",'slip_number': 'RC-NB-PR-210124',  'missing_check_': 'D:\\SVS\\SVS_SCANNED_CHEQUES\\PR-210124$@@@@@@@@@@@@@@@@@@@@@@@@$.tif'}
-
-
 		list_for_blocked_donar_details = []
-		filter_dict.append(new)
 		
-
 		for row in filter_dict:
 			if row.get("bank_account"):
 				row["bank_account"] = row.get("bank_account").split("-")[0]
@@ -180,21 +177,24 @@ def read_csv_(dict_list,df):
 				formatted_date = date_object.strftime('%Y-%m-%d')			
 				row["date_of_slip"] = formatted_date
 
-
+			
 			if row.get("slip_number"):
 				if row.get("slip_number").startswith("RC-NB"):
 					list_for_blocked_donar_details.append(row.get("donor_id"))
 			
-
+			
 			for row in set(list_for_blocked_donar_details):
 				donor_doc = frappe.get_doc("Donor",{"name":row})
 				donor_doc.block_status = "Blocked"
 				donor_doc.remarks1 = "User has been blocked"
 				donor_doc.save()
 		
-		
+
 		return filter_dict,slip_number_lst
-	
+		
+		
+
+
 
 def crete_entries_in_slip_form(filter_dict,slip_number_lst):
 	
@@ -249,7 +249,6 @@ def crete_entries_in_slip_form(filter_dict,slip_number_lst):
 	
 	return len(slip_number_created)
 			
-			
 	
 	
 
@@ -302,7 +301,9 @@ def merged_dict_(slip_data,bank_data):
 
 		if bank_account:
 			slip['bank_account'] = bank_account
-	
+
+
+		
 	return  slip_data
 
 
@@ -313,22 +314,24 @@ def merged_dict_(slip_data,bank_data):
 
 def map_donar_id_with_bank_account(slip_data,bank_data):
 	# Create a dictionary to map bank account numbers to donor ids
-	bank_number_to_donor_id = {bank['bank_account_no']: bank['donor_id'] for bank in bank_data}
+	bank_number_to_donor_id = {bank['name']: bank['donor_id'] for bank in bank_data}
+	
 	
 	# Update slip_data with donor_id where bank_account matches bank_account_no
 	for slip in slip_data:
-		bank_account_name = slip.get('bank_account')
-		
-		
+		bank_account_name = slip.get('bank_account')	
 		if bank_account_name:
-
-			bank_account_number = bank_account_name.split(" - ")[0]  # Extract the bank account number
-			donor_id = bank_number_to_donor_id.get(bank_account_number)
-			
+			donor_id = bank_number_to_donor_id.get(bank_account_name)
 			if donor_id:
-				 slip['donor_id'] = donor_id
+				slip['donor_id'] = donor_id
 	
+		
 		return slip_data
+
+
+			
+					
+
 
 
 
@@ -337,21 +340,21 @@ def map_donar_id_with_bank_account(slip_data,bank_data):
 def donar_to_full_name(slip_data,bank_data):
 	# Create a dictionary to map donor_id to full_name
 	donor_id_to_full_name = {}
-
+	
 	# Iterate through new_data to create the mapping
 	for donor in bank_data:
 			full_name_parts = [donor.get('donor_name', ''), donor.get('middle_name', ''), donor.get('last_name', '')]
 			full_name = ' '.join(part if part else ' ' for part in full_name_parts).strip()
 			donor_id = donor.get('name')
 			donor_id_to_full_name[donor_id] = full_name
-
+	
 	# Update slip_data with full_name where donor_id matches
 	for slip in slip_data:
 		donor_id = slip.get('donor_id')
 		full_name = donor_id_to_full_name.get(donor_id)
 		if full_name:
 			slip['full_name'] = full_name
-
+	
 	return slip_data
 
 

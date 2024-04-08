@@ -77,7 +77,6 @@ frappe.ui.form.on('Donor', {
 	        }
 	    })
 	},
-	
 	electronic_trans_limit: function(frm){
 		var ch_l = frm.doc.cheque_trans_limit;
 		var elect_l = frm.doc.electronic_trans_limit;
@@ -99,10 +98,9 @@ frappe.ui.form.on('Donor', {
 		if (frm.doc.aadhar.length > 12 ){
             frappe.throw(__('Enter a valid Aadhar'))
         }
-	}
+	},
 
 });
-
 frappe.ui.form.on('Donor Bank detail', {
     bank_account: function(frm, cdt, cdn){
         var child_doc = locals[cdt][cdn];
