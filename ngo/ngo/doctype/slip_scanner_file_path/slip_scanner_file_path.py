@@ -37,7 +37,10 @@ def read_csv_(dict_list,df):
 			if number_:
 				slip_number = number_[0]
 				slip_number_lst.append(slip_number)
-			bank_details = row.get("C")	
+			bank_details = row.get("C")
+
+
+
 			if isinstance(bank_details,str):
 				bank_details = bank_details.replace('@', '')
 				bank_details_str = bank_details.split("<")
@@ -109,19 +112,26 @@ def read_csv_(dict_list,df):
 		
 		
 		unique_account_number_lst = []
+		unique_code_list_for_row = []
 		for row in filter_dict:
 			micr_code = row.get("micr_code")
 			short_account_number = row.get("short_account_number")
 			branch_code = row.get("branch_code")
+			check_number = row.get("check_number")
 			if micr_code is not None and short_account_number is not None and branch_code is not None:
 				row["Unique_number"] = micr_code + short_account_number + branch_code
 				unique_account_number_lst.append(row.get("Unique_number"))
 			
-		
+			if micr_code is not None and short_account_number is not None and branch_code is not None and check_number is not None:
+				row["Unique_code_for_row"] = check_number + micr_code + short_account_number + branch_code
+				unique_account_number_lst.append(row.get("Unique_number"))
+				unique_code_list_for_row.append({"slip_number":row["slip_number"],"Unique_code_for_row":row["Unique_code_for_row"]})
+				
+			
+			
+
 		bank_name_lst = []
 		bank_dict = []
-
-
 
 
 		for value in set(unique_account_number_lst):
@@ -131,11 +141,8 @@ def read_csv_(dict_list,df):
 			[bank_name_lst.append(row.get("bank_account")) for row in bank_donar_details if row.get("bank_account")]
 		
 
-
+		
 		slip_data = merged_dict_(filter_dict,bank_dict)
-
-
-
 		donar_id_lst = []
 		bank_details_lst = []
 		
@@ -177,12 +184,16 @@ def read_csv_(dict_list,df):
 				formatted_date = date_object.strftime('%Y-%m-%d')			
 				row["date_of_slip"] = formatted_date
 
-			
 			if row.get("slip_number"):
 				if row.get("slip_number").startswith("RC-NB"):
+					if micr_code is not None and short_account_number is not None and branch_code is not None and check_number is not None:
+						row["Unique_code_for_row"] = check_number + micr_code + short_account_number + branch_code
+						unique_account_number_lst.append(row.get("Unique_number"))
+						Unique_code_for_row.append(row.get("Unique_code_for_row"))
 					list_for_blocked_donar_details.append(row.get("donor_id"))
 			
-			
+
+
 			for row in set(list_for_blocked_donar_details):
 				donor_doc = frappe.get_doc("Donor",{"name":row})
 				donor_doc.block_status = "Blocked"
@@ -190,14 +201,39 @@ def read_csv_(dict_list,df):
 				donor_doc.save()
 		
 
+		unique_code_for_rows = []
+		for row in unique_code_list_for_row:
+			if row.get("slip_number").startswith("RC"):
+				unique_code_for_rows.append(row.get("Unique_code_for_row"))
+		
+		unique_code_identifier_ = []
+		for row in filter_dict:
+			if row.get("Unique_code_for_row"):
+				slip_form_check_form = frappe.db.get_all("Slip Cheque Form",{"unique_row_identifier":row.get("Unique_code_for_row")},["unique_row_identifier","slip_number"])		
+				if slip_form_check_form:
+					unique_code_identifier_.append(slip_form_check_form[0])
+		
+		for row in unique_code_identifier_:
+			slip_form  = frappe.get_doc("Slip Form",{"name":row.get("slip_number")})
+
+			for rows in slip_form.cheque_details:
+				if rows.get("unique_row_identifier") in unique_code_for_rows:
+					rows.clearing_status = "RETURNED"
+			slip_form.save()
+
 		return filter_dict,slip_number_lst
+
+
+
+
 		
 		
+
+
 
 
 
 def crete_entries_in_slip_form(filter_dict,slip_number_lst):
-	
 	slip_number_created = []
 	existing_slip_number = []
 	slip_number_lst_created_ = frappe.db.get_all("Slip Form",["slip_number"])
@@ -229,6 +265,7 @@ def crete_entries_in_slip_form(filter_dict,slip_number_lst):
 				sr_number = sr_number + 1
 				slip_form_doc.append("cheque_details",{
 					"srno":sr_number,
+					"slip_number":slip_number,
 					"cheque_number": row.get("check_number"),
 					"micr_code": row.get("micr_code"),
 					"branch_code": row.get("branch_code"),
@@ -239,15 +276,15 @@ def crete_entries_in_slip_form(filter_dict,slip_number_lst):
 					"cheque_date": row.get("date_of_slip"),
 					"account_no":row.get("bank_account"),
 					"clearing_status":"CREATED",
-					"missing_check_details":row.get("missing_check_") 
-
+					"missing_check_details":row.get("missing_check_"),
+					"unique_row_identifier":row.get("Unique_code_for_row")
 				})
-			
 	
 			slip_number_created.append(slip_number)	
 			slip_form_doc.save()
 	
 	return len(slip_number_created)
+	
 			
 	
 	
