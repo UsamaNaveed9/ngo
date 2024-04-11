@@ -42,9 +42,8 @@ frappe.ui.form.on('Slip Scanner File Path',{
 		// var formattedDate = today.toISOString().slice(0,10);
 
 	}
-		
 
-		});
+});
 
 	
 

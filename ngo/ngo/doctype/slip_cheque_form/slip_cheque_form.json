@@ -40,6 +40,8 @@
   "clearing_status",
   "event_type",
   "event",
+  "ref_link",
+  "ref_id_sr_number",
   "code",
   "slip_item_system_recon_status",
   "slip_item_manual_recon_status",
@@ -324,12 +326,22 @@
    "fieldname": "unique_row_identifier",
    "fieldtype": "Data",
    "label": "Unique Row Identifier "
+  },
+  {
+   "fieldname": "ref_link",
+   "fieldtype": "Data",
+   "label": "Ref Link"
+  },
+  {
+   "fieldname": "ref_id_sr_number",
+   "fieldtype": "Data",
+   "label": "Ref sr number"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-04-09 14:21:23.352577",
+ "modified": "2024-04-10 15:19:00.465815",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Slip Cheque Form",
