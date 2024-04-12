@@ -20,6 +20,7 @@
   "amount",
   "column_break_da0nk",
   "account_no",
+  "bank_account_name",
   "section_break_aquhj",
   "check_image_attched",
   "check_image",
@@ -336,12 +337,19 @@
    "fieldname": "ref_id_sr_number",
    "fieldtype": "Data",
    "label": "Ref sr number"
+  },
+  {
+   "fieldname": "bank_account_name",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Bank Account Name",
+   "options": "Bank Account"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-04-10 15:19:00.465815",
+ "modified": "2024-04-12 11:25:56.890769",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Slip Cheque Form",

@@ -5,6 +5,11 @@ frappe.ui.form.on('Slip Form', {
     $("button[data-original-title=Print]").hide();
     frm.add_custom_button(__('Print Slip'),function(){
         var cheque_details = frm.doc.cheque_details;
+        var current_date = frappe.datetime.now_date();
+
+        frm.set_value("deposit_date",current_date)
+        frm.set_value("slip_deposited_status","Yes")
+        
         $.each(cheque_details, function(index, value){
             value.clearing_status = "DEPOSITED";
             if(value.amount == 0){
@@ -59,7 +64,7 @@ frappe.ui.form.on('Slip Form', {
 }); 
 
 frappe.ui.form.on('Slip Cheque Form', {
-    next: function(frm,cdt,cdn) {
+    next: function(frm,cdt,cdn){
         var cheque_details = cur_frm.doc.cheque_details;
         var child = locals[cdt][cdn];
         var current_row_idx = child.idx
@@ -77,6 +82,61 @@ frappe.ui.form.on('Slip Cheque Form', {
 
     previous: function(frm) {
         cur_frm.open_grid_row().open_prev();
+    },
+    account_no:function(frm,cdt,cdn){
+        var child = locals[cdt][cdn];
+        var account_no = child.account_no
+        if (account_no){
+
+             frappe.call({
+                    method: "ngo.ngo.doctype.slip_form.slip_form.get_donor_details_from_account",
+                    args: {
+                        account_no: account_no
+                    },
+                    callback: function(r){
+                        frappe.model.set_value(child.doctype, child.name, "donor_id_number",r.message.name)
+                        frappe.model.set_value(child.doctype, child.name, "donor_name",r.message.full_name)
+                    }
+                });
+
+
+
+        }
+       
+        },
+
+    donor_id_number:function(frm,cdt,cdn){
+        var child = locals[cdt][cdn];
+        var donor_id_number = child.donor_id_number
+        if (donor_id_number){
+           frappe.call({
+                method: "ngo.ngo.doctype.slip_form.slip_form.get_donor_details_from_donar_id",
+                args: {
+                    donor_id_number: donor_id_number
+                },
+                callback: function(r){
+                    if (!child.account_no){
+                        frappe.model.set_value(child.doctype, child.name, "account_no",r.message.account_name)    
+                    }
+                    frappe.model.set_value(child.doctype, child.name, "donor_name",r.message.full_name)
+                }
+            });
+
+        }
     }
 });
+
+
+     
+        
+
+
+
+
+
+
+
+
+
+
 
