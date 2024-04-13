@@ -30,6 +30,18 @@ def read_csv_(dict_list,df):
 		for row in dict_list:
 			date_of_slip = row.get("A")  # Extract date_of_slip from dictionary
 			number = row.get("B")  # Extract number from dictionary
+
+			check_number_ = row.get("B")
+
+			filename = check_number_.split('\\')[-1]
+
+			new_file_name = "/files/" + filename
+			
+
+			
+
+			
+
 			slip_number = None  # Initialize slip_number to None
 			pattern = r'\\([^\\$]+)\$'
 			number_ = re.findall(pattern, number)
@@ -63,7 +75,7 @@ def read_csv_(dict_list,df):
 							"micr_code": micr_code,
 							"short_account_number": short_account_number,
 							"branch_code": branch_code,
-							"check_path_number":number,
+							"check_path_number":new_file_name,
 							"bank_accounts":row.get("bank_accounts"),
 							"account_name":row.get("account_name"),
 							"slip_date":row.get("slip_date")
@@ -73,12 +85,13 @@ def read_csv_(dict_list,df):
 							"date_of_slip": date_of_slip,
 							"slip_number": slip_number,
 							"missing_check_":number,
-							"check_path_number":number,
+							"check_path_number":new_file_name,
 							"bank_accounts":row.get("bank_accounts"),
 							"account_name":row.get("account_name"),
 							"slip_date":row.get("slip_date")
 						})
 						missing_check_details.append(number)
+
 
 		
 		list_of_check_number = []
