@@ -2,6 +2,27 @@
 // For license information, please see license.txt
 frappe.ui.form.on('Slip Form', {
     refresh:function(frm){
+        // frm.add_custom_button(__('Select Blocked Donor'),function(){
+        //         // Iterate over each row in the grid
+        //         $.each(frm.doc.cheque_details, function(index, row) {
+        //             // Check if the row meets your condition, for example, if donor_status is "Blocked"
+        //             if (row.donor_status == "Blocked"){
+        //                 $('*[data-fieldname="cheque_details"]').find('.grid-row-check')[index+1].click()
+        //             }
+        //         });
+      
+        // },__("DELETE"));
+        // frm.add_custom_button(__('Delete Blocked Donor'),function(){
+        //       frappe.confirm('Are you sure you want Delete Row',
+        //             () => {
+        //                 var grid = frm.fields_dict['cheque_details'].grid;
+        //                 var selected_rows = grid.get_selected_children();
+        //                 grid.delete_rows(selected_rows)
+
+        //             }, () => {
+                        
+        //             })  
+        // },__("DELETE"));
     $("button[data-original-title=Print]").hide();
     frm.add_custom_button(__('Print Slip'),function(){
         var cheque_details = frm.doc.cheque_details;
@@ -98,13 +119,9 @@ frappe.ui.form.on('Slip Cheque Form', {
                         frappe.model.set_value(child.doctype, child.name, "donor_name",r.message.full_name)
                     }
                 });
-
-
-
         }
        
         },
-
     donor_id_number:function(frm,cdt,cdn){
         var child = locals[cdt][cdn];
         var donor_id_number = child.donor_id_number
@@ -134,9 +151,18 @@ frappe.ui.form.on('Slip Cheque Form', {
 
 
 
+// function get_selected(){
+//         // returns list of children that are selected. returns [parentfield, name] for each
+//         var selected = {}, me = this;
+//         frappe.meta.get_table_fields(this.doctype).forEach(function(df){
+//             // handle TableMultiselect child fields
+//             let _selected = [];
 
+//             if(me.fields_dict[df.fieldname].grid) {
+//                 _selected = me.fields_dict[df.fieldname].grid.get_selected();
+//             }
 
-
-
-
-
+           
+//         });
+//         return selected;
+// }

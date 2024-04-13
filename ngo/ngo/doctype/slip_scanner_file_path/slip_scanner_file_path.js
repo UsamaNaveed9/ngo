@@ -37,7 +37,6 @@ frappe.ui.form.on('Slip Scanner File Path',{
 		var month = today.getMonth() + 1; // Months are zero-based, so we add 1
 		var year = today.getFullYear();
 		var formattedDate = year + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);
-
 		frm.set_value("slip_date",formattedDate)
 		// var formattedDate = today.toISOString().slice(0,10);
 
