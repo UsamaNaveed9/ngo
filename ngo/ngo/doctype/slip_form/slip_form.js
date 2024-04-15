@@ -2,41 +2,65 @@
 // For license information, please see license.txt
 frappe.ui.form.on('Slip Form', {
     refresh:function(frm){
-        // frm.add_custom_button(__('Select Blocked Donor'),function(){
-        //         // Iterate over each row in the grid
-        //         $.each(frm.doc.cheque_details, function(index, row) {
-        //             // Check if the row meets your condition, for example, if donor_status is "Blocked"
-        //             if (row.donor_status == "Blocked"){
-        //                 $('*[data-fieldname="cheque_details"]').find('.grid-row-check')[index+1].click()
-        //             }
-        //         });
-      
-        // },__("DELETE"));
-        // frm.add_custom_button(__('Delete Blocked Donor'),function(){
-        //       frappe.confirm('Are you sure you want Delete Row',
-        //             () => {
-        //                 var grid = frm.fields_dict['cheque_details'].grid;
-        //                 var selected_rows = grid.get_selected_children();
-        //                 grid.delete_rows(selected_rows)
+        frm.add_custom_button(__('Select Blocked Donor'),function(){
+                // Iterate over each row in the grid
+                var block_donor = []
+                $.each(frm.doc.cheque_details, function(index, row) {
+                    // Check if the row meets your condition, for example, if donor_status is "Blocked"
+                    if (row.donor_status == "Blocked"){
+                        $('*[data-fieldname="cheque_details"]').find('.grid-row-check')[index+1].click()
+                        block_donor.push(row.donor_status)    
+                    }
+                });
+            frappe.msgprint(__("{0}  Row  Selected  For delete ", [block_donor.length]));
+        },__("DELETE"));
+        frm.add_custom_button(__('Delete Blocked Donor'),function(){
+              frappe.confirm('Are you sure you want Delete Row',
+                    () => {
+                        var grid = frm.fields_dict['cheque_details'].grid;
+                        var selected_rows = grid.get_selected_children();
+                        grid.delete_rows(selected_rows)
 
-        //             }, () => {
+                    }, () => {
                         
-        //             })  
-        // },__("DELETE"));
+                    })  
+        },__("DELETE"));
     $("button[data-original-title=Print]").hide();
     frm.add_custom_button(__('Print Slip'),function(){
         var cheque_details = frm.doc.cheque_details;
         var current_date = frappe.datetime.now_date();
-
         frm.set_value("deposit_date",current_date)
         frm.set_value("slip_deposited_status","Yes")
-        
+        var block_donor = []
         $.each(cheque_details, function(index, value){
             value.clearing_status = "DEPOSITED";
             if(value.amount == 0){
                 frappe.throw(__("Amount For Check Cannot be Zero For Row Number- ") + value.srno);
             }
         });
+
+        var print_format_id = frm.doc.name;
+        var formated_url = "/api/method/frappe.utils.print_format.download_pdf?doctype=Slip Form&name=" + print_format_id + "&format=Slip-1&no_letterhead=1&letterhead=No Letterhead&settings={}&_lang=en-US"
+        window.open(formated_url);
+        
+        frappe.msgprint("Clearing Status DEPOSITED Applied");
+        },__("Print"));
+    frm.add_custom_button(__('Print Detailed Slip'),function(){
+        var cheque_details = frm.doc.cheque_details;
+        var current_date = frappe.datetime.now_date();
+
+        frm.set_value("deposit_date",current_date)
+        frm.set_value("slip_deposited_status","Yes")
+        var block_donor = []
+        $.each(cheque_details, function(index, value){
+            value.clearing_status = "DEPOSITED";
+            if(value.amount == 0){
+                frappe.throw(__("Amount For Check Cannot be Zero For Row Number- ") + value.srno);
+            }
+        });
+        var print_format_id = frm.doc.name;
+        var formated_url = "/api/method/frappe.utils.print_format.download_pdf?doctype=Slip Form&name=" + print_format_id + "&format=Slip-2&no_letterhead=1&letterhead=No Letterhead&settings={}&_lang=en-US"
+        window.open(formated_url);
         frappe.msgprint("Clearing Status DEPOSITED Applied");
         },__("Print"));
     },
@@ -71,10 +95,7 @@ frappe.ui.form.on('Slip Form', {
                 value.clearing_status = "RETURNED"
             }
             if(value.amount == 0){
-
                 frappe.throw(__("Amount For Check Cannot be Zero For Row Number- ") + value.srno);
-
-
             }
         });
         frm.set_value("total_amount_in_slip",total_amount) 
