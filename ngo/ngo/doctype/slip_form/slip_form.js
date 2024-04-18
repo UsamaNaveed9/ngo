@@ -102,10 +102,38 @@ frappe.ui.form.on('Slip Form', {
         frm.set_value("number_of_cheques_returned_or_rejected_in_slip",number_of_cheques_returned_or_rejected_in_slip_lst.length)
         frm.set_value("number_of_cheques_deposited_in_slip",totalNumberOfCheckDeposited.length)
         frm.set_value("total_amount_of_deposited_cheques",totalAmountDeposited)
+    },
+    cheque_details_on_form_rendered:function(frm,cdt,cdn){
+
+        var cheque_details_len = frm.doc.cheque_details.length
+
+        var newDiv = $('<div>').text('Total Number Of Checks: ' + cheque_details_len);
+
+        newDiv.css({
+               'font-size': '20px',
+               'color': 'red'
+           });
+        
+        $('[data-fieldname="total_row_count"]').empty().append(newDiv);
+        
+        frm.fields_dict["cheque_details"].grid.wrapper.find('.grid-insert-row-below').hide();
+        frm.fields_dict["cheque_details"].grid.wrapper.find('.grid-delete-row').hide();
+        frm.fields_dict["cheque_details"].grid.wrapper.find('.grid-insert-row').hide();
+        frm.fields_dict["cheque_details"].grid.wrapper.find('.grid-duplicate-row').hide();
+        frm.fields_dict["cheque_details"].grid.wrapper.find('.grid-move-row').hide();
+        frm.fields_dict["cheque_details"].grid.wrapper.find('.grid-collapse-row').hide();
+        frm.fields_dict["cheque_details"].grid.wrapper.find('.grid-append-row').hide();
+
+                
+
+                
+
     }
 }); 
 
 frappe.ui.form.on('Slip Cheque Form', {
+
+
     next: function(frm,cdt,cdn){
         var cheque_details = cur_frm.doc.cheque_details;
         var child = locals[cdt][cdn];
@@ -162,6 +190,8 @@ frappe.ui.form.on('Slip Cheque Form', {
 
         }
     }
+
+   
 });
 
 

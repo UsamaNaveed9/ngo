@@ -36,11 +36,7 @@ def read_csv_(dict_list,df):
 			filename = check_number_.split('\\')[-1]
 
 			new_file_name = "/files/" + filename
-			
 
-			
-
-			
 
 			slip_number = None  # Initialize slip_number to None
 			pattern = r'\\([^\\$]+)\$'
@@ -100,6 +96,13 @@ def read_csv_(dict_list,df):
 		
 		df = df[["A","B"]]
 		dict_list_for_records_map = df.to_dict('records')
+
+		for row in dict_list_for_records_map:
+			check_number_ = row.get("B")
+			filename = check_number_.split('\\')[-1]
+			new_file_name = "/files/" + filename
+			row["B"] = new_file_name
+
 
 		pattern = r'\\([^\\$]+)\$'
 		for row in dict_list_for_records_map:
@@ -244,6 +247,11 @@ def read_csv_(dict_list,df):
 				donar_details = frappe.db.get_all("Donor",{"name":value}, ["name","block_status"])
 				if donar_details[0]:
 					row["block_status"] = donar_details[0].get("block_status")
+		
+		for row in filter_dict:
+			image_path = row.get("check_path_number").split("/")
+			row["image_path"] = image_path[2]
+
 		return filter_dict,slip_number_lst
 
 
@@ -278,6 +286,8 @@ def crete_entries_in_slip_form(filter_dict,slip_number_lst):
 					"srno":sr_number,
 					"slip_number":slip_number,
 					"token":slip_number,
+					"image":row.get("image_path"),
+					"cheque_image_file_name":row.get("check_path_number"),
 					"ref_link":row.get("ref_link"),
 					"cheque_number": row.get("check_number"),
 					"micr_code": row.get("micr_code"),

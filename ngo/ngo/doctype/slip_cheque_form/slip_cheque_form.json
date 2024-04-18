@@ -5,6 +5,8 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "total_row_count",
+  "section_break_fklqr",
   "previous",
   "column_break_jqjfu",
   "next",
@@ -18,8 +20,10 @@
   "column_break_ptsow",
   "section_break_yp4hc",
   "amount",
+  "donor_id_number",
   "column_break_da0nk",
   "account_no",
+  "donor_name",
   "bank_account_name",
   "section_break_aquhj",
   "check_image_attched",
@@ -34,11 +38,9 @@
   "cheque_number",
   "micr_code",
   "short_code",
-  "donor_id_number",
   "donor_status",
   "branch_code",
   "column_break_6",
-  "donor_name",
   "clearing_status",
   "event_type",
   "event",
@@ -139,9 +141,10 @@
   {
    "columns": 1,
    "fieldname": "account_no",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Account No"
+   "label": "Account No",
+   "options": "Account Number"
   },
   {
    "columns": 1,
@@ -351,12 +354,21 @@
    "fieldtype": "Select",
    "label": "Donor Status",
    "options": "\nBlocked\nUnblocked"
+  },
+  {
+   "fieldname": "section_break_fklqr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "total_row_count",
+   "fieldtype": "HTML",
+   "label": "Total Row Count"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-04-13 10:40:46.939871",
+ "modified": "2024-04-17 15:29:07.230445",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Slip Cheque Form",
