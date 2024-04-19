@@ -105,8 +105,19 @@ frappe.ui.form.on('Slip Form', {
     },
     cheque_details_on_form_rendered:function(frm,cdt,cdn){
 
-        var cheque_details_len = frm.doc.cheque_details.length
+        // $('[data-fieldname="form-grid"]').on('keydown', function(event) {
 
+
+        //     // Check if the pressed key is the right arrow key (key code 39)
+        //     if (event.keyCode === 39) {
+        //         // Call the open_prev() method
+        //         cur_frm.open_grid_row().open_prev();
+        //     }
+        // }); 
+
+        
+        
+        var cheque_details_len = frm.doc.cheque_details.length
         var newDiv = $('<div>').text('Total Number Of Checks: ' + cheque_details_len);
 
         newDiv.css({
@@ -131,9 +142,7 @@ frappe.ui.form.on('Slip Form', {
     }
 }); 
 
-frappe.ui.form.on('Slip Cheque Form', {
-
-
+frappe.ui.form.on('Slip Cheque Form',{
     next: function(frm,cdt,cdn){
         var cheque_details = cur_frm.doc.cheque_details;
         var child = locals[cdt][cdn];
@@ -153,6 +162,9 @@ frappe.ui.form.on('Slip Cheque Form', {
     previous: function(frm) {
         cur_frm.open_grid_row().open_prev();
     },
+
+
+
     account_no:function(frm,cdt,cdn){
         var child = locals[cdt][cdn];
         var account_no = child.account_no
@@ -191,12 +203,16 @@ frappe.ui.form.on('Slip Cheque Form', {
         }
     }
 
+
    
 });
 
 
-     
-        
+
+
+
+  
+
 
 
 
@@ -217,3 +233,4 @@ frappe.ui.form.on('Slip Cheque Form', {
 //         });
 //         return selected;
 // }
+

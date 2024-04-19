@@ -13,7 +13,7 @@ class SlipForm(Document):
 
 @frappe.whitelist()
 def get_donor_details_from_account(account_no):
-	account_details = frappe.db.get_all("Bank Account",{"account_name":account_no},["account_name","donor_id"])
+	account_details = frappe.db.get_all("Bank Account",{"name":account_no},["account_name","donor_id"])
 	if account_details:
 		if account_details[0].get("donor_id"):
 			donor_data = frappe.db.get_all("Donor",{"name":account_details[0].get("donor_id")},["donor_name","middle_name","last_name","name"])
