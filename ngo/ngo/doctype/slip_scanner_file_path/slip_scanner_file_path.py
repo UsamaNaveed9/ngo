@@ -32,6 +32,7 @@ def read_csv_(dict_list,df):
 			number = row.get("B")  # Extract number from dictionary
 
 			check_number_ = row.get("B")
+			event_master = row.get("event_master")
 
 			filename = check_number_.split('\\')[-1]
 
@@ -39,6 +40,7 @@ def read_csv_(dict_list,df):
 
 
 			slip_number = None  # Initialize slip_number to None
+			#event_code = None
 			pattern = r'\\([^\\$]+)\$'
 			number_ = re.findall(pattern, number)
 			
@@ -74,7 +76,8 @@ def read_csv_(dict_list,df):
 							"check_path_number":new_file_name,
 							"bank_accounts":row.get("bank_accounts"),
 							"account_name":row.get("account_name"),
-							"slip_date":row.get("slip_date")
+							"slip_date":row.get("slip_date"),
+							"event_master":row.get("event_master")
 						})
 					else:
 						filter_dict.append({
@@ -84,9 +87,12 @@ def read_csv_(dict_list,df):
 							"check_path_number":new_file_name,
 							"bank_accounts":row.get("bank_accounts"),
 							"account_name":row.get("account_name"),
-							"slip_date":row.get("slip_date")
+							"slip_date":row.get("slip_date"),
+							"event_master":row.get("event_master")
+
 						})
 						missing_check_details.append(number)
+						frappe.errpeint(filter_dict)
 
 
 		
@@ -251,7 +257,6 @@ def read_csv_(dict_list,df):
 		for row in filter_dict:
 			image_path = row.get("check_path_number").split("/")
 			row["image_path"] = image_path[2]
-
 		return filter_dict,slip_number_lst
 
 
@@ -267,8 +272,9 @@ def crete_entries_in_slip_form(filter_dict,slip_number_lst):
 	slip_number_created = []
 	filter_dict.sort(key=itemgetter('slip_number'))  # Ensure data is sorted based on the grouping key
 	grouped_data = {key: list(group) for key, group in groupby(filter_dict, key=itemgetter('slip_number'))}
-	
-	for slip_number,group_data in grouped_data.items():	
+	frappe.errprint(grouped_data)
+	for slip_number,group_data in grouped_data.items():
+		frappe.errprint(grouped_data)	
 		if slip_number not in  existing_slip_number:
 			slip_exists = frappe.db.exists("Slip Form", {"slip_number": slip_number})
 			if slip_exists:
@@ -276,7 +282,9 @@ def crete_entries_in_slip_form(filter_dict,slip_number_lst):
 			else:
 				slip_form_doc = frappe.new_doc("Slip Form")
 				slip_form_doc.slip_number = slip_number
+				#slip_form_doc.slip_event_code = doc.event_master
 				slip_form_doc.deposit_account = group_data[0].get("bank_accounts")
+				slip_form_doc.slip_event_code = group_data[0].get("event_master")
 				slip_form_doc.deposit_bank = group_data[0].get("account_name")
 				slip_form_doc.slip_date = group_data[0].get("slip_date")
 			for sr_number , row  in  enumerate(group_data):
@@ -323,6 +331,7 @@ def read_csv(file,doc):
 	# file_path = frappe.utils.get_files_path(file_doc.file_name)
 	file = get_absolute_path(file_url)
 	doc = json.loads(doc)
+	event_master = doc.get("event_master")
 	bank_accounts = doc.get("bank_accounts")
 	account_name = doc.get("account_name")
 	slip_date = doc.get("slip_date")
@@ -331,6 +340,7 @@ def read_csv(file,doc):
 	
 	for row in dict_list:
 		row["bank_accounts"] = bank_accounts
+		row["event_master"] = event_master
 		row["account_name"] = account_name
 		row["slip_date"] = slip_date
 	
@@ -425,7 +435,6 @@ def donar_to_full_name(slip_data,bank_data):
 	
 
 	
-
 
 
 
