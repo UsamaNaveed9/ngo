@@ -116,7 +116,6 @@ frappe.ui.form.on('Donor Bank detail', {
                     $.each(bank_details, function(i, v){
                         // Set values for fields in the parent form using cur_frm
                         frappe.model.set_value(cdt, cdn, 'micr_code', v.micr);
-                        frappe.model.set_value(cdt, cdn, 'branch_code', v.branch_code);
                         frappe.model.set_value(cdt, cdn, "bank", v.bank);
                         frappe.model.set_value(cdt, cdn, "short_account_number",v.short_account_number);
                     

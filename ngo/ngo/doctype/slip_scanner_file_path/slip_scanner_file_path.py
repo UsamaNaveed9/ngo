@@ -92,7 +92,7 @@ def read_csv_(dict_list,df):
 
 						})
 						missing_check_details.append(number)
-						frappe.errpeint(filter_dict)
+						
 
 
 		
@@ -129,15 +129,31 @@ def read_csv_(dict_list,df):
 			short_account_number = row.get("short_account_number")
 			branch_code = row.get("branch_code")
 			check_number = row.get("check_number")
+
+			if micr_code:
+				micr_code = add_zeroes_for_micr_code(micr_code)
+
+			if short_account_number:
+				short_account_number = add_zeroes_for_short_account_number(short_account_number)
+			
+			if check_number:
+				check_number = add_zeroes_for_micr_code(check_number)
+
+			if branch_code:
+				branch_code = add_zeroes_for_bank_code(branch_code)
+
+
 			if micr_code is not None and short_account_number is not None and branch_code is not None:
-				row["Unique_number"] = micr_code + short_account_number + branch_code
+				row["Unique_number"] = micr_code + short_account_number 
 				unique_account_number_lst.append(row.get("Unique_number"))
 			
 			if micr_code is not None and short_account_number is not None and branch_code is not None and check_number is not None:
 				row["Unique_code_for_row"] = check_number + micr_code + short_account_number + branch_code
 				unique_account_number_lst.append(row.get("Unique_number"))
 				unique_code_list_for_row.append({"slip_number":row["slip_number"],"Unique_code_for_row":row["Unique_code_for_row"]})
-				
+			
+			
+
 			
 			
 
@@ -186,7 +202,6 @@ def read_csv_(dict_list,df):
 
 
 		filter_dict = donar_to_full_name(slip_data,donar_details_lst)
-
 
 
 		list_for_blocked_donar_details = []
@@ -272,9 +287,8 @@ def crete_entries_in_slip_form(filter_dict,slip_number_lst):
 	slip_number_created = []
 	filter_dict.sort(key=itemgetter('slip_number'))  # Ensure data is sorted based on the grouping key
 	grouped_data = {key: list(group) for key, group in groupby(filter_dict, key=itemgetter('slip_number'))}
-	frappe.errprint(grouped_data)
 	for slip_number,group_data in grouped_data.items():
-		frappe.errprint(grouped_data)	
+		
 		if slip_number not in  existing_slip_number:
 			slip_exists = frappe.db.exists("Slip Form", {"slip_number": slip_number})
 			if slip_exists:
@@ -290,6 +304,7 @@ def crete_entries_in_slip_form(filter_dict,slip_number_lst):
 			for sr_number , row  in  enumerate(group_data):
 				sr_number = sr_number + 1
 				slip_form_doc.append("cheque_details",{
+					"event":group_data[0].get("event_master"),
 					"check_image":row.get("check_path_number"), 
 					"srno":sr_number,
 					"slip_number":slip_number,
@@ -422,9 +437,23 @@ def donar_to_full_name(slip_data,bank_data):
 
 
 
+def add_zeroes_for_micr_code(str_num):
+    num_length = len(str_num)
+    num_zeroes = 9 - num_length
+    return '0' * num_zeroes + str_num
 
 
-		
+
+def add_zeroes_for_short_account_number(str_num):
+    num_length = len(str_num)
+    num_zeroes = 6 - num_length
+    return '0' * num_zeroes + str_num
+
+
+def add_zeroes_for_bank_code(str_num):
+    num_length = len(str_num)
+    num_zeroes = 2 - num_length
+    return '0' * num_zeroes + str_num	
 		
 		
 	

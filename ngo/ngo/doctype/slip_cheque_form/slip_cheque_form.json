@@ -29,7 +29,6 @@
   "check_image",
   "section_break_biphr",
   "missing_check_details",
-  "deposit_date",
   "token",
   "srno",
   "cheque_bank",
@@ -60,13 +59,6 @@
   "unique_row_identifier"
  ],
  "fields": [
-  {
-   "columns": 1,
-   "fieldname": "deposit_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Deposit Date"
-  },
   {
    "columns": 1,
    "fieldname": "token",
@@ -360,7 +352,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-04-19 11:16:55.831551",
+ "modified": "2024-04-23 18:15:22.496724",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Slip Cheque Form",
