@@ -114,9 +114,7 @@ frappe.ui.form.on('Slip Form',{
         });
     },
     cheque_details_on_form_rendered:function(frm,cdt,cdn){
-            
-        
-        // setupKeyboardShortcuts(frm,cdt,cdn);
+        setupKeyboardShortcuts(frm,cdt,cdn);
         var cheque_details_len = frm.doc.cheque_details.length
         var newDiv = $('<div>').text('Total Number Of Checks: ' + cheque_details_len);
         newDiv.css({
@@ -196,36 +194,29 @@ frappe.ui.form.on('Slip Cheque Form',{
 
         }
     }
-
-
    
 });
 
-// function setupKeyboardShortcuts(frm, cdt, cdn) {
-//     $(document).off("keydown");
-//     $(document).keydown(function(e) {
-//         var cheque_details = cur_frm.doc.cheque_details;
-//         var child = locals[cdt][cdn];
-//         var current_row_idx = child.idx;
-
-
-
-//         if (e.keyCode === 39) {
-//               // Display the counter value
-//             if (current_row_idx < cheque_details.length) {
-//                 // Open the next row in the grid
-//                 cur_frm.open_grid_row().open_next();
-             
-//             } else {
-//                 frappe.msgprint("All rows have been opened.");
-//             }
-//         }
-
-//         if (e.keyCode === 37) {
-//             cur_frm.open_grid_row().open_prev();
-//         }
-//     });
-// }
+function setupKeyboardShortcuts(frm, cdt, cdn) {
+    $(document).off("keydown");
+    $(document).keydown(function(e) {
+        var cheque_details = cur_frm.doc.cheque_details;
+        var child = locals[cdt][cdn];
+        var current_row_idx =  cur_frm.open_grid_row().wrapper.find('.grid-form-row-index').text()
+        if (e.keyCode === 39) {
+              // Display the counter value
+            if (current_row_idx < cheque_details.length) {
+                // Open the next row in the grid
+                cur_frm.open_grid_row().open_next();
+            } else {
+                frappe.msgprint("All rows have been opened.");
+            }
+        }
+        if (e.keyCode === 37) {
+            cur_frm.open_grid_row().open_prev();
+        }
+    });
+}
 
 
 
