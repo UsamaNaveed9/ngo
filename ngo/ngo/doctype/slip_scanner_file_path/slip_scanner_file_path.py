@@ -130,6 +130,17 @@ def read_csv_(dict_list,df):
 			branch_code = row.get("branch_code")
 			check_number = row.get("check_number")
 
+			if micr_code is not None and short_account_number is not None and branch_code is not None:
+				row["Unique_number"] = micr_code + short_account_number 
+				unique_account_number_lst.append(row.get("Unique_number"))
+
+
+			if micr_code is not None and short_account_number is not None and branch_code is not None and check_number is not None:
+				row["Unique_code_for_row"] = check_number + micr_code + short_account_number + branch_code
+				unique_code_list_for_row.append({"slip_number":row["slip_number"],"Unique_code_for_row":row["Unique_code_for_row"]})
+			
+			
+
 			if micr_code:
 				micr_code = add_zeroes_for_micr_code(micr_code)
 
@@ -143,14 +154,6 @@ def read_csv_(dict_list,df):
 				branch_code = add_zeroes_for_bank_code(branch_code)
 
 
-			if micr_code is not None and short_account_number is not None and branch_code is not None:
-				row["Unique_number"] = micr_code + short_account_number 
-				unique_account_number_lst.append(row.get("Unique_number"))
-			
-			if micr_code is not None and short_account_number is not None and branch_code is not None and check_number is not None:
-				row["Unique_code_for_row"] = check_number + micr_code + short_account_number + branch_code
-				unique_account_number_lst.append(row.get("Unique_number"))
-				unique_code_list_for_row.append({"slip_number":row["slip_number"],"Unique_code_for_row":row["Unique_code_for_row"]})
 			
 			
 
@@ -159,11 +162,16 @@ def read_csv_(dict_list,df):
 
 		bank_name_lst = []
 		bank_dict = []
+
+
+
 		
 		for value in set(unique_account_number_lst):
+			
 			bank_donar_details = frappe.db.get_all("Donor Bank detail",{"unique_account_number__":value}, ["bank_account","unique_account_number__"] )
-
+			
 			[ bank_dict.append(row) for row in bank_donar_details if row ]
+			
 			[bank_name_lst.append(row.get("bank_account")) for row in bank_donar_details if row.get("bank_account")]
 		
 
@@ -190,6 +198,9 @@ def read_csv_(dict_list,df):
 		for row in slip_data:
 			if row.get("bank_account"):
 				bank_details = frappe.db.get_all("Bank Account",{"name":row.get("bank_account")},["name","donor_id","bank_account_no"])
+				
+				print(bank_details,"==============")
+
 				if bank_details:
 					if bank_details[0].get("name") == row.get("bank_account"):
 						row["bank_account_no"] = bank_details[0].get("bank_account_no")
@@ -211,7 +222,18 @@ def read_csv_(dict_list,df):
 				row["bank_account"] = row.get("bank_account")
 			if row.get("date_of_slip"):	
 				# Convert to datetime object
-				date_object = datetime.strptime(row.get("date_of_slip"), '%d-%b-%y %I:%M:%S %p')
+				# date_object = datetime.strptime(row.get("date_of_slip"), '%d-%b-%y %I:%M:%S %p')
+
+				# Assuming row.get("date_of_slip") returns a string in the format '27-01-24 13:58'
+				date_string = row.get("date_of_slip")
+				format_string = '%d-%m-%y %H:%M'
+
+				try:
+					date_object = datetime.strptime(date_string, format_string)
+					
+				except ValueError as e:
+					pass
+
 				# Format to desired string format
 				formatted_date = date_object.strftime('%Y-%m-%d')			
 				row["date_of_slip"] = formatted_date
@@ -270,13 +292,17 @@ def read_csv_(dict_list,df):
 					row["block_status"] = donar_details[0].get("block_status")
 		
 		for row in filter_dict:
-			image_path = row.get("check_path_number").split("/")
-			row["image_path"] = image_path[2]
+			if row.get("check_path_number"):
+
+				image_path = row.get("check_path_number").split("/")
+				row["image_path"] = image_path[2]
 		return filter_dict,slip_number_lst
 
 
 
 def crete_entries_in_slip_form(filter_dict,slip_number_lst):
+	
+	
 	slip_number_created = []
 	existing_slip_number = []
 	slip_number_lst_created_ = frappe.db.get_all("Slip Form",["slip_number"])
@@ -285,11 +311,12 @@ def crete_entries_in_slip_form(filter_dict,slip_number_lst):
 		existing_slip_number.append(row.get("slip_number"))
 	
 	slip_number_created = []
-	filter_dict.sort(key=itemgetter('slip_number'))  # Ensure data is sorted based on the grouping key
+
+	filter_dict.sort(key=lambda x: (x['slip_number'] is not None, x['slip_number']))  # Ensure data is sorted based on the grouping key
 	grouped_data = {key: list(group) for key, group in groupby(filter_dict, key=itemgetter('slip_number'))}
 	for slip_number,group_data in grouped_data.items():
 		
-		if slip_number not in  existing_slip_number:
+		if slip_number and slip_number not in  existing_slip_number:
 			slip_exists = frappe.db.exists("Slip Form", {"slip_number": slip_number})
 			if slip_exists:
 				slip_form_doc = frappe.get_doc("Slip Form", {"slip_number": slip_number})
@@ -329,8 +356,10 @@ def crete_entries_in_slip_form(filter_dict,slip_number_lst):
 			slip_number_created.append(slip_number)	
 			slip_form_check_form = frappe.db.get_all("Slip Cheque Form",{"unique_row_identifier":row.get("Unique_code_for_row") },["name"])
 			
+			print(slip_form_check_form,"====================")
 			for check in slip_form_check_form:
 				frappe.db.set_value("Slip Cheque Form",check.get("name"),"ref_id_sr_number",sr_number)
+
 			slip_form_doc.save()	
 
 	return len(slip_number_created)
@@ -352,6 +381,9 @@ def read_csv(file,doc):
 	slip_date = doc.get("slip_date")
 	df = pd.read_csv(file,names=['A', 'B', 'C'])
 	dict_list = df.to_dict('records')
+
+
+
 	
 	for row in dict_list:
 		row["bank_accounts"] = bank_accounts
@@ -382,6 +414,7 @@ def merged_dict_(slip_data,bank_data):
 	
 	# Create a dictionary to map unique numbers to bank accounts
 	unique_to_bank = {bank['unique_account_number__']: bank['bank_account'] for bank in bank_data}
+
 	# Update slip_data with bank_account where Unique_number matches
 	for slip in slip_data:
 		unique_number = slip.get('Unique_number')
@@ -438,22 +471,22 @@ def donar_to_full_name(slip_data,bank_data):
 
 
 def add_zeroes_for_micr_code(str_num):
-    num_length = len(str_num)
-    num_zeroes = 9 - num_length
-    return '0' * num_zeroes + str_num
+	num_length = len(str_num)
+	num_zeroes = 9 - num_length
+	return '0' * num_zeroes + str_num
 
 
 
 def add_zeroes_for_short_account_number(str_num):
-    num_length = len(str_num)
-    num_zeroes = 6 - num_length
-    return '0' * num_zeroes + str_num
+	num_length = len(str_num)
+	num_zeroes = 6 - num_length
+	return '0' * num_zeroes + str_num
 
 
 def add_zeroes_for_bank_code(str_num):
-    num_length = len(str_num)
-    num_zeroes = 2 - num_length
-    return '0' * num_zeroes + str_num	
+	num_length = len(str_num)
+	num_zeroes = 2 - num_length
+	return '0' * num_zeroes + str_num	
 		
 		
 	
