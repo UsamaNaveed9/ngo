@@ -7,29 +7,121 @@ frappe.ui.form.on('Slip Form',{
 
 
     refresh:function(frm){
-       
-        // $('.primary-action').prop('hidden', true);
-        frm.add_custom_button(__('Select Blocked Donor'),function(){
-                // Iterate over each row in the grid
-                var block_donor = []
-                $.each(frm.doc.cheque_details, function(index, row) {
-                    // Check if the row meets your condition, for example, if donor_status is "Blocked"
-                    if (row.donor_status == "Blocked"){
-                        $('*[data-fieldname="cheque_details"]').find('.grid-row-check')[index+1].click()
-                        block_donor.push(row.donor_status)    
+
+        frm.add_custom_button(__('Select Blocked Donor'), function() {
+            // Function to select blocked donors
+            select_blocked_donors(frm);
+        },__("DELETE"));
+        function select_blocked_donors(frm) {
+            // Assume 'cheque_details' is the table name in the Payment Entry
+            var blocked_donors = frm.doc.cheque_details.filter(cheque => cheque.donor_status === 'Blocked');
+            console.log(blocked_donors);
+        
+            if (blocked_donors.length === 0) {
+                frappe.msgprint(__('No blocked donors found'));
+                return;
+            }
+        
+            // Update the 'is_block' field for blocked donors
+            blocked_donors.forEach(function(cheque) {
+                frappe.model.set_value(cheque.doctype, cheque.name, 'is_block', 1);
+            });
+            frm.save().then(() => {
+                frappe.msgprint(__(`{0} blocked donors selected`, [blocked_donors.length]));
+            });
+            // frm.save()
+            // frappe.msgprint(__('{0} blocked donors selected', [blocked_donors.length]));
+        }
+        frm.add_custom_button(__('Delete Blocked Donor'), function() {
+            select_blocked_donors_slip(frm);
+            // Check if frm and frm.doc are valid
+        }, __("DELETE"));
+
+        function select_blocked_donors_slip(frm) {
+            if (frm && frm.doc) {
+                // Access required properties safely
+                var slip_date = frm.doc.slip_date;
+                console.log(slip_date);
+        
+                // Count the number of blocked donors
+                var blocked_count = 0;
+                frm.doc.cheque_details.forEach(function(row) {
+                    if (row.is_block || row.donor_status === "Blocked") {
+                        blocked_count++;
                     }
                 });
-            frappe.msgprint(__("{0}  Row  Selected  For delete ", [block_donor.length]));
-        },__("DELETE"));
-        frm.add_custom_button(__('Delete Blocked Donor'),function(){
-              frappe.confirm('Are you sure you want Delete Row',
-                    () => {
-                        var grid = frm.fields_dict['cheque_details'].grid;
-                        var selected_rows = grid.get_selected_children();
-                        grid.delete_rows(selected_rows)
-                    }, () => {
-                    })  
-        },__("DELETE"));
+        
+                // Confirm deletion with count
+                frappe.confirm(`Are you sure you want to delete ${blocked_count} row(s) with blocked donors?`, function() {
+                    // Make the call to the server-side function
+                    frappe.call({
+                        method: 'ngo.ngo.doctype.slip_form.slip_form.create_deleted_record',
+                        args: {
+                            docname: frm.doc.name // Pass the document name to the server-side method
+                        },
+                        callback: function(response) {
+                            // Handle the response from the server if needed
+                            console.log(response);
+                            if (response.message) {
+                                frappe.show_alert({
+                                    message: __("New Slip Form created: {0}", [response.message]),
+                                    indicator: 'green'
+                                });
+                                
+                                frm.set_value("total_amount_in_slip", frm.doc.total_amount_in_slip - blocked_amount);
+                                frm.refresh();
+                            }
+                        }
+                    });
+                });
+            } else {
+                // Handle the case when frm or frm.doc is not valid
+                console.error('Form or form document is not valid.');
+            }
+        }
+       
+        // frm.add_custom_button(__('Select Blocked Donor'), function() {
+        //     // Fetch all records of the grid
+        //     var all_cheque_details = frm.doc.cheque_details;
+        //     console.log(all_cheque_details)
+        //     var block_donor = [];
+        //     console.log(block_donor)
+        
+        //     // Iterate over each row in the grid
+        //     all_cheque_details.forEach(function(row, index) {
+        //         // Check if the row meets your condition, for example, if donor_status is "Blocked"
+        //         if (row.donor_status == "Blocked") {
+        //             // Find the grid row index and click the checkbox
+        //             $('*[data-fieldname="cheque_details"]').find('.grid-row-check')[index + 1].click();
+        //             block_donor.push(row.donor_status);
+        //         }
+        //     });
+        
+        //     frappe.msgprint(__("{0} Rows Selected For Delete", [block_donor.length]));
+        // }, __("DELETE"));
+
+        // // $('.primary-action').prop('hidden', true);
+        // // frm.add_custom_button(__('Select Blocked Donor'),function(){
+        // //         // Iterate over each row in the grid
+        // //         var block_donor = []
+        // //         $.each(frm.doc.cheque_details, function(index, row) {
+        // //             // Check if the row meets your condition, for example, if donor_status is "Blocked"
+        // //             if (row.donor_status == "Blocked"){
+        // //                 $('*[data-fieldname="cheque_details"]').find('.grid-row-check')[index+1].click()
+        // //                 block_donor.push(row.donor_status)    
+        // //             }
+        // //         });
+        // //     frappe.msgprint(__("{0}  Row  Selected  For delete ", [block_donor.length]));
+        // // },__("DELETE"));
+        // frm.add_custom_button(__('Delete Blocked Donor'),function(){
+        //       frappe.confirm('Are you sure you want Delete Row',
+        //             () => {
+        //                 var grid = frm.fields_dict['cheque_details'].grid;
+        //                 var selected_rows = grid.get_selected_children();
+        //                 grid.delete_rows(selected_rows)
+        //             }, () => {
+        //             })  
+        // },__("DELETE"));
     $("button[data-original-title=Print]").hide();
     frm.add_custom_button(__('Print Slip'),function(){
         var cheque_details = frm.doc.cheque_details;
@@ -37,10 +129,12 @@ frappe.ui.form.on('Slip Form',{
         frm.set_value("deposit_date",current_date)
         frm.set_value("slip_deposited_status","Yes")
         var block_donor = []
+        var all_status_updated = true;
         $.each(cheque_details, function(index, value){
             value.clearing_status = "DEPOSITED";
             if(value.amount == 0){
                 frappe.throw(__("Amount For Check Cannot be Zero For Row Number- ") + value.srno);
+                all_status_updated = false;
             }
         });
 
@@ -55,10 +149,12 @@ frappe.ui.form.on('Slip Form',{
         frm.set_value("deposit_date",current_date)
         frm.set_value("slip_deposited_status","Yes")
         var block_donor = []
+        var all_status_updated = true;
         $.each(cheque_details, function(index, value){
             value.clearing_status = "DEPOSITED";
             if(value.amount == 0){
                 frappe.throw(__("Amount For Check Cannot be Zero For Row Number- ") + value.srno);
+                var all_status_updated = false;
             }
         });
         var print_format_id = frm.doc.name;
@@ -189,6 +285,7 @@ frappe.ui.form.on('Slip Cheque Form',{
                         frappe.model.set_value(child.doctype, child.name, "account_no",r.message.account_name)    
                     }
                     frappe.model.set_value(child.doctype, child.name, "donor_name",r.message.full_name)
+                    frappe.model.set_value(child.doctype, child.name, "donor_status", r.message.block_status);
                 }
             });
 

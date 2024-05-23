@@ -37,6 +37,7 @@
   "micr_code",
   "short_code",
   "donor_status",
+  "is_block",
   "branch_code",
   "column_break_6",
   "clearing_status",
@@ -331,9 +332,8 @@
   },
   {
    "fieldname": "donor_status",
-   "fieldtype": "Select",
-   "label": "Donor Status",
-   "options": "\nBlocked\nUnblocked"
+   "fieldtype": "Data",
+   "label": "Donor Status"
   },
   {
    "fieldname": "total_row_count",
@@ -347,12 +347,19 @@
   {
    "fieldname": "section_break_944cb",
    "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_block",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Block"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-04-23 18:15:22.496724",
+ "modified": "2024-05-23 14:49:15.611630",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "Slip Cheque Form",
