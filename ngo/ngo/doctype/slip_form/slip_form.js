@@ -162,6 +162,17 @@ frappe.ui.form.on('Slip Form',{
         window.open(formated_url);
         frappe.msgprint("Clearing Status DEPOSITED Applied");
         },__("Print"));
+
+        // set query on bank account to filter by micr and short code in cheque details child table
+        frm.set_query('account_no', 'cheque_details', function(doc, cdt, cdn) {
+            var row = frappe.get_doc(cdt, cdn)
+            return {
+                filters: {
+                    micr: row.micr_code,
+                    short_account_number: row.short_code
+                }
+            }
+        })
     },
     validate:function(frm){
         var slip_number = cur_frm.doc.slip_number

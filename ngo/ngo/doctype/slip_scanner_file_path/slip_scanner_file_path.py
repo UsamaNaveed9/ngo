@@ -136,7 +136,7 @@ def read_csv_(dict_list,df):
                                                     "short_account_number": short_account_number},
                                             fields=["name","donor_id","bank"])
 			frappe.errprint(bank_account_details)
-			if bank_account_details:
+			if len(bank_account_details) == 1:
 				# Check if donor_id exists in the bank account details
 				if "donor_id" in bank_account_details[0]:
 					row["account_no"] = bank_account_details[0]["name"]
