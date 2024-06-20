@@ -123,7 +123,7 @@ frappe.ui.form.on('Slip Form',{
         //             })  
         // },__("DELETE"));
     $("button[data-original-title=Print]").hide();
-    frm.add_custom_button(__('Print Slip'),function(){
+    frm.add_custom_button(__('Print Detailed Slip'),function(){
         var cheque_details = frm.doc.cheque_details;
         var current_date = frappe.datetime.now_date();
         frm.set_value("deposit_date",current_date)
@@ -143,7 +143,7 @@ frappe.ui.form.on('Slip Form',{
         window.open(formated_url);
         frappe.msgprint("Clearing Status DEPOSITED Applied");
         },__("Print"));
-    frm.add_custom_button(__('Print Detailed Slip'),function(){
+    frm.add_custom_button(__('Print Slip '),function(){
         var cheque_details = frm.doc.cheque_details;
         var current_date = frappe.datetime.now_date();
         frm.set_value("deposit_date",current_date)
