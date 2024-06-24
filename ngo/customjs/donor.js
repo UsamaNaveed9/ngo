@@ -37,46 +37,46 @@ frappe.ui.form.on('Donor', {
 	        }
 	    })
 	},
-	region: function(frm){
-	    var region = cur_frm.doc.region;
-	    frm.set_query("state", function(){
-	        return {
-	            filters: [
-	                ["Territory","parent_territory", "=", region ]        
-	            ]
-	        }
-	    })
-	},
-	state: function(frm){
-	    var state = cur_frm.doc.state;
-	    frm.set_query("district", function(){
-	        return {
-	            filters: [
-	                ["Territory","parent_territory", "=", state ]        
-	            ]
-	        }
-	    })
-	},
-    district: function(frm){
-	    var dist = cur_frm.doc.district;
-	    frm.set_query("zone", function(){
-	        return {
-	            filters: [
-	                ["Territory","parent_territory", "=", dist ]        
-	            ]
-	        }
-	    })
-	},
-	zone: function(frm){
-	    var zone = cur_frm.doc.zone;
-	    frm.set_query("locality", function(){
-	        return {
-	            filters: [
-	                ["Territory","parent_territory", "=", zone ]        
-	            ]
-	        }
-	    })
-	},
+	// region: function(frm){
+	//     var region = cur_frm.doc.region;
+	//     frm.set_query("state", function(){
+	//         return {
+	//             filters: [
+	//                 ["Territory","parent_territory", "=", region ]        
+	//             ]
+	//         }
+	//     })
+	// },
+	// state: function(frm){
+	//     var state = cur_frm.doc.state;
+	//     frm.set_query("district", function(){
+	//         return {
+	//             filters: [
+	//                 ["Territory","parent_territory", "=", state ]        
+	//             ]
+	//         }
+	//     })
+	// },
+  //   district: function(frm){
+	//     var dist = cur_frm.doc.district;
+	//     frm.set_query("zone", function(){
+	//         return {
+	//             filters: [
+	//                 ["Territory","parent_territory", "=", dist ]        
+	//             ]
+	//         }
+	//     })
+	// },
+	// zone: function(frm){
+	//     var zone = cur_frm.doc.zone;
+	//     frm.set_query("locality", function(){
+	//         return {
+	//             filters: [
+	//                 ["Territory","parent_territory", "=", zone ]        
+	//             ]
+	//         }
+	//     })
+	// },
 	electronic_trans_limit: function(frm){
 		var ch_l = frm.doc.cheque_trans_limit;
 		var elect_l = frm.doc.electronic_trans_limit;
@@ -99,6 +99,28 @@ frappe.ui.form.on('Donor', {
             frappe.throw(__('Enter a valid Aadhar'))
         }
 	},
+	
+	locality(frm) {
+		frappe.call({
+			method: 'ngo.custompy.donor.get_territory_tree_from_locality',
+			args: {
+				locality: frm.doc.locality
+			},
+			// disable the button until the request is completed
+			btn: $('.primary-action'),
+			// freeze the screen until the request is completed
+			freeze: true,
+			freeze_message: 'Setting territory tree as per Centre',
+			callback: (r) => {
+				var res = r.message
+
+				frm.set_value("zone", res[0])
+				frm.set_value("district", res[1])
+				frm.set_value("state", res[2])
+				frm.set_value("region", res[3])
+			}
+		})
+	}
 
 });
 frappe.ui.form.on('Donor Bank detail', {
