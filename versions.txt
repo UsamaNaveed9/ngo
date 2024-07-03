@@ -1,0 +1,11 @@
+frappe : commit f4ccfab9705046d37b56448bb8c3ff111ad43ecd (HEAD -> version-13, tag: v13.41.7, upstream/version-13)
+erpnext : commit 7ba029b140fe97626aa8d167294f715c288de625 (grafted, HEAD -> version-13, tag: v13.40.2, upstream/version-13)
+ngo : commit 997bc5d2ea9ead5a295a8b07841fd647088a9242 (HEAD)
+python : 3.8.10
+
+===
+
+frappe : commit 43338f3ff02ea00b1a2e9bfb5d841cfa1fa78fd2 (grafted, HEAD -> version-13, upstream/version-13)
+erpnext : commit 8d99763bea5b9297b833f5edee8fceac7397730b (grafted, HEAD -> version-13, tag: v13.42.6, upstream/version-13)
+ngo : commit 0b403610f93f2bfbd3cfae40f6751110913cc287 (HEAD -> master, upstream/master, upstream/HEAD)
+python : 3.10.12
