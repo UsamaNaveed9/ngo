@@ -79,7 +79,73 @@ frappe.ui.form.on('Slip Form',{
                 console.error('Form or form document is not valid.');
             }
         }
-       
+
+        frm.add_custom_button(__("Validate Cheques"), function() {
+            frm.dashboard.reset()
+            frm.dashboard.show()
+            var errors = []
+            frm.doc.cheque_details.forEach(x => {
+                var error = {}
+                if(!(x.amount > 0)) {
+                    error['Amount'] = "Amount is 0"
+                }
+                if(!(x.short_code.length == 6 && x.short_code == Number.parseInt(x.short_code))) {
+                    error['Short Code'] = "Short code is not 6 digit number"
+                }
+                if(!(x.micr_code.length == 9 && x.micr_code == Number.parseInt(x.micr_code))) {
+                    error['MICR'] = "MICR is not 9 digit number"
+                }
+                if(!(x.cheque_number.length == 6 && x.cheque_number == Number.parseInt(x.cheque_number))) {
+                    error['Cheque Number'] = "Cheque Number is not 6 digit number"
+                }
+                if(!((x.account_no || '').length > 0)) {
+                    error['Account Number'] = "Account Number is not set"
+                }
+                if(!((x.donor_id_number || '').length > 0)) {
+                    error['Donor Id'] = "Donor Id is not set"
+                }
+                if(Object.keys(error).length > 0) {
+                    error['Id'] = x.idx
+                    errors.push(error)
+                }
+            })
+
+            console.log(errors)
+            if(errors.length == 0) {
+                frappe.msgprint({
+                    title: __('Success'),
+                    indicator: 'green',
+                    message: __('All Cheques are OK')
+                });
+                return
+            }
+            
+            const newTable = document.createElement("table");
+            newTable.setAttribute("border", "1")
+            newTable.setAttribute("width", "100%")
+            var headers = ['Id', 'Amount', 'Short Code', 'MICR', 'Cheque Number', 'Account Number', 'Donor Id']
+        
+            const thead = document.createElement("thead");
+            headers.forEach(header => {
+                const th = document.createElement("th");
+                th.textContent = header;
+                thead.appendChild(th);
+            })
+            newTable.appendChild(thead);
+        
+            errors.forEach(error => {
+                const newRow = document.createElement("tr");
+                headers.forEach(header => {
+                    const td = document.createElement("td");
+                    td.textContent = error[header] || "OK";
+                    newRow.appendChild(td);
+                })
+                newTable.appendChild(newRow);
+            })
+            
+            console.log(newTable)
+            frm.dashboard.add_section(newTable.outerHTML, "Errors in Cheques")
+        })
         // frm.add_custom_button(__('Select Blocked Donor'), function() {
         //     // Fetch all records of the grid
         //     var all_cheque_details = frm.doc.cheque_details;
