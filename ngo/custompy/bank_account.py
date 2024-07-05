@@ -1,8 +1,9 @@
 import frappe
 
 def before_save(doc, method=None):
-  # Set Bank account in Updated Donor
-  if doc.donor_id:
+  old_donor_id = frappe.db.get_value("Bank Account", doc.name, "donor_id")
+  if old_donor_id != doc.donor_id:
+    # Set Bank account in Updated Donor
     new_donor = frappe.get_doc("Donor", doc.donor_id)
 
     if doc.name not in [i.bank_account for i in new_donor.account]:
@@ -13,9 +14,7 @@ def before_save(doc, method=None):
 
       new_donor.save()
 
-  # Remove Bank Account in Old donor
-  old_donor_id = frappe.db.get_value("Bank Account", doc.name, "donor_id")
-  if old_donor_id:
+    # Remove Bank Account in Old donor
     frappe.db.delete("Donor Bank detail", {
       "bank_account": doc.name,
       "parenttype": "Donor",
