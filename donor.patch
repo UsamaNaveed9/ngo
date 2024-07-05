@@ -1,0 +1,21 @@
+diff --git a/erpnext/non_profit/doctype/donor/donor.json b/erpnext/non_profit/doctype/donor/donor.json
+index 72f24ef..45e1f53 100644
+--- a/erpnext/non_profit/doctype/donor/donor.json
++++ b/erpnext/non_profit/doctype/donor/donor.json
+@@ -42,7 +42,6 @@
+    "fieldtype": "Data",
+    "in_list_view": 1,
+    "label": "Email",
+-   "reqd": 1,
+    "unique": 1
+   },
+   {
+@@ -82,7 +81,7 @@
+    "link_fieldname": "donor"
+   }
+  ],
+- "modified": "2021-02-17 16:36:33.470731",
++ "modified": "2024-04-20 10:34:34.520402",
+  "modified_by": "Administrator",
+  "module": "Non Profit",
+  "name": "Donor",
