@@ -80,6 +80,11 @@ frappe.ui.form.on('Slip Form',{
             }
         }
 
+        frm.add_custom_button(__("Sync with Master Data"), function() {
+            frm.doc.cheque_details.forEach(x => {
+                window.account_no_change_in_cheque_details(frm, x.doctype, x.name, true)
+            })
+        })
         frm.add_custom_button(__("Validate Cheques"), function() {
             frm.dashboard.reset()
             frm.dashboard.show()
@@ -89,20 +94,30 @@ frappe.ui.form.on('Slip Form',{
                 if(!(x.amount > 0)) {
                     error['Amount'] = "Amount is 0"
                 }
-                if(!(x.short_code.length == 6 && x.short_code == Number.parseInt(x.short_code))) {
+                if(!((x.short_code || '').length == 6 && x.short_code == Number.parseInt(x.short_code))) {
                     error['Short Code'] = "Short code is not 6 digit number"
                 }
-                if(!(x.micr_code.length == 9 && x.micr_code == Number.parseInt(x.micr_code))) {
+                if(!((x.micr_code || '').length == 9 && x.micr_code == Number.parseInt(x.micr_code))) {
                     error['MICR'] = "MICR is not 9 digit number"
                 }
-                if(!(x.cheque_number.length == 6 && x.cheque_number == Number.parseInt(x.cheque_number))) {
+                if(!((x.cheque_number || '').length == 6 && x.cheque_number == Number.parseInt(x.cheque_number))) {
                     error['Cheque Number'] = "Cheque Number is not 6 digit number"
                 }
                 if(!((x.account_no || '').length > 0)) {
                     error['Account Number'] = "Account Number is not set"
+                } else {
+                    var repeated_account_number = frm.doc.cheque_details.filter(y => y.account_no == x.account_no)
+                    if(repeated_account_number.length > 0) {
+                        error['Account Number'] = "Account Number repeated at " + repeated_account_number.map(x => x.srno).join(', ')
+                    }
                 }
                 if(!((x.donor_id_number || '').length > 0)) {
                     error['Donor Id'] = "Donor Id is not set"
+                } else {
+                    var repeated_donor_id = frm.doc.cheque_details.filter(y => y.donor_id_number == x.donor_id_number)
+                    if(repeated_donor_id.length > 0) {
+                        error['Donor Id'] = "Donor Id repeated at " + repeated_donor_id.map(x => x.srno).join(', ')
+                    }
                 }
                 if(Object.keys(error).length > 0) {
                     error['Id'] = x.idx
@@ -328,26 +343,27 @@ frappe.ui.form.on('Slip Cheque Form',{
     previous: function(frm) {
         cur_frm.open_grid_row().open_prev();
     },
-    account_no:function(frm,cdt,cdn){
-        var child = locals[cdt][cdn];
-        var account_no = child.account_no
-        if (account_no){
+    account_no: window.account_no_change_in_cheque_details,
+    // account_no:function(frm,cdt,cdn){
+    //     var child = locals[cdt][cdn];
+    //     var account_no = child.account_no
+    //     if (account_no){
 
-             frappe.call({
-                    method: "ngo.ngo.doctype.slip_form.slip_form.get_donor_details_from_account",
-                    args: {
-                        account_no: account_no
-                    },
-                    callback: function(r){
+    //          frappe.call({
+    //                 method: "ngo.ngo.doctype.slip_form.slip_form.get_donor_details_from_account",
+    //                 args: {
+    //                     account_no: account_no
+    //                 },
+    //                 callback: function(r){
                         
-                        frappe.model.set_value(child.doctype, child.name, "donor_id_number",r.message.name)
-                        frappe.model.set_value(child.doctype, child.name, "donor_name",r.message.full_name)
-                        frappe.model.set_value(child.doctype, child.name, "cheque_bank",r.message.bank)
-                    }
-                });
-        }
+    //                     frappe.model.set_value(child.doctype, child.name, "donor_id_number",r.message.name)
+    //                     frappe.model.set_value(child.doctype, child.name, "donor_name",r.message.full_name)
+    //                     frappe.model.set_value(child.doctype, child.name, "cheque_bank",r.message.bank)
+    //                 }
+    //             });
+    //     }
        
-        },
+    //     },
     donor_id_number:function(frm,cdt,cdn){
         var child = locals[cdt][cdn];
         var donor_id_number = child.donor_id_number
@@ -392,7 +408,28 @@ function setupKeyboardShortcuts(frm, cdt, cdn) {
     });
 }
 
+window.account_no_change_in_cheque_details = function(frm,cdt,cdn,freeze_screen=false){
+    var child = locals[cdt][cdn];
+    var account_no = child.account_no
+    if (account_no){
 
+         frappe.call({
+                method: "ngo.ngo.doctype.slip_form.slip_form.get_donor_details_from_account",
+                args: {
+                    account_no: account_no
+                },
+                callback: function(r){
+                    
+                    frappe.model.set_value(child.doctype, child.name, "donor_id_number",r.message.name)
+                    frappe.model.set_value(child.doctype, child.name, "donor_name",r.message.full_name)
+                    frappe.model.set_value(child.doctype, child.name, "cheque_bank",r.message.bank)
+                },
+                freeze: freeze_screen,
+                freeze_message: "Setting donor on basis of account number..."
+            });
+    }
+   
+}
 
 
 

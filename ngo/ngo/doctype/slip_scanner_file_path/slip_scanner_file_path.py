@@ -48,6 +48,8 @@ def read_csv_(dict_list,df):
 				slip_number = number_[0]
 				slip_number_lst.append(slip_number)
 			bank_details = row.get("C")
+			if not isinstance(bank_details, str):
+				bank_details = " "
 
 			if isinstance(bank_details,str):
 				bank_details = bank_details.replace('@', '')
