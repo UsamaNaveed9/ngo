@@ -107,7 +107,7 @@ frappe.ui.form.on('Slip Form',{
                     error['Account Number'] = "Account Number is not set"
                 } else {
                     var repeated_account_number = frm.doc.cheque_details.filter(y => y.account_no == x.account_no)
-                    if(repeated_account_number.length > 0) {
+                    if(repeated_account_number.length > 1) {
                         error['Account Number'] = "Account Number repeated at " + repeated_account_number.map(x => x.srno).join(', ')
                     }
                 }
@@ -115,7 +115,7 @@ frappe.ui.form.on('Slip Form',{
                     error['Donor Id'] = "Donor Id is not set"
                 } else {
                     var repeated_donor_id = frm.doc.cheque_details.filter(y => y.donor_id_number == x.donor_id_number)
-                    if(repeated_donor_id.length > 0) {
+                    if(repeated_donor_id.length > 1) {
                         error['Donor Id'] = "Donor Id repeated at " + repeated_donor_id.map(x => x.srno).join(', ')
                     }
                 }
@@ -244,16 +244,16 @@ frappe.ui.form.on('Slip Form',{
         frappe.msgprint("Clearing Status DEPOSITED Applied");
         },__("Print"));
 
-        // set query on bank account to filter by micr and short code in cheque details child table
-        frm.set_query('account_no', 'cheque_details', function(doc, cdt, cdn) {
-            var row = frappe.get_doc(cdt, cdn)
-            return {
-                filters: {
-                    micr: row.micr_code,
-                    short_account_number: row.short_code
-                }
-            }
-        })
+        //// set query on bank account to filter by micr and short code in cheque details child table
+        //frm.set_query('account_no', 'cheque_details', function(doc, cdt, cdn) {
+        //    var row = frappe.get_doc(cdt, cdn)
+        //    return {
+        //        filters: {
+        //            micr: row.micr_code,
+        //            short_account_number: row.short_code
+        //        }
+        //    }
+        //})
     },
     validate:function(frm){
         var slip_number = cur_frm.doc.slip_number
@@ -343,7 +343,10 @@ frappe.ui.form.on('Slip Cheque Form',{
     previous: function(frm) {
         cur_frm.open_grid_row().open_prev();
     },
-    account_no: window.account_no_change_in_cheque_details,
+    account_no: function(frm, cdt, cdn) {
+	window.account_no_change_in_cheque_details(frm, cdt, cdn)
+    },
+    //account_no: window.account_no_change_in_cheque_details,
     // account_no:function(frm,cdt,cdn){
     //     var child = locals[cdt][cdn];
     //     var account_no = child.account_no
