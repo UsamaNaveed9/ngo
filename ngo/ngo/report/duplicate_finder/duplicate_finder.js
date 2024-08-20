@@ -9,6 +9,7 @@ frappe.query_reports["Duplicate Finder"] = {
 			label: __('Event'),
 			fieldtype: 'Link',
 			options: 'Event Master',
+			mandatory: true,
 			on_change: function() {
 				frappe.query_report.set_filter_value('slip_forms', [])
 			}

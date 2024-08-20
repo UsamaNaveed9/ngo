@@ -225,9 +225,9 @@
   },
   {
    "hidden": 0,
-   "is_query_report": 0,
-   "label": "Report",
-   "link_to": "ToDo",
+   "is_query_report": 1,
+   "label": "Duplicate Finder Report",
+   "link_to": "Duplicate Finder",
    "link_type": "Report",
    "onboard": 0,
    "type": "Link"
@@ -250,8 +250,7 @@
    "type": "Link"
   }
  ],
-
- "modified": "2024-03-14 23:40:32.547222",
+ "modified": "2024-08-20 13:22:43.472997",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "NGO",
