@@ -255,16 +255,17 @@ def read_csv_(dict_list,df):
 					if micr_code is not None and short_account_number is not None and branch_code is not None and check_number is not None:
 						row["Unique_code_for_row"] = check_number + micr_code + short_account_number + branch_code
 						unique_account_number_lst.append(row.get("Unique_number"))
-						Unique_code_for_row.append(row.get("Unique_code_for_row"))
-					list_for_blocked_donar_details.append(row.get("donor_id"))
+						#Unique_code_for_row.append(row.get("Unique_code_for_row"))
+					list_for_blocked_donar_details.append(row.get("donor"))
 			
 
-
-			for row in set(list_for_blocked_donar_details):
-				donor_doc = frappe.get_doc("Donor",{"name":row})
-				donor_doc.block_status = "Blocked"
-				donor_doc.remarks1 = "User has been blocked"
-				donor_doc.save()
+		frappe.errprint("DONOR LOG ::")
+		frappe.errprint(list_for_blocked_donar_details)
+		for row in set(list_for_blocked_donar_details):
+			donor_doc = frappe.get_doc("Donor",{"name":row})
+			donor_doc.block_status = "Blocked"
+			donor_doc.remarks1 = "User has been blocked"
+			donor_doc.save()
 			
 
 
