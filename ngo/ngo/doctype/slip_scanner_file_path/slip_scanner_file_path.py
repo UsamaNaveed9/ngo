@@ -259,16 +259,7 @@ def read_csv_(dict_list,df):
 						frappe.errprint(['unique row setting2', row])
 						unique_account_number_lst.append(row.get("Unique_number"))
 						#Unique_code_for_row.append(row.get("Unique_code_for_row"))
-					list_for_blocked_donar_details.append(row.get("donor"))
 			
-
-		frappe.errprint("DONOR LOG ::")
-		frappe.errprint(list_for_blocked_donar_details)
-		for row in set(list_for_blocked_donar_details):
-			donor_doc = frappe.get_doc("Donor",{"name":row})
-			donor_doc.block_status = "Blocked"
-			donor_doc.remarks1 = "User has been blocked"
-			donor_doc.save()
 			
 
 
@@ -286,6 +277,19 @@ def read_csv_(dict_list,df):
 						frappe.errprint(["equality", row["event_master"], rows["event"]])
 						row["ref_link"] = rows.get("slip_number")
 						row["ref_id_sr_number"] = str(rows.get("srno"))
+			if row.get("slip_number").startswith("RC-NB"):
+				list_for_blocked_donar_details.append({"donor": row.get("donor"), "ref_link": row["ref_link"], "ref_id_sr_number": row["ref_id_sr_number"]})
+				
+		frappe.errprint("DONOR LOG ::")
+		frappe.errprint(list_for_blocked_donar_details)
+		for row in list_for_blocked_donar_details:
+			donor_doc = frappe.get_doc("Donor",{"name":row["donor"]})
+			donor_doc.block_status = "Blocked"
+			remarks1_new = "Blocked for {}, {}".format(row["ref_link"], row["ref_id_sr_number"])
+			remarks1 = [] if donor_doc.get("remarks1", "") == "" else donor_doc.get("remarks1").split("\n")
+			remarks1.append(remarks1_new)
+			donor_doc.remarks1 = "\n".join(remarks1)
+			donor_doc.save()
 			
 			
 
