@@ -129,6 +129,7 @@ def read_csv_(dict_list,df):
 		unique_code_list_for_row = []
 		# frappe.errprint(unique_code_list_for_row)
 		for row in filter_dict:
+			frappe.errprint(['unique row setting', row])
 			micr_code = row.get("micr_code")
 			short_account_number = row.get("short_account_number")
 			branch_code = row.get("branch_code")
@@ -185,8 +186,9 @@ def read_csv_(dict_list,df):
 			
 			if micr_code is not None and short_account_number is not None and branch_code is not None and check_number is not None:
 				row["Unique_code_for_row"] = check_number + micr_code + short_account_number + branch_code
+				frappe.errprint(["unique row setting1", row])
 				unique_account_number_lst.append(row.get("Unique_number"))
-				unique_code_list_for_row.append({"slip_number":row["slip_number"],"Unique_code_for_row":row["Unique_code_for_row"]})
+				unique_code_list_for_row.append({"slip_number":row["slip_number"],"Unique_code_for_row":row["Unique_code_for_row"], "event_master": row["event_master"]})
 			
 
 		
@@ -253,7 +255,8 @@ def read_csv_(dict_list,df):
 			if row.get("slip_number"):
 				if row.get("slip_number").startswith("RC-NB"):
 					if micr_code is not None and short_account_number is not None and branch_code is not None and check_number is not None:
-						row["Unique_code_for_row"] = check_number + micr_code + short_account_number + branch_code
+						#row["Unique_code_for_row"] = check_number + micr_code + short_account_number + branch_code
+						frappe.errprint(['unique row setting2', row])
 						unique_account_number_lst.append(row.get("Unique_number"))
 						#Unique_code_for_row.append(row.get("Unique_code_for_row"))
 					list_for_blocked_donar_details.append(row.get("donor"))
@@ -270,14 +273,19 @@ def read_csv_(dict_list,df):
 
 
 		unique_code_for_rows = []
-		for row in unique_code_list_for_row:
+		frappe.errprint("RETURNED CHEQUE DEBUGGING")
+		for row in filter_dict:
+			frappe.errprint(["row", row])
 			if row.get("slip_number").startswith("RC"):
 				unique_code_for_rows.append(row)
-				slip_form_check_form = frappe.db.get_all("Slip Cheque Form",{"unique_row_identifier":row.get("Unique_code_for_row")},["unique_row_identifier","slip_number","srno"])
-				for rows in filter_dict:	
-					if rows.get("slip_number") == row.get("slip_number"):
-						rows["ref_link"] = slip_form_check_form[0].get("slip_number")
-						rows["ref_id_sr_number"] = str(slip_form_check_form[0].get("srno"))
+				slip_form_check_form = frappe.db.get_all("Slip Cheque Form",{"unique_row_identifier":row.get("Unique_code_for_row")},["unique_row_identifier","slip_number","srno", "event"])
+				frappe.errprint(["og slip form details", slip_form_check_form])
+				for rows in slip_form_check_form:	
+					frappe.errprint(["rows", rows])
+					if row["event_master"] == rows["event"]:
+						frappe.errprint(["equality", row["event_master"], rows["event"]])
+						row["ref_link"] = rows.get("slip_number")
+						row["ref_id_sr_number"] = str(rows.get("srno"))
 			
 			
 
