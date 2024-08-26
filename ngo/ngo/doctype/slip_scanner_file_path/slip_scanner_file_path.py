@@ -34,9 +34,8 @@ def read_csv_(dict_list,df):
 			check_number_ = row.get("B")
 			event_master = row.get("event_master")
 
-			filename = check_number_.split('\\')[-1]
-
-			new_file_name = "/files/" + filename
+			filename = check_number_.split('\\public')[-1].replace('\\', '/')
+			new_file_name = filename
 
 
 			slip_number = None  # Initialize slip_number to None
@@ -107,8 +106,8 @@ def read_csv_(dict_list,df):
 
 		for row in dict_list_for_records_map:
 			check_number_ = row.get("B")
-			filename = check_number_.split('\\')[-1]
-			new_file_name = "/files/" + filename
+			filename = check_number_.split('\\public')[-1].replace('\\', '/')
+			new_file_name = filename
 			row["B"] = new_file_name
 
 
@@ -302,12 +301,15 @@ def read_csv_(dict_list,df):
 		
 		for row in unique_code_identifier_:
 			slip_form  = frappe.get_doc("Slip Form",{"name":row.get("slip_number")})
+			frappe.errprint(["slip_form", slip_form, unique_code_for_rows])
 			for check in slip_form.cheque_details:
 				for return_check in unique_code_for_rows:
 					if check.unique_row_identifier == return_check.get("Unique_code_for_row"):
-						if check.clearing_status == "DEPOSITED":
-							check.clearing_status = "RETURNED"
-							check.ref_link = return_check.get("slip_number")
+						frappe.errprint(["for debug", check.unique_row_identifier, return_check])
+						#if check.clearing_status == "DEPOSITED":
+						check.clearing_status = "RETURNED"
+						check.ref_link = return_check.get("slip_number")
+						#check.ref_id_sr_number = 
 			slip_form.save()
 		
 		for row in filter_dict:
