@@ -128,7 +128,6 @@ def read_csv_(dict_list,df):
 		unique_code_list_for_row = []
 		# frappe.errprint(unique_code_list_for_row)
 		for row in filter_dict:
-			frappe.errprint(['unique row setting', row])
 			micr_code = row.get("micr_code")
 			short_account_number = row.get("short_account_number")
 			branch_code = row.get("branch_code")
@@ -139,6 +138,7 @@ def read_csv_(dict_list,df):
                                             fields=["name","donor_id","bank"])
 			frappe.errprint(bank_account_details)
 			if len(bank_account_details) == 1:
+				frappe.errprint(['filter_dict donor', bank_account_details[0]['donor_id']])
 				# Check if donor_id exists in the bank account details
 				if "donor_id" in bank_account_details[0]:
 					row["account_no"] = bank_account_details[0]["name"]
@@ -147,6 +147,7 @@ def read_csv_(dict_list,df):
 					# Fetch the full name of the donor using the donor_id
 					donor_name = frappe.get_value("Donor", donor, "donor_name")
 					donor_status = frappe.get_value("Donor", donor, "block_status")
+					frappe.errprint(["donor none debug", donor])
 					if donor_name:
 						row["donor"] = donor
 						row["donor_name"] = donor_name
@@ -154,6 +155,7 @@ def read_csv_(dict_list,df):
 					else:
 						row["donor_name"] = None
 				else:
+					frappe.errprint(["donor none debug1", bank_account_details[0]])
 					# Handle this case accordingly, e.g., set donor_id to None or skip this row
 					row["account_no"] = bank_account_details[0]["name"]
 					row["bank"] = bank_account_details[0]["bank"]
@@ -185,7 +187,6 @@ def read_csv_(dict_list,df):
 			
 			if micr_code is not None and short_account_number is not None and branch_code is not None and check_number is not None:
 				row["Unique_code_for_row"] = check_number + micr_code + short_account_number + branch_code
-				frappe.errprint(["unique row setting1", row])
 				unique_account_number_lst.append(row.get("Unique_number"))
 				unique_code_list_for_row.append({"slip_number":row["slip_number"],"Unique_code_for_row":row["Unique_code_for_row"], "event_master": row["event_master"]})
 			
@@ -255,7 +256,6 @@ def read_csv_(dict_list,df):
 				if row.get("slip_number").startswith("RC-NB"):
 					if micr_code is not None and short_account_number is not None and branch_code is not None and check_number is not None:
 						#row["Unique_code_for_row"] = check_number + micr_code + short_account_number + branch_code
-						frappe.errprint(['unique row setting2', row])
 						unique_account_number_lst.append(row.get("Unique_number"))
 						#Unique_code_for_row.append(row.get("Unique_code_for_row"))
 			
@@ -263,32 +263,28 @@ def read_csv_(dict_list,df):
 
 
 		unique_code_for_rows = []
-		frappe.errprint("RETURNED CHEQUE DEBUGGING")
 		for row in filter_dict:
-			frappe.errprint(["row", row])
 			if row.get("slip_number").startswith("RC"):
 				unique_code_for_rows.append(row)
 				slip_form_check_form = frappe.db.get_all("Slip Cheque Form",{"unique_row_identifier":row.get("Unique_code_for_row")},["unique_row_identifier","slip_number","srno", "event"])
-				frappe.errprint(["og slip form details", slip_form_check_form])
 				for rows in slip_form_check_form:	
-					frappe.errprint(["rows", rows])
 					if row["event_master"] == rows["event"]:
-						frappe.errprint(["equality", row["event_master"], rows["event"]])
 						row["ref_link"] = rows.get("slip_number")
 						row["ref_id_sr_number"] = str(rows.get("srno"))
 			if row.get("slip_number").startswith("RC-NB"):
-				list_for_blocked_donar_details.append({"donor": row.get("donor"), "ref_link": row["ref_link"], "ref_id_sr_number": row["ref_id_sr_number"]})
+				list_for_blocked_donar_details.append({"donor": row.get("donor"), "ref_link": row.get("ref_link", ""), "ref_id_sr_number": row.get("ref_id_sr_number", "")})
 				
-		frappe.errprint("DONOR LOG ::")
 		frappe.errprint(list_for_blocked_donar_details)
 		for row in list_for_blocked_donar_details:
-			donor_doc = frappe.get_doc("Donor",{"name":row["donor"]})
-			donor_doc.block_status = "Blocked"
-			remarks1_new = "Blocked for {}, {}".format(row["ref_link"], row["ref_id_sr_number"])
-			remarks1 = [] if donor_doc.get("remarks1", "") == "" else donor_doc.get("remarks1").split("\n")
-			remarks1.append(remarks1_new)
-			donor_doc.remarks1 = "\n".join(remarks1)
-			donor_doc.save()
+			if row['donor']:
+				donor_doc = frappe.get_doc("Donor",{"name":row["donor"]})
+				donor_doc.block_status = "Blocked"
+				remarks1_new = "Blocked for {}, {}".format(row["ref_link"], row["ref_id_sr_number"])
+				frappe.errprint(["DONOR REMARKS", donor_doc.as_dict()])
+				remarks1 = [] if donor_doc.remarks1 in [None, ""] else donor_doc.get("remarks1", "").split("\n")
+				remarks1.append(remarks1_new)
+				donor_doc.remarks1 = "\n".join(remarks1)
+				donor_doc.save()
 			
 			
 
