@@ -1497,7 +1497,7 @@
    "reqd": 1,
    "search_index": 0,
    "translatable": 1,
-   "unique": 1,
+   "unique": 0,
    "width": null
   },
   {

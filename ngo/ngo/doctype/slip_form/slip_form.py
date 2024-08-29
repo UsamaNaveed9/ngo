@@ -151,5 +151,103 @@ def get_donor_details_from_donar_id(donor_id_number):
 			
 			return donor 
 
+@frappe.whitelist()
+def validate_cheques(slip_form_name):
+	errors = []
+	slip_form = frappe.get_doc("Slip Form", slip_form_name)
 
+	for cheque in slip_form.cheque_details:
+		error = {}
+		print(cheque)
+		print()
 
+		if not cheque.amount: 
+			error['Amount'] = "Amount is 0"
+		if not (len(cheque.short_code or '')) == 6 and (cheque.short_code or '').isdigit():
+			error['Short Code'] = "Short code is not 6 digit number"
+		if not (len(cheque.micr_code or '')) == 9 and (cheque.micr_code or '').isdigit():
+			error['MICR'] = "MICR is not 9 digit number"
+		if not (len(cheque.cheque_number or '')) == 6 and (cheque.cheque_number or '').isdigit():
+			error['Cheque Number'] = "Cheque Number is not 6 digit number"
+		if not cheque.account_no:
+			error['Account Number'] = "Account Number is not set"
+		else:
+			repeated_account_number = []
+			for x in slip_form.cheque_details:
+				if (x.account_no or '') == cheque.account_no:
+					repeated_account_number.append(x)
+			if len(repeated_account_number) > 1:
+				error['Account Number'] = "Account Number repeated at " + ', '.join([str(x.srno) for x in repeated_account_number])
+		if not cheque.donor_id_number:
+			error['Donor Id'] = "Donor Id is not set"
+		else:
+			repeated_donor_id = []
+			for x in slip_form.cheque_details:
+				if (x.donor_id_number or '') == cheque.donor_id_number:
+					repeated_donor_id.append(x)
+			if len(repeated_donor_id) > 1:
+				error['Donor Id'] = "Donor Id repeated at " + ', '.join([str(x.srno) for x in repeated_donor_id])
+		if len(list(error.keys())) > 0:
+			error['Id'] = cheque.idx
+			errors.append(error)
+
+	return errors
+
+@frappe.whitelist()
+def set_donor_from_account(slip_form_name):
+	slip_form = frappe.get_doc("Slip Form", slip_form_name)
+
+	for cheque in slip_form.cheque_details:
+		if cheque.account_no:
+			donor_id = frappe.db.get_value("Bank Account", cheque.account_no, "donor_id")
+			if donor_id:
+				donor = frappe.get_doc("Donor", donor_id)
+				full_name = []
+				if donor.donor_name:
+					full_name.append(donor.donor_name)
+				if donor.middle_name:
+					full_name.append(donor.middle_name)
+				if donor.last_name:
+					full_name.append(donor.last_name)
+				
+				cheque.donor_id_number = donor_id
+				cheque.donor_name = ' '.join(full_name)
+	
+	slip_form.save()
+
+@frappe.whitelist()
+def return_cheques_and_block_donors(slip_form_name):
+	if slip_form_name.startswith("RC"):
+		slip_form = frappe.get_doc("Slip Form", slip_form_name)
+
+		for cheque in slip_form.cheque_details:
+			filters = {
+				'amount': cheque.amount,
+				'account_no': cheque.account_no,
+				'unique_row_identifier': cheque.unique_row_identifier,
+			}
+			og_cheque_list = frappe.db.get_all("Slip Cheque Form", filters)
+
+			if len(og_cheque_list) == 1:
+				og_cheque_name = og_cheque_list[0]['name']
+
+				frappe.db.set_value("Slip Cheque Form", og_cheque_name, "clearing_status", "RETURNED")
+				frappe.db.set_value("Slip Cheque Form", og_cheque_name, "ref_link", slip_form_name)
+				frappe.db.set_value("Slip Cheque Form", og_cheque_name, "ref_id_sr_number", cheque.srno)
+
+				og_cheque = frappe.get_doc("Slip Cheque Form", og_cheque_name)
+				cheque.ref_link = og_cheque.parent
+				cheque.ref_id_sr_number = og_cheque.srno
+
+			if slip_form_name.startswith("RC-NB"):
+				if cheque.donor_id_number:
+					donor = frappe.get_doc("Donor", cheque.donor_id_number)
+
+					donor.blocked_status = "BLOCKED"
+					remarks1_new = "Blocked for {}, {}".format(cheque.ref_link, cheque.ref_id_sr_number)
+					remarks1 = [] if donor.remarks1 in [None, ""] else donor.get("remarks1", "").split("\n")
+					remarks1.append(remarks1_new)
+					donor.remarks1 = "\n".join(remarks1)
+					donor.save()
+
+		slip_form.save()

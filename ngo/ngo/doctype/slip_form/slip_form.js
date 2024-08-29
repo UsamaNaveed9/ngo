@@ -81,85 +81,82 @@ frappe.ui.form.on('Slip Form',{
         }
 
         frm.add_custom_button(__("Sync with Master Data"), function() {
-            frm.doc.cheque_details.forEach(x => {
-                window.account_no_change_in_cheque_details(frm, x.doctype, x.name, true)
-            })
+            if(frm.is_dirty()) return frappe.throw("Please save the form!")
+
+            frappe.call({
+                method: "ngo.ngo.doctype.slip_form.slip_form.set_donor_from_account",
+                args: {
+                    slip_form_name: frm.doc.name
+                },
+                callback: function(r){
+                    frm.refresh()
+                },
+                freeze: true,
+                freeze_message: "Setting donor on basis of account number..."
+            });
         })
         frm.add_custom_button(__("Validate Cheques"), function() {
+            if(frm.is_dirty()) return frappe.throw("Please save the form!")
+  
             frm.dashboard.reset()
             frm.dashboard.show()
             var errors = []
-            frm.doc.cheque_details.forEach(x => {
-                var error = {}
-                if(!(x.amount > 0)) {
-                    error['Amount'] = "Amount is 0"
-                }
-                if(!((x.short_code || '').length == 6 && x.short_code == Number.parseInt(x.short_code))) {
-                    error['Short Code'] = "Short code is not 6 digit number"
-                }
-                if(!((x.micr_code || '').length == 9 && x.micr_code == Number.parseInt(x.micr_code))) {
-                    error['MICR'] = "MICR is not 9 digit number"
-                }
-                if(!((x.cheque_number || '').length == 6 && x.cheque_number == Number.parseInt(x.cheque_number))) {
-                    error['Cheque Number'] = "Cheque Number is not 6 digit number"
-                }
-                if(!((x.account_no || '').length > 0)) {
-                    error['Account Number'] = "Account Number is not set"
-                } else {
-                    var repeated_account_number = frm.doc.cheque_details.filter(y => y.account_no == x.account_no)
-                    if(repeated_account_number.length > 1) {
-                        error['Account Number'] = "Account Number repeated at " + repeated_account_number.map(x => x.srno).join(', ')
-                    }
-                }
-                if(!((x.donor_id_number || '').length > 0)) {
-                    error['Donor Id'] = "Donor Id is not set"
-                } else {
-                    var repeated_donor_id = frm.doc.cheque_details.filter(y => y.donor_id_number == x.donor_id_number)
-                    if(repeated_donor_id.length > 1) {
-                        error['Donor Id'] = "Donor Id repeated at " + repeated_donor_id.map(x => x.srno).join(', ')
-                    }
-                }
-                if(Object.keys(error).length > 0) {
-                    error['Id'] = x.idx
-                    errors.push(error)
-                }
-            })
 
-            console.log(errors)
-            if(errors.length == 0) {
-                frappe.msgprint({
-                    title: __('Success'),
-                    indicator: 'green',
-                    message: __('All Cheques are OK')
-                });
-                return
-            }
-            
-            const newTable = document.createElement("table");
-            newTable.setAttribute("border", "1")
-            newTable.setAttribute("width", "100%")
-            var headers = ['Id', 'Amount', 'Short Code', 'MICR', 'Cheque Number', 'Account Number', 'Donor Id']
-        
-            const thead = document.createElement("thead");
-            headers.forEach(header => {
-                const th = document.createElement("th");
-                th.textContent = header;
-                thead.appendChild(th);
-            })
-            newTable.appendChild(thead);
-        
-            errors.forEach(error => {
-                const newRow = document.createElement("tr");
-                headers.forEach(header => {
-                    const td = document.createElement("td");
-                    td.textContent = error[header] || "OK";
-                    newRow.appendChild(td);
-                })
-                newTable.appendChild(newRow);
-            })
-            
-            console.log(newTable)
-            frm.dashboard.add_section(newTable.outerHTML, "Errors in Cheques")
+            console.log('hit hua')
+
+            frappe.call({
+                method: "ngo.ngo.doctype.slip_form.slip_form.validate_cheques",
+                type: "POST",
+                args: {
+                    slip_form_name: frm.doc.name
+                },
+                callback: function(r) {
+                    console.log('api response', r)
+                    var errors = r.message
+                    console.log('errors', errors)
+                    if(errors.length == 0) {
+                        frappe.msgprint({
+                            title: __('Success'),
+                            indicator: 'green',
+                            message: __('All Cheques are OK')
+                        });
+                        return
+                    }
+                    
+                    const newTable = document.createElement("table");
+                    newTable.setAttribute("border", "1")
+                    newTable.setAttribute("width", "100%")
+                    var headers = ['Id', 'Amount', 'Short Code', 'MICR', 'Cheque Number', 'Account Number', 'Donor Id']
+                
+                    const thead = document.createElement("thead");
+                    headers.forEach(header => {
+                        const th = document.createElement("th");
+                        th.textContent = header;
+                        thead.appendChild(th);
+                    })
+                    newTable.appendChild(thead);
+                
+                    errors.forEach(error => {
+                        const newRow = document.createElement("tr");
+                        headers.forEach(header => {
+                            const td = document.createElement("td");
+                            td.textContent = error[header] || "OK";
+                            newRow.appendChild(td);
+                        })
+                        newTable.appendChild(newRow);
+                    })
+                    
+                    console.log(newTable)
+                    frm.dashboard.add_section(newTable.outerHTML, "Errors in Cheques")
+                },
+                error: function(r) {},
+                always: function(r) {
+                    console.log('in always', r)
+                },
+                freeze: true,
+                freeze_message: "Validating Cheques...",
+                async: true,
+            });
         })
         // frm.add_custom_button(__('Select Blocked Donor'), function() {
         //     // Fetch all records of the grid
@@ -243,6 +240,26 @@ frappe.ui.form.on('Slip Form',{
         window.open(formated_url);
         frappe.msgprint("Clearing Status DEPOSITED Applied");
         },__("Print"));
+
+    if(frm.doc.name.startsWith("RC")) {
+        var button_text = frm.doc.name.startsWith("RC-NB") ? "Return cheques and block donors" : "Return cheques" 
+        var freeze_message = frm.doc.name.startsWith("RC-NB") ? "Returning cheques and blocking donors" : "Returning cheques" 
+        frm.add_custom_button(__(button_text), function() {
+            if(frm.is_dirty()) return frappe.throw("Please save the form!")
+
+            frappe.call({
+                method: "ngo.ngo.doctype.slip_form.slip_form.return_cheques_and_block_donors",
+                args: {
+                    slip_form_name: frm.doc.name
+                },
+                callback: function(r){
+                    frm.refresh()
+                },
+                freeze: true,
+                freeze_message: `${freeze_message}...`
+            });
+        })
+    }
 
         //// set query on bank account to filter by micr and short code in cheque details child table
         //frm.set_query('account_no', 'cheque_details', function(doc, cdt, cdn) {

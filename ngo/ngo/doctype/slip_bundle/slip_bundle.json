@@ -1,0 +1,117 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-08-23 21:42:55.488071",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "slip_bundle_date",
+  "deposit_account",
+  "deposit_date",
+  "slip_bundle_total_amount",
+  "slip_bundle_status",
+  "column_break_cn4jl",
+  "slip_bundle_event_code",
+  "deposit_account_bank",
+  "physical_slip_reference_number",
+  "slip_bundle_total_cheques",
+  "section_break_hfvnb",
+  "items"
+ ],
+ "fields": [
+  {
+   "default": "Today",
+   "fieldname": "slip_bundle_date",
+   "fieldtype": "Date",
+   "label": "Slip Bundle Date"
+  },
+  {
+   "fieldname": "deposit_account",
+   "fieldtype": "Link",
+   "label": "Deposit Account",
+   "options": "Bank Account"
+  },
+  {
+   "fieldname": "deposit_date",
+   "fieldtype": "Date",
+   "label": "Deposit Date"
+  },
+  {
+   "fieldname": "slip_bundle_total_amount",
+   "fieldtype": "Int",
+   "label": "Slip Bundle Total Amount",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "slip_bundle_event_code",
+   "fieldtype": "Link",
+   "label": "Slip Bundle Event Code",
+   "options": "Event Master"
+  },
+  {
+   "fetch_from": "deposit_account.bank",
+   "fieldname": "deposit_account_bank",
+   "fieldtype": "Link",
+   "label": "Deposit Account Bank",
+   "options": "Bank",
+   "read_only": 1
+  },
+  {
+   "fieldname": "physical_slip_reference_number",
+   "fieldtype": "Data",
+   "label": "Physical Slip Reference Number"
+  },
+  {
+   "fieldname": "slip_bundle_total_cheques",
+   "fieldtype": "Int",
+   "label": "Slip Bundle Total Cheques",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "slip_bundle_status",
+   "fieldtype": "Select",
+   "label": "Slip Bundle Status",
+   "options": "Created\nDeposited\nCancelled"
+  },
+  {
+   "fieldname": "column_break_cn4jl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_hfvnb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Slip Bundle Item"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-08-24 12:10:23.899141",
+ "modified_by": "Administrator",
+ "module": "NGO",
+ "name": "Slip Bundle",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
