@@ -224,7 +224,8 @@ def return_cheques_and_block_donors(slip_form_name):
 			filters = {
 				'amount': cheque.amount,
 				'account_no': cheque.account_no,
-				'unique_row_identifier': cheque.unique_row_identifier,
+				'event': cheque.event,
+                                'parent': ['!=', slip_form_name]
 			}
 			og_cheque_list = frappe.db.get_all("Slip Cheque Form", filters)
 
@@ -234,6 +235,7 @@ def return_cheques_and_block_donors(slip_form_name):
 				frappe.db.set_value("Slip Cheque Form", og_cheque_name, "clearing_status", "RETURNED")
 				frappe.db.set_value("Slip Cheque Form", og_cheque_name, "ref_link", slip_form_name)
 				frappe.db.set_value("Slip Cheque Form", og_cheque_name, "ref_id_sr_number", cheque.srno)
+				frappe.db.commit()
 
 				og_cheque = frappe.get_doc("Slip Cheque Form", og_cheque_name)
 				cheque.ref_link = og_cheque.parent
@@ -243,7 +245,7 @@ def return_cheques_and_block_donors(slip_form_name):
 				if cheque.donor_id_number:
 					donor = frappe.get_doc("Donor", cheque.donor_id_number)
 
-					donor.blocked_status = "BLOCKED"
+					donor.block_status = "Blocked"
 					remarks1_new = "Blocked for {}, {}".format(cheque.ref_link, cheque.ref_id_sr_number)
 					remarks1 = [] if donor.remarks1 in [None, ""] else donor.get("remarks1", "").split("\n")
 					remarks1.append(remarks1_new)
