@@ -6,6 +6,8 @@ from frappe.model.document import Document
 from ngo.ngo.doctype.slip_form.slip_form import validate_cheques
 from ngo.ngo.report.duplicate_finder.duplicate_finder import execute as duplicate_finder_report
 
+address = '"Sanskruti Vistarak Sangh , Nirmal Niketan , 2 Bhajekar Lane, Mumbai 40004"'
+
 class SlipBundle(Document):
 	def set_total_amount_and_total_cheques(self):
 		self.slip_bundle_total_cheques = 0
@@ -13,7 +15,11 @@ class SlipBundle(Document):
 		for item in self.items:
 			self.slip_bundle_total_cheques += int(item.number_of_cheques)
 			self.slip_bundle_total_amount += int(item.total_amount)
-	
+			
+		deposit_account = frappe.get_doc("Bank Account", self.deposit_account)
+		if deposit_account.cheque_bundle_limit < self.slip_bundle_total_cheques:
+			frappe.throw("Please keep total cheques below {}".format(str(deposit_account.cheque_bundle_limit)))
+
 	def before_save(self):
 		self.set_total_amount_and_total_cheques()
 
@@ -43,6 +49,10 @@ class SlipBundle(Document):
 @frappe.whitelist()
 def validate_slip_bundle(slip_bundle_name):
 	slip_bundle = frappe.get_doc("Slip Bundle", slip_bundle_name)
+	
+	# unsetting bundle items remark
+	for i in slip_bundle.items:
+		i.remarks = None
 
 	slip_bundle.check_if_slip_forms_do_not_exist_in_another_bundle()
 	slip_bundle.validate_slip_forms()
@@ -58,12 +68,15 @@ def download_slip_bundle_summary(slip_bundle_name):
 	# Date
 	slip_bundle_summary_content.append(','.join(map(str, [slip_bundle.slip_bundle_date])))
 	# Address
-	slip_bundle_summary_content.append(','.join(map(str, [slip_bundle.deposit_account])))
+	slip_bundle_summary_content.append(','.join(map(str, [address])))
 	# Slip Form Header
 	header = ['Sr.no', 'Slip Number', 'Sum of Amount', 'Count of Cheques']
 	slip_bundle_summary_content.append(','.join(map(str, header)))
 	# Entries
 	for i in slip_bundle.items:
+		if i.remarks != "0 errors in validation":
+			frappe.respond_as_web_page("Error", "Bundle not validated!", primary_action=None)
+			return
 		tmp = [
 			i.idx,
 			i.slip_form,
@@ -89,13 +102,16 @@ def download_slip_bundle_details(slip_bundle_name):
 	# Date
 	slip_bundle_details_content.append(','.join(map(str, [slip_bundle.slip_bundle_date])))
 	# Address
-	slip_bundle_details_content.append(','.join(map(str, [slip_bundle.deposit_account])))
+	slip_bundle_details_content.append(','.join(map(str, [address])))
 	# Slip Form Header
 	header = ['Sr. No.', 'Slip Number', 'SrNo', 'Account No', 'Cheque Bank', 'Cheque Number', 'Short Code', 'MICR Code']
 	slip_bundle_details_content.append(','.join(map(str, header)))
 	# Entries
 	curr_no = 1
 	for i in slip_bundle.items:
+		if i.remarks != "0 errors in validation":
+			frappe.respond_as_web_page("Error", "Bundle not validated!", primary_action=None)
+			return
 		slip_form = frappe.get_doc("Slip Form", i.slip_form)
 
 		for j in slip_form.cheque_details:

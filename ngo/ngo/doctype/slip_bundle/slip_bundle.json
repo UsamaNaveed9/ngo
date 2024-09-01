@@ -30,7 +30,8 @@
    "fieldname": "deposit_account",
    "fieldtype": "Link",
    "label": "Deposit Account",
-   "options": "Bank Account"
+   "options": "Bank Account",
+   "reqd": 1
   },
   {
    "fieldname": "deposit_date",
@@ -48,7 +49,8 @@
    "fieldname": "slip_bundle_event_code",
    "fieldtype": "Link",
    "label": "Slip Bundle Event Code",
-   "options": "Event Master"
+   "options": "Event Master",
+   "reqd": 1
   },
   {
    "fetch_from": "deposit_account.bank",
