@@ -18,6 +18,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Upload",
+   "link_to": "Slip Form",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -43,7 +44,17 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Slip Bundle",
+   "link_to": "Slip Bundle",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Donor",
+   "link_to": "Slip Form",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -79,6 +90,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Banking",
+   "link_to": "Slip Form",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -123,6 +135,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Reconciliation",
+   "link_to": "Slip Form",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -176,6 +189,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Centre(Kendra)",
+   "link_to": "Slip Form",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -202,6 +216,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Event",
+   "link_to": "Slip Form",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -219,6 +234,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Reports",
+   "link_to": "Slip Form",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -236,6 +252,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Administration",
+   "link_to": "Slip Form",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -250,7 +267,7 @@
    "type": "Link"
   }
  ],
- "modified": "2024-08-20 13:22:43.472997",
+ "modified": "2024-09-01 01:44:11.216289",
  "modified_by": "Administrator",
  "module": "NGO",
  "name": "NGO",

@@ -36,11 +36,23 @@ frappe.ui.form.on('Slip Bundle', {
 				freeze_message: "Validating Slips..."
 			});
 		})
-	}
-});
 
-frappe.ui.form.on('Slip Bundle Item', {
-	slip_form: function(frm) {
-		console.log('set hua')
+		frm.add_custom_button(__("Download Summary"), function() {
+			if(frm.is_dirty()) return frappe.throw("Please save the form!")
+
+			window.open(
+				'/api/method/ngo.ngo.doctype.slip_bundle.slip_bundle.download_slip_bundle_summary?slip_bundle_name=' + frm.doc.name,
+				'_blank'
+			);
+		}, __("Download"))
+
+		frm.add_custom_button(__("Download Details"), function() {
+			if(frm.is_dirty()) return frappe.throw("Please save the form!")
+
+			window.open(
+				'/api/method/ngo.ngo.doctype.slip_bundle.slip_bundle.download_slip_bundle_details?slip_bundle_name=' + frm.doc.name,
+				'_blank'
+			);
+		}, __("Download"))
 	}
 });
