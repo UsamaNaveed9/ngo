@@ -104,7 +104,7 @@ def download_slip_bundle_details(slip_bundle_name):
 	# Address
 	slip_bundle_details_content.append(','.join(map(str, [address])))
 	# Slip Form Header
-	header = ['Sr. No.', 'Slip Number', 'SrNo', 'Account No', 'Cheque Bank', 'Cheque Number', 'Short Code', 'MICR Code']
+	header = ['Sr. No.', 'Slip Number', 'SrNo', 'Amount', 'Account No', 'Cheque Bank', 'Cheque Number', 'Short Code', 'MICR Code']
 	slip_bundle_details_content.append(','.join(map(str, header)))
 	# Entries
 	curr_no = 1
@@ -119,6 +119,7 @@ def download_slip_bundle_details(slip_bundle_name):
 				curr_no,
 				slip_form.name,
 				j.srno,
+				j.amount,
 				j.account_no,
 				j.cheque_bank,
 				j.cheque_number,
